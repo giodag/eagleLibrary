@@ -1,0 +1,36 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "eagleLibraryApp",
+    "relationships": [
+        {
+            "relationshipName": "literary_work",
+            "otherEntityName": "literary_work",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "number",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "chapter",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20190211145017",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "page",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination",
+    "microserviceName": "eagleLibraryApp"
+}
