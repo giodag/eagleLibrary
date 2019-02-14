@@ -1,0 +1,5 @@
+Run Gateway debug mode on port number 5005: 
+java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=n -jar /home/saba/.m2/repository/com/univaq/eaglelibrarygateway/eagle-library-gateway/0.0.1-SNAPSHOT/eagle-library-gateway-0.0.1-SNAPSHOT.war
+
+Run Application debug mode on port number 5006: 
+java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=5006,suspend=n -jar /home/saba/.m2/repository/com/univaq/eaglelibraryapp/eagle-library-app/0.0.1-SNAPSHOT/eagle-library-app-0.0.1-SNAPSHOT.war
