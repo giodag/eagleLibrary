@@ -1,0 +1,35 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "eagleLibraryApp",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "author",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "year",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "category",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "number_of_pages",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20190211133114",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "literary_work",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination",
+    "microserviceName": "eagleLibraryApp"
+}
