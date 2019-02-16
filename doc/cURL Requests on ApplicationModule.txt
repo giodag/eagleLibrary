@@ -1,0 +1,12 @@
+Comando che mi fa accedere sull'Application di Jhipster mostrando sul cmd la stessa pagina che mostrerebbe via web :
+
+curl -H "Authorization: Basic MmUyMzY3MWYyMTAzMGE3ZDgzODMxYTI4MDM3NWVhMDIyYWYwZTY3YzM0YzFiZGNhMWI3MmI1NDQ0ZDU5MWFhMjJiMGI3OTVkNTQyNjJhMWJlN2Q4Y2NjNjg5MDdhOTUzMGFmYzQzNDg1Njk1MDk2ZDRjYzIwZjgzZWNiOTllYzQ=" http://localhost:8081/
+
+Token da inserire per l'authenticatione quando si provano a fare operazioni da linea di comando :
+--header 'Accept: application/json' --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU1MDM5NzgxMn0.aGuxk28ip-qrm73sop-pgrbEQlf7l2VIEUkgZfpWGlvHNsiTSAEas9Buzh0BgLYaIreoV65VqOleacDIyhPdaA'
+
+Infatti, l'esempio di cui sotto è una POST che serve per creare un profilo, per poter far andare la richiesta a buon fine
+è sufficiente authenticarsi combinando la richiesta normale di POST con il token di cui sopra.
+
+Comando cURL per creare un profilo direttamente da linea di comando puntando all'Application module :
+curl -X POST --header 'Accept: application/json' --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU1MDM5NzgxMn0.aGuxk28ip-qrm73sop-pgrbEQlf7l2VIEUkgZfpWGlvHNsiTSAEas9Buzh0BgLYaIreoV65VqOleacDIyhPdaA' 'http://localhost:8081/api/profiles' -H "Content-Type: application/json" -d "{ \"address\": \"string\", \"date_of_birth\": \"2019-02-15\", \"degree_course\": \"string\", \"email\": \"string\", \"last_name\": \"string\", \"matriculation_number\": \"string\", \"name\": \"string\"}"
