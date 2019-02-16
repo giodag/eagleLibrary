@@ -1,0 +1,35 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "eagleLibraryApp",
+    "relationships": [
+        {
+            "relationshipName": "page",
+            "otherEntityName": "page",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "number",
+            "ownerSide": true,
+            "useJPADerivedIdentifier": true,
+            "otherEntityRelationshipName": "transcript"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "tei_format",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20190213142859",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "transcript",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination",
+    "microserviceName": "eagleLibraryApp"
+}
