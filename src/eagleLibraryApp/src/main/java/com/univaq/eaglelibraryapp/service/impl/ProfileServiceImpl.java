@@ -3,6 +3,7 @@ package com.univaq.eaglelibraryapp.service.impl;
 import com.univaq.eaglelibraryapp.service.ProfileService;
 import com.univaq.eaglelibraryapp.domain.Profile;
 import com.univaq.eaglelibraryapp.repository.ProfileRepository;
+import com.univaq.eaglelibraryapp.repository.UserRepository;
 import com.univaq.eaglelibraryapp.service.dto.ProfileDTO;
 import com.univaq.eaglelibraryapp.service.mapper.ProfileMapper;
 import org.slf4j.Logger;
@@ -28,10 +29,13 @@ public class ProfileServiceImpl implements ProfileService {
     private final ProfileRepository profileRepository;
 
     private final ProfileMapper profileMapper;
+    
+    private final UserRepository userRepository;
 
-    public ProfileServiceImpl(ProfileRepository profileRepository, ProfileMapper profileMapper) {
+    public ProfileServiceImpl(ProfileRepository profileRepository, ProfileMapper profileMapper, UserRepository userRepository) {
         this.profileRepository = profileRepository;
         this.profileMapper = profileMapper;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -45,6 +49,8 @@ public class ProfileServiceImpl implements ProfileService {
         log.debug("Request to save Profile : {}", profileDTO);
 
         Profile profile = profileMapper.toEntity(profileDTO);
+        long userId = profileDTO.getUserId();
+        userRepository.findById(userId).ifPresent(profile::user);
         profile = profileRepository.save(profile);
         return profileMapper.toDto(profile);
     }
