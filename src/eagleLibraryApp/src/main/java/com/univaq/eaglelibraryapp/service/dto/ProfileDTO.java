@@ -27,8 +27,12 @@ public class ProfileDTO implements Serializable {
     private String degree_course;
 
     private String email;
+    
+    
+    private Long userId;
+    
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -91,6 +95,14 @@ public class ProfileDTO implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
     @Override
     public boolean equals(Object o) {
