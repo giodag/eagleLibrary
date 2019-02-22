@@ -67,6 +67,15 @@ public class TranscriptServiceImpl implements TranscriptService {
             .map(transcriptMapper::toDto);
     }
 
+    /**
+     * Get all the Transcript with eager load of many-to-many relationships.
+     *
+     * @return the list of entities
+     */
+    public Page<TranscriptDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return transcriptRepository.findAllWithEagerRelationships(pageable).map(transcriptMapper::toDto);
+    }
+    
 
     /**
      * Get one transcript by id.
@@ -78,7 +87,7 @@ public class TranscriptServiceImpl implements TranscriptService {
     @Transactional(readOnly = true)
     public Optional<TranscriptDTO> findOne(Long id) {
         log.debug("Request to get Transcript : {}", id);
-        return transcriptRepository.findById(id)
+        return transcriptRepository.findOneWithEagerRelationships(id)
             .map(transcriptMapper::toDto);
     }
 

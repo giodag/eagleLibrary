@@ -28,7 +28,13 @@ public interface TranscriptService {
      */
     Page<TranscriptDTO> findAll(Pageable pageable);
 
-
+    /**
+     * Get all the Transcript with eager load of many-to-many relationships.
+     *
+     * @return the list of entities
+     */
+    Page<TranscriptDTO> findAllWithEagerRelationships(Pageable pageable);
+    
     /**
      * Get the "id" transcript.
      *

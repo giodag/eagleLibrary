@@ -85,13 +85,19 @@ public class TranscriptResource {
      * GET  /transcripts : get all the transcripts.
      *
      * @param pageable the pagination information
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of transcripts in body
      */
     @GetMapping("/transcripts")
-    public ResponseEntity<List<TranscriptDTO>> getAllTranscripts(Pageable pageable) {
+    public ResponseEntity<List<TranscriptDTO>> getAllTranscripts(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get a page of Transcripts");
-        Page<TranscriptDTO> page = transcriptService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/transcripts");
+        Page<TranscriptDTO> page;
+        if (eagerload) {
+            page = transcriptService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = transcriptService.findAll(pageable);
+        }
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/transcripts?eagerload=%b", eagerload));
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 

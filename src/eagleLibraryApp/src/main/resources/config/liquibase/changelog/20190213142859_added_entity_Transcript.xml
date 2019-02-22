@@ -29,13 +29,20 @@
             <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
-            <column name="page_id" type="bigint">
-                <constraints nullable="false" />
-            </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        
+        <createTable tableName="user_trans_link">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transcript_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="transcript_id, user_id" tableName="user_trans_link"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
