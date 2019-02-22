@@ -14,5 +14,16 @@
                                  referencedColumnNames="id"
                                  referencedTableName="page"/>
 
+        <addForeignKeyConstraint baseColumnNames="transcript_id"
+                                 baseTableName="user_trans_link"
+                                 constraintName="fk_transcript_user_transcript_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transcript"/>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_trans_link"
+                                 constraintName="fk_transcript_user_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
     </changeSet>
 </databaseChangeLog>

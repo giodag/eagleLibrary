@@ -13,9 +13,12 @@ import com.univaq.eaglelibraryapp.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -27,12 +30,14 @@ import org.springframework.util.Base64Utils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import static com.univaq.eaglelibraryapp.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -54,8 +59,14 @@ public class TranscriptResourceIntTest {
     @Autowired
     private TranscriptRepository transcriptRepository;
 
+    @Mock
+    private TranscriptRepository transcriptRepositoryMock;
+
     @Autowired
     private TranscriptMapper transcriptMapper;
+
+    @Mock
+    private TranscriptService transcriptServiceMock;
 
     @Autowired
     private TranscriptService transcriptService;
@@ -172,6 +183,39 @@ public class TranscriptResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllTranscriptsWithEagerRelationshipsIsEnabled() throws Exception {
+        TranscriptResource transcriptResource = new TranscriptResource(transcriptServiceMock);
+        when(transcriptServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        MockMvc restTranscriptMockMvc = MockMvcBuilders.standaloneSetup(transcriptResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restTranscriptMockMvc.perform(get("/api/transcripts?eagerload=true"))
+        .andExpect(status().isOk());
+
+        verify(transcriptServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllTranscriptsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        TranscriptResource transcriptResource = new TranscriptResource(transcriptServiceMock);
+            when(transcriptServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restTranscriptMockMvc = MockMvcBuilders.standaloneSetup(transcriptResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restTranscriptMockMvc.perform(get("/api/transcripts?eagerload=true"))
+        .andExpect(status().isOk());
+
+            verify(transcriptServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getTranscript() throws Exception {

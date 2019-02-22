@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Transcript and its DTO TranscriptDTO.
  */
-@Mapper(componentModel = "spring", uses = {PageMapper.class})
+@Mapper(componentModel = "spring", uses = {PageMapper.class, UserMapper.class})
 public interface TranscriptMapper extends EntityMapper<TranscriptDTO, Transcript> {
 
     @Mapping(source = "page.id", target = "pageId")

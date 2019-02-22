@@ -9,7 +9,17 @@
             "otherEntityField": "number",
             "ownerSide": true,
             "useJPADerivedIdentifier": true,
-            "otherEntityRelationshipName": "transcript"
+            "otherEntityRelationshipName": "transcript",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "uuser",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "transcript",
+            "otherEntityRelationshipNameUndefined": false
         }
     ],
     "fields": [

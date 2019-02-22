@@ -1,5 +1,7 @@
 package com.univaq.eaglelibraryapp.service.dto;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 import javax.persistence.Lob;
 
@@ -19,6 +21,8 @@ public class TranscriptDTO implements Serializable {
     private Long pageId;
 
     private String pageNumber;
+
+    private Set<UserDTO> users = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -58,6 +62,14 @@ public class TranscriptDTO implements Serializable {
 
     public void setPageNumber(String pageNumber) {
         this.pageNumber = pageNumber;
+    }
+
+    public Set<UserDTO> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserDTO> users) {
+        this.users = users;
     }
 
     @Override

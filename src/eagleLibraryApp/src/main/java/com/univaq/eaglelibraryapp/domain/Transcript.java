@@ -7,6 +7,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -31,8 +33,15 @@ public class Transcript implements Serializable {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "page_id")
+    @JoinColumn(name = "id")
     private Page page;
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "user_trans_link",
+               joinColumns = @JoinColumn(name = "transcript_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -80,6 +89,31 @@ public class Transcript implements Serializable {
 
     public void setPage(Page page) {
         this.page = page;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public Transcript users(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
+    public Transcript addUser(User user) {
+        this.users.add(user);
+        //user.getTranscripts().add(this);
+        return this;
+    }
+
+    public Transcript removeUser(User user) {
+        this.users.remove(user);
+        //user.getTranscripts().remove(this);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
