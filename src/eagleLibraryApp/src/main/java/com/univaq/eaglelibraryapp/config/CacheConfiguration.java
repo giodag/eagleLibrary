@@ -43,6 +43,7 @@ public class CacheConfiguration {
             cm.createCache(com.univaq.eaglelibraryapp.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.univaq.eaglelibraryapp.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(com.univaq.eaglelibraryapp.domain.Transcript.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(com.univaq.eaglelibraryapp.domain.Form.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
