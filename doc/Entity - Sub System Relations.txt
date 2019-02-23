@@ -1,0 +1,80 @@
+Opera :                                                                          *
+	Viewer :                                                                     *
+			- Consente la consultazione dell'opera;                              *
+			- Consente la ricerca di un'opera per mezzo dei metadati (...);      *
+			- Le opere possono essere suddivise per categoria;                   *
+			- Alcuni utenti possono fare il download dell'opera;                 *
+                                                                                 *
+	Uploader :                                                                   *
+			- Ogni opera è formata da più immagini (scansioni);                  *
+			- Per ogni opera vengono caricati dei metadati (titolo, anno, ...);  *
+	                                                                             *
+	Transcriber :                                                                *
+			- Ogni opera acquisita deve essree trasformata in opera digitale;	 *
+                                                                                 *
+	Manager :                                                                    *
+			- Consente di associare parte di un'opera a 1 o più trascrittori;    *
+			- Consente la pubblicazione delle opere;                             *
+	                                                                             *
+**********************************************************************************
+Pagina :                                                                         *
+N.B. per me la pagina è un immagine (Viewer rigo 3, Uploader rigo 1);            *
+	                                                                             *
+	Viewer :                                                                     *
+			- E' possibile sfogliare le pagine per mezzo di un paginatore;       *
+			                                                                     *
+	Transcriber :                                                                *
+			- Trascrive la pagina usando editor di testo formato TEI;            *
+	                                                                             *
+	Manager :                                                                    *
+			- Consente di assegnare parte di un'opera (1 o più immagini          *
+			  a 1 o più trascrittore);                                           *
+			- Consente la pubblicazione di trscrizioni e o immagini;             *
+			- Consente di riassegnare un'immagine ad un trascrittore             *
+			  qualora la trascrizione necessiti di una nuova revisione;          *
+			- Consente la supervisione dell'acquisizione delle immagini;         *
+                                                                                 *
+**********************************************************************************
+Profilo :                                                                        *
+		Viewer :                                                                 *
+			- Gli utenti possono accedere al proprio profilo o al profilo        *
+			  di altri per la visualizzazione dei dati inerenti all'utente       *
+			  associato al profilo;                                              *
+		                                                                         *
+**********************************************************************************
+Modulo :                                                                         *
+		Viewer :                                                                 *
+			- Attraverso il modulo, l'utente può fare richiesta per diventare    *
+			  un trascrittore.                                                   *
+		Manager :                                                                *
+			- Può accettare o rifiutare il modulo per la nomina di trascrittore; *
+																				 *
+**********************************************************************************
+Utente :                                                                         *
+		Viewer :                                                                 *
+			- Consente la visualizzazione, la ricerca                            *
+			  e il download (se si gode di alcuni privilegi) di un'opera;        *
+			- La possibilità di far richiesta di diventare                       *
+			  trascrittore attraverso un modulo;                                 *
+			- Consente di accedere al proprio profilo;                           *
+			                                                                     *
+		Uploader :                                                               *
+			- Se un utente è anche un supervisore, allora l'utente può           *
+			  valutare la qualità di una trascrizione                            *
+			  (vedi ultima riga uploader);                                       *
+			                                                                     *
+		Transcriber :                                                            *
+			- Se un utente è trascrittore allora può trascrivere le parti di     *
+			  opera ad esso associati;                                           *
+		N.B. : (ultima riga di transcriber == ultima riga di uploader, in cui    *
+				viene spiegata questa cosa);                                     *
+				                                                                 *
+		Manager : (solo per utenti con alcuni privilegi!!!)                      *
+			- Può assegnare 1 o più parti di un opera/e a più trascrittori;      *
+			- Consente di effettuare correzioni e validazioni;                   *
+			- Può riassegnare pagine ai trascrittori;                            *
+			- Consente la pubblicazione di trscrizioni e o immagini;             *
+			- Consente la supervisione dell'acquisizione delle immagini;         *
+			- Gestisce i livelli dei trascrittori;                               *
+			                                                                     *
+**********************************************************************************
