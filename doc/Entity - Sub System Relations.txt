@@ -46,6 +46,7 @@ Modulo :                                                                        
 		Viewer :                                                                 *
 			- Attraverso il modulo, l'utente può fare richiesta per diventare    *
 			  un trascrittore.                                                   *
+		
 		Manager :                                                                *
 			- Può accettare o rifiutare il modulo per la nomina di trascrittore; *
 																				 *
@@ -77,4 +78,20 @@ Utente :                                                                        
 			- Consente la supervisione dell'acquisizione delle immagini;         *
 			- Gestisce i livelli dei trascrittori;                               *
 			                                                                     *
+**********************************************************************************
+Trascrizione :                                                                   *
+			Viewer :                                                             *
+				- Può essere ricercato per mezzo di metadati;                    *
+				- Può essere visualizzato da utenti registrati;                  *
+			                                                                     *
+			Uploader :                                                           *
+				- L'uente può caricarla per sottometterla a revisione;           *
+				                                                                 *
+			Transcriber :                                                        *
+				- Mediante un editor TEI effettua(crea) la trascrizione;         *
+				                                                                 *
+			Manager :                                                            *
+				- Revisione, corregge e valida una trascrizione;                 *
+				- Pubblica una trascrizione;                                     *
+				                                                                 *
 **********************************************************************************
