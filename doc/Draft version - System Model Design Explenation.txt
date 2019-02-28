@@ -4,15 +4,33 @@ La progettazione del sistema EagleLibrary inizia dalla stilatura dei requisiti f
 Per poter individuare quelli che, secondo noi, erano i requisiti che caratterizzavano l'applicazione
 da implementare abbiamo in prima istanza riportato tutti quei requisiti che si evincevano facilmente
 dalle specifiche del progetto, in più, ci siamo immedesimati nell'utente finale dell'applicazione 
-per cercare di formalizzare altri requisiti che rendessero il systema quanto più semplice ed user frendly possibile.
+per cercare di formalizzare altri requisiti che rendessero il sistema quanto più semplice ed user friendly possibile.
 
 Dunque i documenti che abbiamo prodotto come output di tale procedura sono disponibili al seguente indirizzo : 
-- https://github.com/giodag/eagleLibrary/blob/master/doc/Requisiti.docx;
+- https://github.com/giodag/eagleLibrary/blob/develop/doc/Requirement%20and%20Assumptions/Requisiti.docx
 
 Il secondo step è stato quello di partire dai requisiti e dalle specifiche di progetto per tirare fuori 
 dei casi d'uso che iniziassero a farci capire ad alto livello quale sarebbe state le interazioni tra :
-- utente & systema;
+- user & system;
 - subSystem & subSystem;
 
-ricavando dunque i vari use case implementati nel file disponibile al path che segue : 
-- https://github.com/giodag/eagleLibrary/blob/master/doc/EagleLibrary.mdzip
+ricavando dunque i vari use case implementati nel file disponibile all'indirizzo che segue : 
+- https://github.com/giodag/eagleLibrary/blob/develop/doc/Models/EagleLibrary.mdzip
+
+
+A questo punto ci siamo concetrati sull'estrazione delle entità che caratterizzano il sistema
+e abbiamo formalizzato tutto in un class diagram. In questa fase abbiamo dovuto fare delle assunzioni 
+che ci hanno permesso di semplificare alcuni comportamenti del sistema e degli attori che vi interagiscono.
+
+Le assunzioni di cui sopra sono disponibili al seguente link :
+- https://github.com/giodag/eagleLibrary/blob/develop/doc/Requirement%20and%20Assumptions/Assunzioni.docx
+
+Una volta che sono diventati chiari quali dovessero essere le entità e come avrebbero dovuto interagire tra loro
+ad alto livello abbiamo iniziato a pensare al tipo di architettura da utilizzare. Fin da subito abbiamo voluto scegliere
+qualcosa che divergesse dal classico monolite così siamo andati verso una soluzione più modulare che non richiedesse
+aver presente già tutta l'architettura del sistema. Senza precluderci nulla quindi, abbiamo optato per un'architettura 
+a microservizi. Nella fattispece di implementare (almeno per la prima versione del programma) 3 micro servizi 
+deployabili indipendentemente. I tre micro servizi sono i seguenti  : 
+
+- Registry - modulo che agevola il monitoring, server balance, application's performance e così via.
+
