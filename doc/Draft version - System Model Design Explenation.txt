@@ -1,4 +1,4 @@
-System Design :
+EagleLibrary - System Design :
 
 La progettazione del sistema EagleLibrary inizia dalla stilatura dei requisiti funzionali e non.
 Per poter individuare quelli che, secondo noi, erano i requisiti che caratterizzavano l'applicazione
@@ -29,8 +29,38 @@ Una volta che sono diventati chiari quali dovessero essere le entità e come avr
 ad alto livello abbiamo iniziato a pensare al tipo di architettura da utilizzare. Fin da subito abbiamo voluto scegliere
 qualcosa che divergesse dal classico monolite così siamo andati verso una soluzione più modulare che non richiedesse
 aver presente già tutta l'architettura del sistema. Senza precluderci nulla quindi, abbiamo optato per un'architettura 
-a microservizi. Nella fattispece di implementare (almeno per la prima versione del programma) 3 micro servizi 
-deployabili indipendentemente. I tre micro servizi sono i seguenti  : 
+a microservizi. Nella fattispecie di implementare (almeno per la prima versione del programma) 3 micro servizi 
+deployabili indipendentemente con Spring Boot. I tre micro servizi sono i seguenti  : 
 
 - Registry - modulo che agevola il monitoring, server balance, application's performance e così via.
+- Gateway - modulo che gestisce la parte grafica e che comunica con il microservizio che verrà presentato al punto successivo per mezzo di chiamate rest.
+- Application - modulo che gestisce tutta la parte back end della nostra applicazione.
 
+La piattaforma che ci ha aiutato a realizzare l'architettura del nostro progetto è stata Jhipster.
+Come prerequisito all'utilizzo di Jhipster abbiamo dovuto installare sui nostri terminali :
+
+- Java 8;
+- NodeJs 8.11.3 LTS (le versioni non LTS non sono supportate);
+- Yeoman 2.0.5;
+
+Jhipster ci ha aiutato molto per la generazione automatica della DTS e di conseguenza di tutta la struttura del progetto.
+Inoltre abbiamo utilizzato la piattaforma anche per generare una prima versione delle JPA, dei POJO e dei CRUD per le entità 
+principali dell'applicazione.
+
+Lo start up dei vari moduli con l'ausilio di Jhipster ha incluso nel progetto features che potremmo decidere di non tenere e/o customizzare
+a seconda delle esigenze del cliente e del team di sviluppo.
+
+Attraverso questi passaggi abbiamo quindi consolidato la parte architetturale della nostra applicazione, a questo punto abbiamo fatto un passo indietro
+e siamo tornati sulle specifiche del progetto per guardare i requisiti da un punto di vista differente, invece di elencare
+cosa potesse/oppure no fare un subSystem [mi riferisco quindi a Viewer, Transcriber, etc...] abbiamo implementato uno schema
+che descrivesse tutte e sole le operazioni che vengono effettuate dai subSystem sulle entità che abbiamo individuato.
+
+Tale schema è consultabile al link :
+https://github.com/giodag/eagleLibrary/blob/master/doc/Models/Entity%20-%20Sub%20System%20Relations/Entity%20-%20Sub%20System%20Relations.txt
+
+
+
+
+
+
+ 
