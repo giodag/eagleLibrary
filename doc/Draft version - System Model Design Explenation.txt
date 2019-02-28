@@ -58,9 +58,5 @@ che descrivesse tutte e sole le operazioni che vengono effettuate dai subSystem 
 Tale schema è consultabile al link :
 https://github.com/giodag/eagleLibrary/blob/master/doc/Models/Entity%20-%20Sub%20System%20Relations/Entity%20-%20Sub%20System%20Relations.txt
 
-
-
-
-
-
- 
+Questa nuova prospettiva ci ha offerto spunti per iniziare a buttare giù i primi high level design (che da qui denoterò con HLD)
+intesi come activity diagram (almeno in questa prima fase, solo activity) che appunto spiegano come interagiscono le entità con i vari subSystem.
