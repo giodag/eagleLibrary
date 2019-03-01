@@ -29,8 +29,8 @@ Una volta che sono diventati chiari quali dovessero essere le entità e come avr
 ad alto livello abbiamo iniziato a pensare al tipo di architettura da utilizzare. Fin da subito abbiamo voluto scegliere
 qualcosa che divergesse dal classico monolite così siamo andati verso una soluzione più modulare che non richiedesse
 aver presente già tutta l'architettura del sistema. Senza precluderci nulla quindi, abbiamo optato per un'architettura 
-a microservizi. Nella fattispecie di implementare (almeno per la prima versione del programma) 3 micro servizi 
-deployabili indipendentemente con Spring Boot. I tre micro servizi sono i seguenti  : 
+a microservizi. Nella fattispecie di implementare (almeno per la prima versione del programma) 3 microservizi 
+deployabili indipendentemente con Spring Boot. I tre microservizi sono i seguenti  : 
 
 - Registry - modulo che agevola il monitoring, server balance, application's performance e così via.
 - Gateway - modulo che gestisce la parte grafica e che comunica con il microservizio che verrà presentato al punto successivo per mezzo di chiamate rest.
@@ -42,6 +42,7 @@ Come prerequisito all'utilizzo di Jhipster abbiamo dovuto installare sui nostri 
 - Java 8;
 - NodeJs 8.11.3 LTS (le versioni non LTS non sono supportate);
 - Yeoman 2.0.5;
+- Yarn 1.13.0;
 
 Jhipster ci ha aiutato molto per la generazione automatica della DTS e di conseguenza di tutta la struttura del progetto.
 Inoltre abbiamo utilizzato la piattaforma anche per generare una prima versione delle JPA, dei POJO e dei CRUD per le entità 
@@ -49,6 +50,9 @@ principali dell'applicazione.
 
 Lo start up dei vari moduli con l'ausilio di Jhipster ha incluso nel progetto features che potremmo decidere di non tenere e/o customizzare
 a seconda delle esigenze del cliente e del team di sviluppo.
+
+La scelta sul RDBMS da utilizzare è ricaduta su MySQL, un database open source molto semplice da utilizzare, 
+gestibile con i vari tool messi a disposizione da Oracle, con il quale abbiamo già avuto esperienza in passato.
 
 Attraverso questi passaggi abbiamo quindi consolidato la parte architetturale della nostra applicazione, a questo punto abbiamo fatto un passo indietro
 e siamo tornati sulle specifiche del progetto per guardare i requisiti da un punto di vista differente, invece di elencare
