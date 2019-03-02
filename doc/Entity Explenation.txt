@@ -1,0 +1,28 @@
+In questo documento si presenta una spiegazione dettagliata del come abbiamo individuato e selezionato 
+entità e relative associazioni che costituiscono ed/o interagiscono con il sistema EagleLibrary.
+
+Utente : 
+	L'utente è l'attore del sistema. Privilegi differenti consentono all'utente di effettuare
+	una determinata operazione oppure no. Egli infatti può essere investito dalla carica di 
+	manager, ossia colui che valida o rigetta una trascrizione, che effettua correzioni e che 
+	attribuisce valutazioni ai trascrittori. Al contempo invece, potrebbe essere un trascrittore
+	e quindi interagire con il sistema in maniera differente rispetto lo scenario descritto precedentemente, ecc.
+	
+	Di seguito vediamo come Utente si collega alle altre entità del sistema :
+		
+		Utente <---> Modulo [1,1] : un utente può creare (e quindi inviare) 1 ed un solo modulo
+									per far richiesta di diventare trascrittore. Il sistema conserverà
+									sempre una e una sola copia del modulo di un utente dal momento che quest'ultimo decide di inviarlo.
+									Il modulo sarà caratterizzato da uno stato che ci fa capire se è valido oppure è stato rigettato.
+									
+		Utente <---> Profilo [1,1]: dal momento che l'utente decide di registrarsi gli verrà attribuito automaticamente un profilo
+									Egli potrà arricchire il profilo con informazioni di anagrafica più altre informazioni di contesto.
+									
+		Utente <---> Trascrizione [*,*] : Per poter realizzare questa associazione abbiamo avuto bisogno di inserire una tabella ponte
+										  per gestire alcuni scenari che abbiamo immaginato. Spieghiamo prima l'associazione 
+										  Utente <-> UserTransLink [0..*,1] : nel sistema ci possono essere da 0 a n trascrittori.
+										  Quando un utente diventa un trascrittore, quindi una parte di un'opera gli viene assegnata, 
+										  si crea una tupla in UserTransLink che lega lo user alla parte di un'opera. Per ogni parte di 
+										  opera associata all'utente ci sarà un record 
+									 
+						
