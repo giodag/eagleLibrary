@@ -51,6 +51,11 @@ principali dell'applicazione.
 Lo start up dei vari moduli con l'ausilio di Jhipster ha incluso nel progetto features che potremmo decidere di non tenere e/o customizzare
 a seconda delle esigenze del cliente e del team di sviluppo.
 
+Tra i framework che abbiamo utilizzato ci sono anche i seguenti :
+- Maven per la gestione del progetto, build automation e la gestione delle dipendenze;
+- Spring, nella fattispecie l'utilizzo di @Annotation per lo scanning e il detecting dei package nel progetto. In più lo utilizziamo per l'injection.
+- Hibernate per la gestione del DB lato backend.
+
 La scelta sul RDBMS da utilizzare è ricaduta su MySQL, un database open source molto semplice da utilizzare, 
 gestibile con i vari tool messi a disposizione da Oracle, con il quale abbiamo già avuto esperienza in passato.
 
@@ -64,3 +69,10 @@ https://github.com/giodag/eagleLibrary/blob/master/doc/Models/Entity%20-%20Sub%2
 
 Questa nuova prospettiva ci ha offerto spunti per iniziare a buttare giù i primi high level design (che da qui denoterò con HLD)
 intesi come activity diagram (almeno in questa prima fase, solo activity) che appunto spiegano come interagiscono le entità con i vari subSystem.
+
+Tali design sono disponibili al seguente link :
+https://github.com/giodag/eagleLibrary/tree/master/doc/Models/Activity%20Diagrams
+
+
+
+
