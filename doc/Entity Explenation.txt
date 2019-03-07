@@ -10,19 +10,34 @@ Utente :
 	
 	Di seguito vediamo come Utente si collega alle altre entità del sistema :
 		
-		Utente <---> Modulo [1,1] : un utente può creare (e quindi inviare) 1 ed un solo modulo
+		Utente <---> Modulo [1,1] : 
+									un utente può creare (e quindi inviare) 1 ed un solo modulo
 									per far richiesta di diventare trascrittore. Il sistema conserverà
 									sempre una e una sola copia del modulo di un utente dal momento che quest'ultimo decide di inviarlo.
 									Il modulo sarà caratterizzato da uno stato che ci fa capire se è valido oppure è stato rigettato.
 									
-		Utente <---> Profilo [1,1]: dal momento che l'utente decide di registrarsi gli verrà attribuito automaticamente un profilo
+		Utente <---> Profilo [1,1]: 
+									dal momento che l'utente decide di registrarsi gli verrà attribuito automaticamente un profilo
 									Egli potrà arricchire il profilo con informazioni di anagrafica più altre informazioni di contesto.
 									
-		Utente <---> Trascrizione [*,*] : Per poter realizzare questa associazione abbiamo avuto bisogno di inserire una tabella ponte
-										  per gestire alcuni scenari che abbiamo immaginato. Spieghiamo prima l'associazione 
-										  Utente <-> UserTransLink [0..*,1] : nel sistema ci possono essere da 0 a n trascrittori.
-										  Quando un utente diventa un trascrittore, quindi una parte di un'opera gli viene assegnata, 
-										  si crea una tupla in UserTransLink che lega lo user alla parte di un'opera. Per ogni parte di 
-										  opera associata all'utente ci sarà un record 
-									 
+		Utente <---> Trascrizione [*,*] : 
+		
+									Per poter realizzare questa associazione abbiamo avuto bisogno di inserire una tabella ponte
+									per gestire alcuni scenari che abbiamo immaginato. 
+									
+									Spieghiamo prima l'associazione Utente <-> UserTransLink [0..*,1] :
+									Nel sistema ci possono essere da 0 a n trascrittori.
+									Quando un utente diventa un trascrittore, quindi una o più pagine di un'opera gli vengono assegnate, 
+									per ogni pagina associata creiamo una tupla in UserTransLink che lega lo user alla pagina. 
+									
+									Adesso spieghiamo UserTransLink <-> Trascrizione [1,1..*] :
+									Come abbiamo già avuto modo di vedere nella precedente relazione, la tabella UserTransLink
+									viene utilizzata per gestire il concetto di 'assegnazione'. Infatti in user trans ci saranno 
+									tante tuple per ogni utente tante quante sono le pagine che egli sta trascrivendo. Se non trascrive
+									non vi saranno record per un determinato utente. Di conseguenza questa tabella è collegata direttamente a quella delle trascrizioni.
+									
+									
+									
+									
+								 
 						
