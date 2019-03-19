@@ -1,6 +1,6 @@
 Controllers Eagle Library
 
-<<OperaController>>
+<<LiteraryWorkController>>
 - getOpera();				//Quando leggiamo un'opera per visualizzarla, 
 - getOperaList();			//per ogni pagina controlliamo se esiste una trascrizione con stato completato, se si la visualizziamo.
 - uploadOpera();
