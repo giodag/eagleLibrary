@@ -1,0 +1,22 @@
+Controllers Eagle Library
+
+<<Opera>>
+- getOpera();
+- getOperaList();
+- uploadOpera();
+
+<<Profile>>
+- getProfile();
+- createUpdateProfile();
+
+<<Transcription>>
+- submitTranscription();
+- validateTranscription();
+- assignTranscription();
+- getTrascription(); //Serve al menager quando la visualizza per poi passare alla validazione.
+
+<<Module>>
+- submitModule();
+- getModule(); //Serve al menager quando lo visualizza per poi passare alla validazione.
+- validateModule(); //Se l'esito è positivo possiamo pensare di mandare una notifica asincrona all'utente che lo avvisa dell'investitura;
+
