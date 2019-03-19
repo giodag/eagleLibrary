@@ -22,3 +22,6 @@ Controllers Eagle Library
 - getModule(); 				//Serve al menager quando lo visualizza per poi passare alla validazione.
 - validateModule(); 		//Se l'esito è positivo possiamo pensare di mandare una notifica asincrona all'utente che lo avvisa dell'investitura;
 
+<<UserController>>
+- login();
+- registration();
