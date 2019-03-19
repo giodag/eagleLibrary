@@ -1,22 +1,23 @@
 Controllers Eagle Library
 
-<<Opera>>
-- getOpera();
-- getOperaList();
+<<OperaController>>
+- getOpera();				//Quando leggiamo un'opera per visualizzarla, 
+- getOperaList();			//per ogni pagina controlliamo se esiste una trascrizione con stato completato, se si la visualizziamo.
 - uploadOpera();
 
-<<Profile>>
+<<ProfileController>>
 - getProfile();
 - createUpdateProfile();
 
-<<Transcription>>
+<<TranscriptionController>>
 - submitTranscription();
 - validateTranscription();
 - assignTranscription();
 - getTrascription(); 		//Serve al menager quando la visualizza per poi passare alla validazione.
 - lockTranscription();
+- publishTrascription(); 	//Consiste nell'updatare la trascrizione con uno stato completed.
 
-<<Module>>
+<<ModuleController>>
 - submitModule();
 - getModule(); 				//Serve al menager quando lo visualizza per poi passare alla validazione.
 - validateModule(); 		//Se l'esito è positivo possiamo pensare di mandare una notifica asincrona all'utente che lo avvisa dell'investitura;
