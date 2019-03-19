@@ -14,6 +14,7 @@ Controllers Eagle Library
 - validateTranscription();
 - assignTranscription();
 - getTrascription(); 		//Serve al menager quando la visualizza per poi passare alla validazione.
+- lockTranscription();
 
 <<Module>>
 - submitModule();
