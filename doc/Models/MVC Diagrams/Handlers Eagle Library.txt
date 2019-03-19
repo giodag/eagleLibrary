@@ -1,0 +1,26 @@
+<<OperaHanlder>>
+- createUpdateOpera();  		//Servizio invocato sull'upload di un'opera o quando si apporta una modifica alla stessa;
+- readOpera();					
+- readOperaList();
+- readOperaTranscripted();
+
+<<ProfileHandler>>
+- createUpdateProfile();
+- readProfile();
+
+<<TranscriptionHandler>>
+- createUpdateTranscription();
+- readTranscription();
+- assignTranscription();
+- lockTranscription();
+- validateTranscription(); //Ci serve davvero ? O alla validazione di una trascrizione dobbiamo solo modificarne lo stato con l'esito del check ?
+
+<<ModuleHandler>>
+- createUpdateModule();
+- readModule();
+- validateModule(); //Ci serve davvero ? O alla validazione di un modulo dobbiamo solo modificarne lo stato con l'esito del check ?
+
+<<UserHandler>>
+- createUpdateUser();
+- login();
+- deleteUser();
