@@ -23,3 +23,9 @@
 - createUpdateUser(UserDTO) 						 : UserDTO;
 - login(LoginRequestDTO) 							 : UserDTO;
 - deleteUser(UserDTO) 								 : ResultDTO;
+
+<<PageHanlder>>
+- createPage(PageDTO) 								 : PageDTO;
+- readPage(PageFilterDTO) 							 : PageDTO;
+- updatePage(PageDTO)								 : PageDTO;
+- deletePage(PageDTO)								 : PageDTO;
