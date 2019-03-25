@@ -26,7 +26,7 @@ Controllers Eagle Library
 <<UserController>>
 - login(LoginRequestDTO)							 : UserDTO
 - registration(UserDTO)								 : ResultDTO
-
+- logout(UserDTO)									 : ResultDTO
 
 
 
