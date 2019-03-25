@@ -29,3 +29,4 @@
 - readPage(PageFilterDTO) 							 : PageDTO;
 - updatePage(PageDTO)								 : PageDTO;
 - deletePage(PageDTO)								 : PageDTO;
+- readPageList(OperaBusinessKeyDTO)					 : ListPageDTO;
