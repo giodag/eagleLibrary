@@ -5,12 +5,14 @@ GENERIC DTO
 
 ResultDTO :
 - Boolean result; 
+- String message;
 ************************************
 
 ************************************
 OPERA DTO
 
 OperaDTO :
+- Long id;
 - String category;
 - String title;
 - Date year;
@@ -35,6 +37,7 @@ ProfileFilterDTO :
 - String username;
 
 ProfileDTO :
+- Long id;
 - String username;
 - String name;
 - String surname;
@@ -75,13 +78,27 @@ LockTranscriptionRequestDTO :
 ************************************
 MODULE DTO
 
-ModuleDTO : 
+ModuleDTO :
+- Long id; 
 - String username;
 - String status;
+************************************
 
-ModuleFilterDTO : 
-- Long id;
+************************************
+USER DTO
+
+LoginRequestTO :
 - String username;
+- String password;
+
+UserDTO :
+- String username;
+- String name;
+- String username;
+- Enum permission; //(una specie di set di valori per discriminare admin da utenti normali ??)
+- Boolean isTranscriptor;
+
+
 
 
 
