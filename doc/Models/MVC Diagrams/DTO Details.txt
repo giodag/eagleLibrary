@@ -1,0 +1,94 @@
+Dettagli dei DataTransferObject v1 : 
+
+************************************
+GENERIC DTO 
+
+ResultDTO :
+- Boolean result; 
+************************************
+
+************************************
+OPERA DTO
+
+OperaDTO :
+- String category;
+- String title;
+- Date year;
+- String author;
+- List<PageDTO> listPage;
+
+OperaFilterDTO :
+- String category;
+- String title;
+- Date year;
+- String author;
+- String partOfText;
+
+OperaListDTO :
+- List<OperaDTO> listOpera;
+************************************
+
+************************************
+PROFILE DTO
+
+ProfileFilterDTO :
+- String username;
+
+ProfileDTO :
+- String username;
+- String name;
+- String surname;
+- String email;
+- String TitleOfStudy;
+- String profession;
+- String address;
+************************************
+
+************************************
+TRANSCRIPTION DTO
+
+TranscriptionDTO :
+- Long id;
+- String transcription;
+- String status;
+- String lastUser; //possiamo pernsare di salvarci il nome dell'ultimo utente che ha lavorato su quella trascrizione.
+
+AssignTranscriptionRequestDTO :
+- ListPageDTO listPage : ricordiamo che possiamo associare più pagine ad un utente, almeno 1;
+- String username;
+
+AssignTranscriptionResponseDTO :
+- ListPageDTO listPage (possiamo pensare di restituire solo le pagine per cui l'assgin è andata bene);
+- String username;
+- Boolean response;
+
+LockTranscriptionRequestDTO :
+- PageDTO Page;
+- String username;
+
+LockTranscriptionRequestDTO :
+- PageDTO page (possiamo pensare di restituire solo le pagine per cui l'assgin è andata bene);
+- String username;
+- Boolean response;
+************************************
+
+************************************
+MODULE DTO
+
+ModuleDTO : 
+- String username;
+- String status;
+
+ModuleFilterDTO : 
+- Long id;
+- String username;
+
+
+
+
+
+
+
+
+
+
