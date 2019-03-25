@@ -1,28 +1,29 @@
 <<OperaHanlder>>
 - createUpdateOpera(OperaDTO) 						 : OperaDTO;  		//Servizio invocato sull'upload di un'opera o quando si apporta una modifica alla stessa;
-- readOpera(OperaFilterDTO) 						 : OperaDTO;					
-- readOperaList(OperaListFilterDTO) 				 : OperaListDTO;
+- readOpera(OperaDTO) 						 		 : OperaDTO;					
+- readOperaList(OperaFilterDTO) 				     : OperaListDTO;
                                                      
 <<ProfileHandler>>                                   
-- readProfile(ProfileFilterDTO) 					 : ProfileDTO;
+- readProfile(ProfileDTO) 					 		 : ProfileDTO;
 - createUpdateProfile(ProfileDTO) 					 : ProfileDTO;
                                                      
 <<TranscriptionHandler>>                             
 - createUpdateTranscription(TranscriptionDTO) 		 : TranscriptionDTO;
-- readTranscription(TranscriptionFilterDTO) 		 : TranscriptionDTO;
+- readTranscription(TranscriptionDTO) 		 		 : TranscriptionDTO;
 - assignTranscription(AssignTranscriptionRequestDTO) : AssignTranscriptionResponseDTO
 - lockTranscription(LockTranscriptionRequestDTO) 	 : LockTranscriptionResponseDTO
 - validateTranscription(TranscriptionDTO) 			 : ResultDTO //Ci serve davvero ? O alla validazione di una trascrizione dobbiamo solo modificarne lo stato con l'esito del check ?
 
 <<ModuleHandler>>
 - createUpdateModule(ModuleDTO) 					 : ModuleDTO;
-- readModule(ModuleFilterDTO) 						 : ModuleDTO;
+- readModule(ModuleDTO) 						 	 : ModuleDTO;
 - validateModule(ModuleDTO) 						 : ModuleDTO; //Ci serve davvero ? O alla validazione di un modulo dobbiamo solo modificarne lo stato con l'esito del check ?
 
 <<UserHandler>>
 - createUpdateUser(UserDTO) 						 : UserDTO;
 - login(LoginRequestDTO) 							 : UserDTO;
 - deleteUser(UserDTO) 								 : ResultDTO;
+- readUser(UserDTO); 								 : UserDTO;
 
 <<PageHanlder>>
 - createPage(PageDTO) 								 : PageDTO;
