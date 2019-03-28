@@ -12,12 +12,10 @@
 - readTranscription(TranscriptionDTO) 		 		 : TranscriptionDTO;
 - assignTranscription(AssignTranscriptionRequestDTO) : AssignTranscriptionResponseDTO
 - lockTranscription(LockTranscriptionRequestDTO) 	 : LockTranscriptionResponseDTO
-- validateTranscription(TranscriptionDTO) 			 : ResultDTO //Ci serve davvero ? O alla validazione di una trascrizione dobbiamo solo modificarne lo stato con l'esito del check ?
 
 <<ModuleHandler>>
 - createUpdateModule(ModuleDTO) 					 : ModuleDTO;
 - readModule(ModuleDTO) 						 	 : ModuleDTO;
-- validateModule(ModuleDTO) 						 : ModuleDTO; //Ci serve davvero ? O alla validazione di un modulo dobbiamo solo modificarne lo stato con l'esito del check ?
 
 <<UserHandler>>
 - createUpdateUser(UserDTO) 						 : UserDTO;
@@ -26,8 +24,7 @@
 - readUser(UserDTO); 								 : UserDTO;
 
 <<PageHanlder>>
-- createPage(PageDTO) 								 : PageDTO;
-- readPage(PageFilterDTO) 							 : PageDTO;
-- updatePage(PageDTO)								 : PageDTO;
+- createUpdatePage(PageDTO) 						 : PageDTO;
+- readPage(PageFilterDTO) 							 : PageDTO;								
 - deletePage(PageDTO)								 : PageDTO;
 - readPageList(OperaDTO)					         : ListPageDTO;
