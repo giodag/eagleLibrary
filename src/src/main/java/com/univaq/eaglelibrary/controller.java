@@ -28,7 +28,7 @@ public class controller {
 	    	try{  
 				Class.forName("com.mysql.jdbc.Driver");  
 				Connection con=DriverManager.getConnection(  
-						"jdbc:mysql://localhost:3306/eaglelibraryapp?serverTimezone=UTC","root","admin");  
+						"jdbc:mysql://localhost:3306/javafx?serverTimezone=UTC","admin","danimetu");  
 				//here sonoo is database name, root is username and password  
 				Statement stmt=con.createStatement();  
 				stmt.executeUpdate("INSERT INTO user(id,first_name) VALUES ('1','"+user.getFirstName()+"');");    
