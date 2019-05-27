@@ -1,5 +1,6 @@
 package com.univaq.eaglelibrary.controller;
 
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public interface PersistenceService {
 	
 	public Set<Map<String, String>> search(String kind, String condition, int count) throws DatabaseException;
 	
-	public void update(String kind, Map<String,Object> data, String condition) throws DatabaseException;
+	public void update(String kind, Map<String,Object> data, String condition) throws DatabaseException, SQLException;
 
 	public Set<Map<String, String>> getGroup(String kind, String condition, String group) throws DatabaseException;
 

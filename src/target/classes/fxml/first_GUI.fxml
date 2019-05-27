@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.controller">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.view.loginView">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -55,7 +55,8 @@
       <children>
             <TextField fx:id="name" layoutX="265.0" layoutY="101.0" />
             <Label layoutX="178.0" layoutY="105.0" prefHeight="18.0" prefWidth="15.0" text="ID" />
-            <Button fx:id="save" layoutX="165.0" layoutY="174.0" mnemonicParsing="false" onAction="#saveName" text="Save" />
+            <Button fx:id="save" layoutX="165.0" layoutY="174.0" mnemonicParsing="false" onAction="#startupLogin" text="Save" />
+            <!-- <Button fx:id="save" layoutX="165.0" layoutY="174.0" mnemonicParsing="false" onAction="#saveName" text="Save" /> -->
       </children>
     </AnchorPane>
   </children>

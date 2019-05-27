@@ -2,6 +2,7 @@ package com.univaq.eaglelibrary.controller.database;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -60,9 +61,9 @@ public abstract  class Database implements PersistenceService {
 		}
 	}
 
-	public void update(String table, Map<String, Object> data, String condition) throws DatabaseException {
+	public void update(String table, Map<String, Object> data, String condition) throws DatabaseException, SQLException {
 		try {
-			this.update(table, data, "");
+			this.update(table, data, condition);
 		} catch (Exception e) {
 			throw new DatabaseException(e.getMessage(), e.getCause());
 		}
@@ -106,14 +107,9 @@ public abstract  class Database implements PersistenceService {
 	 */
 	protected abstract void insert(String table, Map<String, Object> data) throws Exception;
 
-	/**
-	 * This method provides an interface to update for database tables
-	 * 
-	 * @param table
-	 * @param data
-	 * @param condition
-	 * @throws Exception
-	 */
-	protected abstract void updateGeneric(String table, Map<String, Object> data, String condition) throws Exception;
+	public void connect() throws DatabaseException {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
