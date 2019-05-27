@@ -1,10 +1,16 @@
 package com.univaq.eaglelibrary.view;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.univaq.eaglelibrary.controller.PersistenceService;
 import com.univaq.eaglelibrary.controller.UserControllerImpl;
+import com.univaq.eaglelibrary.controller.database.MySQLConnection;
 import com.univaq.eaglelibrary.dto.UserDTO;
 
 import javafx.fxml.FXML;
@@ -59,6 +65,21 @@ public class loginView extends GUI {
 	void startup() {
 		UserDTO userDTO = new UserDTO();
 		userDTO.setFirstName(name.getText());
-		userController.registration(userDTO);
+		FileInputStream fis;
+		Properties properties = new Properties();
+		try {
+			fis = new FileInputStream( "D:\\Università\\EagleLibrary\\eagleLibrary\\src\\src\\main\\resources\\properties\\db.properties" );
+			properties.load(fis);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		PersistenceService persistenceService = new MySQLConnection(properties.getProperty("root"),properties.getProperty("admin"),
+				properties.getProperty("localhost"), Integer.parseInt(properties.getProperty("port")), properties.getProperty("eaglelibraryapp"));
+		UserControllerImpl user = new UserControllerImpl(persistenceService);
+		user.registration(userDTO);
 	}
 }
