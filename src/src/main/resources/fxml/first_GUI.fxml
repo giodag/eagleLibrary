@@ -55,7 +55,7 @@
       <children>
             <TextField fx:id="name" layoutX="265.0" layoutY="101.0" />
             <Label layoutX="178.0" layoutY="105.0" prefHeight="18.0" prefWidth="15.0" text="ID" />
-            <Button fx:id="save" layoutX="165.0" layoutY="174.0" mnemonicParsing="false" onAction="#startupLogin" text="Save" />
+            <Button fx:id="save" layoutX="165.0" layoutY="174.0" mnemonicParsing="false" onAction="#startup" text="Save" />
             <!-- <Button fx:id="save" layoutX="165.0" layoutY="174.0" mnemonicParsing="false" onAction="#saveName" text="Save" /> -->
       </children>
     </AnchorPane>

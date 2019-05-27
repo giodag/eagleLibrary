@@ -51,7 +51,7 @@ public class MySQLConnection extends Database {
 		connProps.put("password", password);
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 			this.db = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db_name + "?serverTimezone=UTC", connProps);
 		} catch (Exception e) {
 			throw new DatabaseException();

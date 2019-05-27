@@ -20,6 +20,8 @@ public class GUI extends UserInterface{
 		}
 	}
 
+	public GUI() {}
+	
 	@Override
 	public void run() {
 		this.open();

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.univaq.eaglelibrary.controller.PersistenceService;
+import com.univaq.eaglelibrary.controller.UserControllerImpl;
 import com.univaq.eaglelibrary.dto.UserDTO;
 
 import javafx.fxml.FXML;
@@ -28,8 +29,11 @@ public class loginView extends GUI {
 		super(persistenceService);
 	}
 	
-	@FXML
-	void startupLogin() {
+	//il costruttore aggiunto
+	public loginView() {
+	}
+	
+	public void startupLogin() {
 		
 		// --Codice che dobbiamo portare nelle classi view
 		String fxmlFile = "/fxml/first_GUI.fxml";
@@ -47,13 +51,14 @@ public class loginView extends GUI {
 		stage.setScene(scene);
 		stage.show();
 		
-		UserDTO userDTO = new UserDTO();
-		userDTO.setFirstName(name.getText());
 		
-		userController.registration(userDTO);
-		
-		
-
 	}
 
+	//QUESTO è IL METODO CHE HO AGGIUNTO
+	@FXML
+	void startup() {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setFirstName(name.getText());
+		userController.registration(userDTO);
+	}
 }

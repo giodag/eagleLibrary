@@ -26,7 +26,7 @@ public class App extends Application{
 	@Override
 	public void start(Stage stage) throws Exception {
 		
-		PersistenceService persistenceService = new MySQLConnection("admin", "danimetu", "localhost", 3306, "javafx");
+		PersistenceService persistenceService = new MySQLConnection("root", "admin", "localhost", 3306, "eaglelibraryapp");
 		UserInterface gui = new GUI(persistenceService);
 		
 		//--Run view
