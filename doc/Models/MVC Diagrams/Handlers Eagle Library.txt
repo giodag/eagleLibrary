@@ -1,0 +1,30 @@
+<<OperaHanlder>>
+- createUpdateOpera(OperaDTO) 						 : OperaDTO;  		//Servizio invocato sull'upload di un'opera o quando si apporta una modifica alla stessa;
+- readOpera(OperaDTO) 						 		 : OperaDTO;					
+- readOperaList(OperaFilterDTO) 				     : OperaListDTO;
+                                                     
+<<ProfileHandler>>                                   
+- readProfile(ProfileDTO) 					 		 : ProfileDTO;
+- createUpdateProfile(ProfileDTO) 					 : ProfileDTO;
+                                                     
+<<TranscriptionHandler>>                             
+- createUpdateTranscription(TranscriptionDTO) 		 : TranscriptionDTO;
+- readTranscription(TranscriptionDTO) 		 		 : TranscriptionDTO;
+- assignTranscription(AssignTranscriptionRequestDTO) : AssignTranscriptionResponseDTO
+- lockTranscription(LockTranscriptionRequestDTO) 	 : LockTranscriptionResponseDTO
+
+<<ModuleHandler>>
+- createUpdateModule(ModuleDTO) 					 : ModuleDTO;
+- readModule(ModuleDTO) 						 	 : ModuleDTO;
+
+<<UserHandler>>
+- createUpdateUser(UserDTO) 						 : UserDTO;
+- login(LoginRequestDTO) 							 : UserDTO;
+- deleteUser(UserDTO) 								 : ResultDTO;
+- readUser(UserDTO); 								 : UserDTO;
+
+<<PageHanlder>>
+- createUpdatePage(PageDTO) 						 : PageDTO;
+- readPage(PageFilterDTO) 							 : PageDTO;								
+- deletePage(PageDTO)								 : PageDTO;
+- readPageList(OperaDTO)					         : ListPageDTO;
