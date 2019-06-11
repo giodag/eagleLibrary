@@ -21,9 +21,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class loginView extends GUI {
+public class LoginView extends GUI {
 	
-	private final Logger logger = LoggerFactory.getLogger(loginView.class);
+	private final Logger logger = LoggerFactory.getLogger(LoginView.class);
 	
 	@FXML
 	private TextField name;
@@ -31,18 +31,18 @@ public class loginView extends GUI {
 	@FXML
 	private Button save;
 	
-	public loginView(PersistenceService persistenceService) {
+	public LoginView(PersistenceService persistenceService) {
 		super(persistenceService);
 	}
 	
 	//il costruttore aggiunto
-	public loginView() {
+	public LoginView() {
 	}
 	
 	public void startupLogin() {
 		
 		// --Codice che dobbiamo portare nelle classi view
-		String fxmlFile = "/fxml/first_GUI.fxml";
+		String fxmlFile = "/fxml/login.fxml";
 
 		FXMLLoader loader = new FXMLLoader();
 		Parent rootNode = null;

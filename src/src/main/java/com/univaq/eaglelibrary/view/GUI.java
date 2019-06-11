@@ -34,7 +34,7 @@ public class GUI extends UserInterface{
 	 * Valutare l'utilizzo di altre classoi fatte per pagine dell'applicazione (e.g. UploaderLiteraryWorkView)
 	 */
 	private void open() {
-		loginView loginView = new loginView(persistenceService);
+		LoginView loginView = new LoginView(persistenceService);
 		loginView.startupLogin();
 		//controller.getUser();
 	}
