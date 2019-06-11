@@ -3,8 +3,8 @@ package com.univaq.eaglelibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.univaq.eaglelibrary.controller.PersistenceService;
-import com.univaq.eaglelibrary.controller.database.MySQLConnection;
+import com.univaq.eaglelibrary.persistence.MySQLConnection;
+import com.univaq.eaglelibrary.persistence.PersistenceService;
 import com.univaq.eaglelibrary.view.GUI;
 import com.univaq.eaglelibrary.view.UserInterface;
 

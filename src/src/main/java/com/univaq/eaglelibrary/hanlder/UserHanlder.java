@@ -1,13 +1,13 @@
-package com.univaq.eaglelibrary.controller.hanlder;
+package com.univaq.eaglelibrary.hanlder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.univaq.eaglelibrary.controller.PersistenceService;
-import com.univaq.eaglelibrary.controller.exceptions.DatabaseException;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.persistence.PersistenceService;
+import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
 
 public class UserHanlder {
 	

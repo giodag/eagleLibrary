@@ -1,4 +1,4 @@
-package com.univaq.eaglelibrary.controller.database;
+package com.univaq.eaglelibrary.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.univaq.eaglelibrary.controller.exceptions.DatabaseException;
+import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
 
 public class MySQLConnection extends Database {
 

@@ -1,4 +1,4 @@
-package com.univaq.eaglelibrary.controller.exceptions;
+package com.univaq.eaglelibrary.persistence.exceptions;
 
 public class DatabaseException extends Exception{
 	

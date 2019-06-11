@@ -8,10 +8,10 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.univaq.eaglelibrary.controller.PersistenceService;
-import com.univaq.eaglelibrary.controller.UserControllerImpl;
-import com.univaq.eaglelibrary.controller.database.MySQLConnection;
+import com.univaq.eaglelibrary.controllerImpl.UserControllerImpl;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.persistence.MySQLConnection;
+import com.univaq.eaglelibrary.persistence.PersistenceService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

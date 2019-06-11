@@ -1,7 +1,7 @@
 package com.univaq.eaglelibrary.view;
 
-import com.univaq.eaglelibrary.controller.PersistenceService;
-import com.univaq.eaglelibrary.controller.exceptions.DatabaseException;
+import com.univaq.eaglelibrary.persistence.PersistenceService;
+import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
 
 
 public class GUI extends UserInterface{

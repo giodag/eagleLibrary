@@ -1,4 +1,4 @@
-package com.univaq.eaglelibrary.controller.hanlder;
+package com.univaq.eaglelibrary.hanlder;
 
 import java.util.Map;
 import java.util.Set;
@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.univaq.eaglelibrary.controller.LiteraryWork;
-import com.univaq.eaglelibrary.controller.PersistenceService;
-import com.univaq.eaglelibrary.controller.exceptions.DatabaseException;
+import com.univaq.eaglelibrary.persistence.PersistenceService;
+import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
 
 //@Slf4j
 public class LiteraryWorkHanlder implements LiteraryWork {
