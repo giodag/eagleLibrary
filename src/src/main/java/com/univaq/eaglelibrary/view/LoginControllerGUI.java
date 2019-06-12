@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class LoginControllerGUI {
 
@@ -26,12 +27,37 @@ public class LoginControllerGUI {
 
     @FXML
     void login(ActionEvent event) {
+    	
     	//TODO
+    	
+    	
+    	
+    	
+    	Stage stage = (Stage) login.getScene().getWindow();
+        stage.close();
+        
+    	String fxmlFile = "/fxml/homePage.fxml";
+
+		FXMLLoader loader = new FXMLLoader();
+		Parent rootNode = null;
+		try {
+			rootNode = loader.load(getClass().getResourceAsStream(fxmlFile));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		
+		stage = new Stage();
+		Scene scene = new Scene(rootNode);
+		stage.setScene(scene);
+		stage.show();
     }
 
     @FXML
     void registration(ActionEvent event) {
     	
+    	Stage stage = (Stage) registration.getScene().getWindow();
+        stage.close();
+        
     	String fxmlFile = "/fxml/registration.fxml";
 
 		FXMLLoader loader = new FXMLLoader();
@@ -42,7 +68,6 @@ public class LoginControllerGUI {
 			e.printStackTrace();
 		}	
 
-		Stage stage = new Stage();
 		Scene scene = new Scene(rootNode);
 		stage.setScene(scene);
 		stage.show();

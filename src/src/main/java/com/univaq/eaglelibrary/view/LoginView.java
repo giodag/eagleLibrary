@@ -33,7 +33,6 @@ public class LoginView extends GUI {
 	
 	public void startupLogin() {
 		
-		// --Codice che dobbiamo portare nelle classi view
 		String fxmlFile = "/fxml/login.fxml";
 
 		FXMLLoader loader = new FXMLLoader();

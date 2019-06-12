@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="top" prefHeight="78.0" prefWidth="686.0" style="-fx-background-color: #e1cc4f;">
+         <children>
+            <Label layoutX="46.0" layoutY="31.0" text="Profilo" />
+            <Label layoutX="120.0" layoutY="30.0" text="Cerca Opera" />
+            <Label layoutX="351.0" layoutY="30.0" text="Trascrizioni" />
+            <Label layoutX="448.0" layoutY="30.0" text="Modulo Trascrittore" />
+            <Label layoutX="603.0" layoutY="31.0" text="Logout" />
+            <Label layoutX="229.0" layoutY="30.0" text="Upload Opera" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="profile" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" />
+      <AnchorPane fx:id="searchOpera" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" />
+      <AnchorPane fx:id="upload" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" />
+      <AnchorPane fx:id="trascription" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" />
+      <AnchorPane fx:id="module" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" />
+   </children>
+</AnchorPane>

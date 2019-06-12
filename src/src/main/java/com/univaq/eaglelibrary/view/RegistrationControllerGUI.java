@@ -3,6 +3,7 @@ package com.univaq.eaglelibrary.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class RegistrationControllerGUI {
@@ -21,10 +22,16 @@ public class RegistrationControllerGUI {
 
     @FXML
     private TextField username;
+    
+    @FXML
+    private PasswordField password;
 
     @FXML
     void registration(ActionEvent event) {
 
-    	//TODO
+    	//TODO inserire messaggi dialog
+    	
+    	
+    	
     }
 }
