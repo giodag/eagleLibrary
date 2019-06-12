@@ -17,19 +17,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginView extends GUI {
 	
 	private final Logger logger = LoggerFactory.getLogger(LoginView.class);
-	
-	@FXML
-	private TextField name;
-
-	@FXML
-	private Button save;
 	
 	public LoginView(PersistenceService persistenceService) {
 		super(persistenceService);
@@ -64,7 +56,6 @@ public class LoginView extends GUI {
 	@FXML
 	void startup() {
 		UserDTO userDTO = new UserDTO();
-		userDTO.setFirstName(name.getText());
 		FileInputStream fis;
 		Properties properties = new Properties();
 		try {
