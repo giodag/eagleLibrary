@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -19,6 +20,18 @@
       <AnchorPane fx:id="searchOpera" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" />
       <AnchorPane fx:id="upload" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" />
       <AnchorPane fx:id="trascription" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" />
-      <AnchorPane fx:id="module" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" />
+      <AnchorPane fx:id="module" layoutY="92.0" prefHeight="429.0" prefWidth="686.0">
+         <children>
+            <Label layoutX="75.0" layoutY="45.0" text="Nome" />
+            <Label layoutX="75.0" layoutY="80.0" text="Cognome" />
+            <Label layoutX="75.0" layoutY="115.0" text="Username" />
+            <Label layoutX="75.0" layoutY="150.0" text="E-mail" />
+            <Label layoutX="75.0" layoutY="185.0" text="Data di nascita" />
+            <Label layoutX="75.0" layoutY="220.0" text="Matricola" />
+            <Label layoutX="75.0" layoutY="255.0" text="Indirizzo" />
+            <Label layoutX="75.0" layoutY="290.0" text="Corso di laurea" />
+            <Button layoutX="378.0" layoutY="336.0" mnemonicParsing="false" text="Save" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

@@ -68,6 +68,7 @@ public class LoginControllerGUI {
 			e.printStackTrace();
 		}	
 
+		stage = new Stage();
 		Scene scene = new Scene(rootNode);
 		stage.setScene(scene);
 		stage.show();
