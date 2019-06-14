@@ -13,7 +13,7 @@ public class HomepageControllerGUI {
     private Label l_profile,l_search,l_transcription,l_module,l_logout,l_upload;
 
     @FXML
-    private AnchorPane top,module,a_searchOpera,upload,trascription,a_profile;
+    private AnchorPane top,a_module,a_searchOpera,a_upload,a_trascription,a_profile;
 
     @FXML
     private void handleButtonAction(MouseEvent eventMuose) {
@@ -21,10 +21,18 @@ public class HomepageControllerGUI {
     	if(eventMuose.getSource() == l_profile) {
     		a_profile.setVisible(true);
     		a_searchOpera.setVisible(false);
+    		a_module.setVisible(false);
     	} else {
     		if(eventMuose.getSource() == l_search) {
     			a_searchOpera.setVisible(true);
     			a_profile.setVisible(false);
+    			a_module.setVisible(false);
+    		} else {
+    			if(eventMuose.getSource() == l_module) {
+    				a_profile.setVisible(false);
+    	    		a_searchOpera.setVisible(false);
+    	    		a_module.setVisible(true);
+    			}
     		}
     	}
     }
