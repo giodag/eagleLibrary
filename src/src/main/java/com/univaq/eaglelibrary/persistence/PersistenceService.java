@@ -1,10 +1,10 @@
-package com.univaq.eaglelibrary.controller;
+package com.univaq.eaglelibrary.persistence;
 
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 
-import com.univaq.eaglelibrary.controller.exceptions.DatabaseException;
+import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
 
 public interface PersistenceService {
 	

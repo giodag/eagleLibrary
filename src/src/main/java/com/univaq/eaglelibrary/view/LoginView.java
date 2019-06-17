@@ -8,41 +8,32 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.univaq.eaglelibrary.controller.PersistenceService;
-import com.univaq.eaglelibrary.controller.UserControllerImpl;
-import com.univaq.eaglelibrary.controller.database.MySQLConnection;
+import com.univaq.eaglelibrary.controllerImpl.UserControllerImpl;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.persistence.MySQLConnection;
+import com.univaq.eaglelibrary.persistence.PersistenceService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class loginView extends GUI {
+public class LoginView extends GUI {
 	
-	private final Logger logger = LoggerFactory.getLogger(loginView.class);
+	private final Logger logger = LoggerFactory.getLogger(LoginView.class);
 	
-	@FXML
-	private TextField name;
-
-	@FXML
-	private Button save;
-	
-	public loginView(PersistenceService persistenceService) {
+	public LoginView(PersistenceService persistenceService) {
 		super(persistenceService);
 	}
 	
 	//il costruttore aggiunto
-	public loginView() {
+	public LoginView() {
 	}
 	
 	public void startupLogin() {
 		
-		// --Codice che dobbiamo portare nelle classi view
-		String fxmlFile = "/fxml/first_GUI.fxml";
+		String fxmlFile = "/fxml/login.fxml";
 
 		FXMLLoader loader = new FXMLLoader();
 		Parent rootNode = null;
@@ -64,7 +55,6 @@ public class loginView extends GUI {
 	@FXML
 	void startup() {
 		UserDTO userDTO = new UserDTO();
-		userDTO.setFirstName(name.getText());
 		FileInputStream fis;
 		Properties properties = new Properties();
 		try {
