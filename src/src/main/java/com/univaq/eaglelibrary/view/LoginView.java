@@ -16,16 +16,9 @@ import com.univaq.eaglelibrary.persistence.PersistenceService;
 public class LoginView extends GUI {
 	
 	private final Logger logger = LoggerFactory.getLogger(LoginView.class);
-	private PersistenceService persistenceService;
-	
-	public LoginView(PersistenceService persistenceService) {
-		super(persistenceService);
-		this.persistenceService = persistenceService;
-	}
 	
 	//il costruttore aggiunto
-	public LoginView() {
-	}
+	public LoginView() {/**empty method**/}
 	
 	public void startupLogin() {
 		
@@ -48,7 +41,7 @@ public class LoginView extends GUI {
 //		FileInputStream fis;
 //		Properties properties = new Properties();
 		
-		UserControllerImpl userProva = new UserControllerImpl(this.persistenceService);
+		UserControllerImpl userProva = new UserControllerImpl();
 		ResultDTO resultDTO = userProva.registration(userDTO);
 		
 		if(resultDTO != null && resultDTO.getSuccessfullyOperation()) { 
@@ -76,7 +69,7 @@ public class LoginView extends GUI {
 		FileInputStream fis;
 		Properties properties = new Properties();
 		
-		UserControllerImpl userProva = new UserControllerImpl(this.persistenceService);
+		UserControllerImpl userProva = new UserControllerImpl();
 		userProva.registration(userDTO);
 		
 		

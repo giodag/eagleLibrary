@@ -8,16 +8,12 @@ import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.hanlder.UserHanlder;
-import com.univaq.eaglelibrary.persistence.PersistenceService;
 
 public class UserControllerImpl implements UserController {
 	
 	private UserHanlder userHanlder;
 	private final Logger logger = LoggerFactory.getLogger(UserControllerImpl.class);
 
-	public UserControllerImpl(PersistenceService persistenceService) {
-		this.userHanlder = new UserHanlder(persistenceService);
-	}
 
 	public UserDTO login(LoginRequestDTO loginRequestDTO) {
 		// TODO Auto-generated method stub
@@ -26,6 +22,7 @@ public class UserControllerImpl implements UserController {
 
 	public ResultDTO registration(UserDTO userDTO) {
 		logger.debug("Start registration");
+		userHanlder = new UserHanlder();
 		return this.userHanlder.registration(userDTO);
 	}
 

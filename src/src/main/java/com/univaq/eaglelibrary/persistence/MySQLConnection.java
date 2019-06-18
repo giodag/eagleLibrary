@@ -1,5 +1,6 @@
 package com.univaq.eaglelibrary.persistence;
 
+import java.security.Policy;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -56,7 +57,7 @@ public class MySQLConnection extends Database {
 	 * @param db_name
 	 * @throws DatabaseException 
 	 */
-	public MySQLConnection(String user, String password, String host, int port, String db_name) throws DatabaseException {
+	public MySQLConnection() throws DatabaseException {
 		this.connect();
 	}
 
@@ -96,13 +97,28 @@ public class MySQLConnection extends Database {
 	@Override
 	protected ResultSet select(String table, String condition, String order) throws SQLException {
 		ResultSet records = null;
-		Connection connObj = null;
 		PreparedStatement pstmtObj = null;
-		connObj = pool.getConnection();
+		
+		Connection connObj = getPoolConnection();
+		
 		String selectQuery = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order;
 		pstmtObj = connObj.prepareStatement(selectQuery);
 		records = pstmtObj.executeQuery();
 		return records;
+	}
+
+	private Connection getPoolConnection() {
+		Connection connObj = null;
+		if(pool == null) {
+			this.connect();
+		}
+		try {
+			connObj = pool.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return connObj;
 	}
 
 	@Override
