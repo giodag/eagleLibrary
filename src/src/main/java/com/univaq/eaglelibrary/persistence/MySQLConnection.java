@@ -67,7 +67,7 @@ public class MySQLConnection extends Database {
 	 * @throws ClassNotFoundException 
 	 */
 	@Override
-	public void connect() throws DatabaseException {
+	public void connect() {
 		if (pool == null) {
 
 			try {

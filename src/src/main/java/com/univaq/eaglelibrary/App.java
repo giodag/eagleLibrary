@@ -4,12 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.univaq.eaglelibrary.persistence.ConnectionPool;
 import com.univaq.eaglelibrary.persistence.MySQLConnection;
 import com.univaq.eaglelibrary.persistence.PersistenceService;
 import com.univaq.eaglelibrary.view.GUI;
@@ -37,17 +34,13 @@ public class App extends Application{
 		ResultSet rsObj = null;
 		Connection connObj = null;
 		PreparedStatement pstmtObj = null;
-		com.univaq.eaglelibrary.persistence.ConnectionPool jdbcObj = new ConnectionPool();
+		PersistenceService persistenceService = new MySQLConnection("root", "danimetu", "localhost", 3306, "eaglelibraryapp");
+		persistenceService.connect();
+		
+		
 		try {	
-			DataSource dataSource = jdbcObj.setUpPool();
-			jdbcObj.printDbStatus();
-			
-			
-			
-			
 			
 			//--Run view
-			PersistenceService persistenceService = new MySQLConnection("root", "admin", "localhost", 3306, "eaglelibraryapp");
 			UserInterface gui = new GUI(persistenceService );
 			gui.run();
 					
@@ -71,13 +64,5 @@ public class App extends Application{
 				sqlException.printStackTrace();
 			}
 		}
-		jdbcObj.printDbStatus();
-		
-		
-		PersistenceService persistenceService = new MySQLConnection("root", "admin", "localhost", 3306, "eaglelibraryapp");
-		UserInterface gui = new GUI(persistenceService);
-		
-		
-		
 	}
 }
