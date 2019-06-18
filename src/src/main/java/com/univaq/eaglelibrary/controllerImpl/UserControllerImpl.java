@@ -25,7 +25,6 @@ public class UserControllerImpl implements UserController {
 	}
 
 	public ResultDTO registration(UserDTO userDTO) {
-		this.userHanlder.registration(userDTO);
 		logger.debug("Start registration");
 		return this.userHanlder.registration(userDTO);
 	}

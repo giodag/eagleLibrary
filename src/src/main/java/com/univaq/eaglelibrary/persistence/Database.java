@@ -10,7 +10,7 @@ import java.util.Set;
 
 import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
 
-public abstract  class Database implements PersistenceService {
+public abstract class Database implements PersistenceService {
 	
 	public void save(String table, Map<String, Object> data) throws DatabaseException {
 		try {
@@ -106,9 +106,7 @@ public abstract  class Database implements PersistenceService {
 	 */
 	protected abstract void insert(String table, Map<String, Object> data) throws Exception;
 
-	public void connect() throws DatabaseException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void connect() throws DatabaseException {}
+
 
 }

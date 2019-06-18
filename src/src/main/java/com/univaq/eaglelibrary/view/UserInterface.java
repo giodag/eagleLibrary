@@ -14,8 +14,7 @@ public abstract class UserInterface {
 		userController = new UserControllerImpl(persistenceService);
 	}
 	
-	public UserInterface()
-	{}
+	public UserInterface(){}
 	public abstract void run();
 
 }

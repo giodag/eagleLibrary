@@ -1,8 +1,15 @@
 package com.univaq.eaglelibrary;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.univaq.eaglelibrary.persistence.ConnectionPool;
 import com.univaq.eaglelibrary.persistence.MySQLConnection;
 import com.univaq.eaglelibrary.persistence.PersistenceService;
 import com.univaq.eaglelibrary.view.GUI;
@@ -16,6 +23,7 @@ public class App extends Application{
 	private static final Logger log = LoggerFactory.getLogger(App.class);
 
 	public static void main(String[] args) {	
+		
 		try {
 		launch(args);
 		}catch(Exception e) {
@@ -26,11 +34,50 @@ public class App extends Application{
 	@Override
 	public void start(Stage stage) throws Exception {
 		
+		ResultSet rsObj = null;
+		Connection connObj = null;
+		PreparedStatement pstmtObj = null;
+		com.univaq.eaglelibrary.persistence.ConnectionPool jdbcObj = new ConnectionPool();
+		try {	
+			DataSource dataSource = jdbcObj.setUpPool();
+			jdbcObj.printDbStatus();
+			
+			
+			
+			
+			
+			//--Run view
+			PersistenceService persistenceService = new MySQLConnection("root", "admin", "localhost", 3306, "eaglelibraryapp");
+			UserInterface gui = new GUI(persistenceService );
+			gui.run();
+					
+		} catch(Exception sqlException) {
+			sqlException.printStackTrace();
+		} finally {
+			try {
+				// Closing ResultSet Object
+				if(rsObj != null) {
+					rsObj.close();
+				}
+				// Closing PreparedStatement Object
+				if(pstmtObj != null) {
+					pstmtObj.close();
+				}
+				// Closing Connection Object
+				if(connObj != null) {
+					connObj.close();
+				}
+			} catch(Exception sqlException) {
+				sqlException.printStackTrace();
+			}
+		}
+		jdbcObj.printDbStatus();
+		
+		
 		PersistenceService persistenceService = new MySQLConnection("root", "admin", "localhost", 3306, "eaglelibraryapp");
 		UserInterface gui = new GUI(persistenceService);
 		
-		//--Run view
-		gui.run();
+		
 		
 	}
 }

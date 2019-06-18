@@ -36,7 +36,6 @@ public class GUI extends UserInterface{
 	private void open() {
 		LoginView loginView = new LoginView(persistenceService);
 		loginView.startupLogin();
-		//controller.getUser();
 	}
 
 }
