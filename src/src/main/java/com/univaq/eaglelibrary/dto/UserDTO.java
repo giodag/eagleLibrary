@@ -3,10 +3,11 @@ package com.univaq.eaglelibrary.dto;
 public class UserDTO {
 	
 	private Long id;
+	private String username;
 	private String firstName;
 	private String secondName;
-	private String emailAddress;
-	private String username;
+	private String email;
+	
 	
 	//-- Getter and Setter --//
 	
@@ -35,10 +36,10 @@ public class UserDTO {
 		this.secondName = secondName;
 	}
 	public String getEmailAddress() {
-		return emailAddress;
+		return email;
 	}
 	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
+		this.email = emailAddress;
 	}
 
 }
