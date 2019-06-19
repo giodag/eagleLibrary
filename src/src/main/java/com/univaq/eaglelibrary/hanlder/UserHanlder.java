@@ -26,9 +26,9 @@ public class UserHanlder {
 		
 		try {
 			persistenceService = new MySQLConnection();
-		} catch (DatabaseException e1) {
+		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		ResultDTO resultDTO = null;

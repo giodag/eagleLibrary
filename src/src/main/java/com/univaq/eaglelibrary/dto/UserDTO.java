@@ -2,11 +2,20 @@ package com.univaq.eaglelibrary.dto;
 
 public class UserDTO {
 	
+	private Long id;
 	private String firstName;
 	private String secondName;
 	private String emailAddress;
 	private String username;
 	
+	//-- Getter and Setter --//
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getUsername() {
 		return username;
 	}
