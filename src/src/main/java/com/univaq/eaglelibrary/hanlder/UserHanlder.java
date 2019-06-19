@@ -13,7 +13,7 @@ import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
 public class UserHanlder {
 
 	private final Logger logger = LoggerFactory.getLogger(UserHanlder.class);
-	private PersistenceService persistenceService;
+	private static PersistenceService persistenceService;
 
 	public UserDTO login(LoginRequestDTO loginRequestDTO) {
 		// TODO Auto-generated method stub
@@ -21,6 +21,8 @@ public class UserHanlder {
 	}
 
 	public ResultDTO registration(UserDTO userDTO) {
+		
+		getPersistenceInterface();
 		
 		try {
 			persistenceService = new MySQLConnection();
@@ -42,6 +44,20 @@ public class UserHanlder {
  		resultDTO = new ResultDTO();
 		resultDTO.setSuccessfullyOperation(Boolean.TRUE);
 		return resultDTO;
+	}
+
+	@SuppressWarnings("static-access")
+	private PersistenceService getPersistenceInterface() {
+		
+		if(this.persistenceService == null) {
+			try {
+				this.persistenceService = new MySQLConnection();
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return this.persistenceService;
 	}
 
 	public ResultDTO logout(UserDTO userDTO) {

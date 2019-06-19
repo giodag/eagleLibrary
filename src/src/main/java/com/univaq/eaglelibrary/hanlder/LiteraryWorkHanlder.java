@@ -16,10 +16,6 @@ public class LiteraryWorkHanlder implements LiteraryWork {
 	private PersistenceService persistenceService;
 	private final Logger logger = LoggerFactory.getLogger(LiteraryWorkHanlder.class);
 	
-	public LiteraryWorkHanlder(PersistenceService persistenceService) {
-		this.persistenceService = persistenceService;
-	}
-
 	// Qua andrebbe ovviamente passato un filtro, solo che prima delle generazione
 	// dei TO
 	// queste classi non si possono completare.
