@@ -1,10 +1,14 @@
 package com.univaq.eaglelibrary.controller;
 
-import java.util.Map;
-import java.util.Set;
+import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
+import com.univaq.eaglelibrary.dto.LiteraryWorkListDTO;
+import com.univaq.eaglelibrary.dto.LiteraryWorkListFilterDTO;
+import com.univaq.eaglelibrary.dto.ResultDTO;
 
 public interface LiteraryWork {
 	
-	public Set<Map<String, String>> getLiteraryWork();
-
+	public LiteraryWorkDTO getLiteraryWork(LiteraryWorkDTO literaryWorkDTO);
+	public LiteraryWorkDTO getLiteraryWorkTranscribed(LiteraryWorkDTO literaryWorkDTO);
+	public LiteraryWorkListDTO getLiteraryWork(LiteraryWorkListFilterDTO literaryWorkListFilterDTO);
+	public ResultDTO createUpdateLiteraryWork(LiteraryWorkDTO literaryWorkDTO);
 }

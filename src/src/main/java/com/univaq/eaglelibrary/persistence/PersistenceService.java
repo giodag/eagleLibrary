@@ -8,7 +8,6 @@ import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
 
 public interface PersistenceService {
 	
-	public void connect() throws DatabaseException; 
 	
 	public void save(String kind, Map<String, Object> data) throws DatabaseException;
 	
@@ -19,5 +18,7 @@ public interface PersistenceService {
 	public void update(String kind, Map<String,Object> data, String condition) throws DatabaseException, SQLException;
 
 	public Set<Map<String, String>> getGroup(String kind, String condition, String group) throws DatabaseException;
+
+	public void connect()throws DatabaseException;
 
 }

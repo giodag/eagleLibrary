@@ -1,24 +1,7 @@
 package com.univaq.eaglelibrary.view;
 
-import com.univaq.eaglelibrary.persistence.PersistenceService;
-import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
-
-
 public class GUI extends UserInterface{
 	
-	private PersistenceService persistenceService;
-
-	public GUI(PersistenceService persistenceService) {
-		super(persistenceService);
-
-		//--Vedere se funziona
-		this.persistenceService = persistenceService;
-		try{
-			persistenceService.connect();
-		} catch (DatabaseException e) {
-			e.getStackTrace();
-		}
-	}
 
 	public GUI() {}
 	
@@ -34,9 +17,8 @@ public class GUI extends UserInterface{
 	 * Valutare l'utilizzo di altre classoi fatte per pagine dell'applicazione (e.g. UploaderLiteraryWorkView)
 	 */
 	private void open() {
-		LoginView loginView = new LoginView(persistenceService);
+		LoginView loginView = new LoginView();
 		loginView.startupLogin();
-		//controller.getUser();
 	}
 
 }

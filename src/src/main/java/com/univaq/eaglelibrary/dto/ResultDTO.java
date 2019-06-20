@@ -4,6 +4,8 @@ public class ResultDTO {
 	
 	private Boolean successfullyOperation;
 	
+	//-- Getter and Setter --//
+	
 	public Boolean getSuccessfullyOperation() {
 		return successfullyOperation;
 	}

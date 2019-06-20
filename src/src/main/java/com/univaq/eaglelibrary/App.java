@@ -3,8 +3,6 @@ package com.univaq.eaglelibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.univaq.eaglelibrary.persistence.MySQLConnection;
-import com.univaq.eaglelibrary.persistence.PersistenceService;
 import com.univaq.eaglelibrary.view.GUI;
 import com.univaq.eaglelibrary.view.UserInterface;
 
@@ -16,6 +14,7 @@ public class App extends Application{
 	private static final Logger log = LoggerFactory.getLogger(App.class);
 
 	public static void main(String[] args) {	
+		
 		try {
 		launch(args);
 		}catch(Exception e) {
@@ -25,12 +24,14 @@ public class App extends Application{
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		
-		PersistenceService persistenceService = new MySQLConnection("root", "admin", "localhost", 3306, "eaglelibraryapp");
-		UserInterface gui = new GUI(persistenceService);
-		
-		//--Run view
-		gui.run();
-		
+		try {	
+			
+			//--Run view
+			UserInterface gui = new GUI();
+			gui.run();
+					
+		} catch(Exception sqlException) {
+			sqlException.printStackTrace();
+		}
 	}
 }

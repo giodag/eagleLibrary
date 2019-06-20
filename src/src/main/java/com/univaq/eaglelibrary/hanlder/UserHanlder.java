@@ -6,17 +6,14 @@ import org.slf4j.LoggerFactory;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.persistence.MySQLConnection;
 import com.univaq.eaglelibrary.persistence.PersistenceService;
 import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
 
 public class UserHanlder {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(UserHanlder.class);
-	private PersistenceService persistenceService;
-	
-	public UserHanlder(PersistenceService persistenceService) {
-		this.persistenceService = persistenceService;
-	}
+	private static PersistenceService persistenceService;
 
 	public UserDTO login(LoginRequestDTO loginRequestDTO) {
 		// TODO Auto-generated method stub
@@ -24,17 +21,43 @@ public class UserHanlder {
 	}
 
 	public ResultDTO registration(UserDTO userDTO) {
-		ResultDTO resultDTO = null;
-		//--Costruire la mappa chiave valore con i nome dei campi e valori dei campi
-		//--della tabella user
+		
+		getPersistenceInterface();
+		
 		try {
-			persistenceService.save("", null);
+			persistenceService = new MySQLConnection();
 		} catch (DatabaseException e) {
-			logger.error("Database Exception",e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		resultDTO = new ResultDTO();
+		
+		ResultDTO resultDTO = null;
+		String kind = "user";
+		String condition = "first_name = 'sab'";
+		try {
+			persistenceService.search(kind, condition);
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+		
+		
+ 		resultDTO = new ResultDTO();
 		resultDTO.setSuccessfullyOperation(Boolean.TRUE);
 		return resultDTO;
+	}
+
+	@SuppressWarnings("static-access")
+	private PersistenceService getPersistenceInterface() {
+		
+		if(this.persistenceService == null) {
+			try {
+				this.persistenceService = new MySQLConnection();
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return this.persistenceService;
 	}
 
 	public ResultDTO logout(UserDTO userDTO) {
