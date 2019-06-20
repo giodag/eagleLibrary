@@ -1,5 +1,9 @@
 package com.univaq.eaglelibrary.dto;
 
+import java.util.List;
+
+import com.univaq.eaglelibrary.utility.Permission;
+
 public class UserDTO {
 	
 	private Long id;
@@ -7,10 +11,24 @@ public class UserDTO {
 	private String firstName;
 	private String secondName;
 	private String email;
+	private Enum<Permission> permission;
+	private List<TranscriptionDTO> transcriptionList;
 	
 	
 	//-- Getter and Setter --//
 	
+	public Enum<Permission> getPermission() {
+		return permission;
+	}
+	public void setPermission(Enum<Permission> permission) {
+		this.permission = permission;
+	}
+	public List<TranscriptionDTO> getTranscriptionList() {
+		return transcriptionList;
+	}
+	public void setTranscriptionList(List<TranscriptionDTO> transcriptionList) {
+		this.transcriptionList = transcriptionList;
+	}
 	public Long getId() {
 		return id;
 	}
