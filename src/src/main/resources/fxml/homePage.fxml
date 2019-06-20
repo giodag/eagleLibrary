@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextArea?>
@@ -26,12 +28,22 @@
             <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="611.0" layoutY="23.0" startX="-19.600051879882812" startY="39.60000228881836" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="a_searchOpera" layoutY="92.0" prefHeight="430.0" prefWidth="686.0" visible="false">
+      <AnchorPane fx:id="a_searchOpera" layoutY="92.0" prefHeight="430.0" prefWidth="686.0">
          <children>
             <Polygon fill="#f3f3f3" layoutX="162.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
-            <Label layoutX="140.0" layoutY="102.0" text="Search..." />
+            <Label layoutX="42.0" layoutY="21.0" prefHeight="56.0" prefWidth="50.0" text="Titolo" />
+            <TextField fx:id="t_title" layoutX="134.0" layoutY="36.0" prefHeight="26.0" prefWidth="181.0" />
+            <ComboBox fx:id="co_category" layoutX="42.0" layoutY="90.0" prefHeight="30.0" prefWidth="130.0" promptText="Genere" />
+            <CheckBox fx:id="c_trascription" layoutX="514.0" layoutY="93.0" mnemonicParsing="false" text="Trascrizione" />
+            <Button fx:id="b_saerchOpera" layoutX="290.0" layoutY="319.0" mnemonicParsing="false" text="Search" />
+            <TextField fx:id="t_author" layoutX="436.0" layoutY="36.0" prefHeight="26.0" prefWidth="182.0" />
+            <Label layoutX="359.0" layoutY="40.0" text="Autore" />
+            <Label layoutX="273.0" layoutY="96.0" text="Anno" />
+            <TextField fx:id="t_year" layoutX="319.0" layoutY="93.0" prefHeight="26.0" prefWidth="104.0" />
+            <Label layoutX="42.0" layoutY="167.0" text="Parte del testo" />
+            <TextArea fx:id="t_partOfText" layoutX="200.0" layoutY="167.0" prefHeight="110.0" prefWidth="417.0" />
          </children></AnchorPane>
-      <AnchorPane fx:id="a_module" layoutY="92.0" prefHeight="429.0" prefWidth="686.0">
+      <AnchorPane fx:id="a_module" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
          <children>
 			<Polygon fill="#f3f3f3" layoutX="511.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
             <Button fx:id="b_send" layoutX="289.0" layoutY="331.0" mnemonicParsing="false" text="Send" />

@@ -6,7 +6,11 @@ import java.io.File;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -21,7 +25,20 @@ public class HomepageControllerGUI {
     private AnchorPane top,a_module,a_searchOpera,a_upload,a_trascription,a_profile;
     
     @FXML
-    private Button b_chooseFile;
+    private Button b_chooseFile,b_send,b_saerchOpera;
+    
+    @FXML
+    private TextField t_year,t_author,t_title;
+
+    @FXML
+    private TextArea t_partOfText;
+    
+    @FXML
+    private ComboBox<?> co_category;
+
+    @FXML
+    private CheckBox c_trascription;
+
 
     final FileChooser fileChooser = new FileChooser();
     
