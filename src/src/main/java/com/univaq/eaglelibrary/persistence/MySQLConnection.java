@@ -1,14 +1,11 @@
 package com.univaq.eaglelibrary.persistence;
 
-import java.security.Policy;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.sql.DataSource;
 

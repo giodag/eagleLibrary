@@ -46,6 +46,11 @@ public class UserHanlder {
 		return resultDTO;
 	}
 
+	public ResultDTO logout(UserDTO userDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@SuppressWarnings("static-access")
 	private PersistenceService getPersistenceInterface() {
 		
@@ -58,11 +63,6 @@ public class UserHanlder {
 			}
 		}
 		return this.persistenceService;
-	}
-
-	public ResultDTO logout(UserDTO userDTO) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
