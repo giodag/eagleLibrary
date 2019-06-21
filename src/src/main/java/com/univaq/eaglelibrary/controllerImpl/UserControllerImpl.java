@@ -15,20 +15,26 @@ public class UserControllerImpl implements UserController {
 	private final Logger logger = LoggerFactory.getLogger(UserControllerImpl.class);
 
 
+	public UserControllerImpl() {
+		userHanlder = new UserHanlder();
+	}
+	
+	
 	public UserDTO login(LoginRequestDTO loginRequestDTO) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.debug("Start login");
+		UserDTO userDTO = this.userHanlder.login(loginRequestDTO); 
+		return userDTO;
 	}
 
 	public ResultDTO registration(UserDTO userDTO) {
 		logger.debug("Start registration");
-		userHanlder = new UserHanlder();
-		return this.userHanlder.registration(userDTO);
+		ResultDTO resultDTO = this.userHanlder.registration(userDTO);
+		return resultDTO;
 	}
 
 	public ResultDTO logout(UserDTO userDTO) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.debug("Start logout");
+		ResultDTO resultDTO = this.userHanlder.logout(userDTO);
+		return resultDTO;
 	}
-
 }
