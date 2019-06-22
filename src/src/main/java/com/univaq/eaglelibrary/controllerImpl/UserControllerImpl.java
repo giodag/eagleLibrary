@@ -19,7 +19,6 @@ public class UserControllerImpl implements UserController {
 		userHanlder = new UserHanlder();
 	}
 	
-	
 	public UserDTO login(LoginRequestDTO loginRequestDTO) {
 		logger.debug("Start login");
 		UserDTO userDTO = this.userHanlder.login(loginRequestDTO); 
