@@ -33,13 +33,13 @@ public class MySQLConnection extends Database {
 
 	// --New property for DB connection--//
 	// JDBC Driver Name & Database URL
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	static final String JDBC_DB_URL = "jdbc:mysql://localhost:3306/eaglelibraryapp";
 	static final String TIMEZONE = "?serverTimezone=UTC";
 
 	// JDBC Database Credentials
 	static final String JDBC_USER = "root";
-	static final String JDBC_PASS = "danimetu";
+	static final String JDBC_PASS = "admin";
 
 	private static GenericObjectPool gPool = null;
 	private static DataSource pool = null;
