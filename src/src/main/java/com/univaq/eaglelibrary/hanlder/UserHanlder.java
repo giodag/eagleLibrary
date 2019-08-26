@@ -1,68 +1,64 @@
 package com.univaq.eaglelibrary.hanlder;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import com.univaq.eaglelibrary.converters.ConvertUserToModel;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
-import com.univaq.eaglelibrary.persistence.MySQLConnection;
-import com.univaq.eaglelibrary.persistence.PersistenceService;
-import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
+import com.univaq.eaglelibrary.model.User;
+import com.univaq.eaglelibrary.persistence.exceptions.CreateUserException;
+import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.repository.UserRepository;
 
+@Component
 public class UserHanlder {
 
 	private final Logger logger = LoggerFactory.getLogger(UserHanlder.class);
-	private static PersistenceService persistenceService;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private ConvertUserToModel convertUserToModel;
 
 	public UserDTO login(LoginRequestDTO loginRequestDTO) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ResultDTO registration(UserDTO userDTO) {
-		
-		getPersistenceInterface();
-		
-		try {
-			persistenceService = new MySQLConnection();
-		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	public ResultDTO registration(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
 		ResultDTO resultDTO = null;
-		String kind = "user";
-		String condition = "first_name = 'sab'";
-		try {
-			persistenceService.search(kind, condition);
-		} catch (DatabaseException e) {
-			e.printStackTrace();
+		checkMandatory(userDTO);
+		User user = userRepository.save(convertUserToModel.convert(userDTO));
+		if(user != null) {
+			resultDTO = new ResultDTO();
+			resultDTO.setSuccessfullyOperation(Boolean.TRUE);
+		}else {
+			logger.error("Error in creation User :"+userDTO.getUsername());
+			throw new CreateUserException("Error in creation User :"+userDTO.getUsername());
 		}
 		
-		
- 		resultDTO = new ResultDTO();
-		resultDTO.setSuccessfullyOperation(Boolean.TRUE);
 		return resultDTO;
 	}
 
-	public ResultDTO logout(UserDTO userDTO) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@SuppressWarnings("static-access")
-	private PersistenceService getPersistenceInterface() {
-		
-		if(this.persistenceService == null) {
-			try {
-				this.persistenceService = new MySQLConnection();
-			} catch (DatabaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	private void checkMandatory(UserDTO userDTO)throws MandatoryFieldException{
+		if(userDTO == null
+				|| StringUtils.isEmpty(userDTO.getEmail())
+				|| StringUtils.isEmpty(userDTO.getFirstName())
+				|| StringUtils.isEmpty(userDTO.getLastName())
+				|| StringUtils.isEmpty(userDTO.getUsername())
+				|| StringUtils.isEmpty(userDTO.getPassword())
+				|| userDTO.getPermission() == null) {
+			throw new MandatoryFieldException();
 		}
-		return this.persistenceService;
+		
 	}
 
+	public ResultDTO logout(UserDTO userDTO) {
+		return null;
+	}
 }

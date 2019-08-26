@@ -1,14 +1,19 @@
 package com.univaq.eaglelibrary.view;
 
-public class GUI extends UserInterface{
-	
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
-	public GUI() {}
+@Service
+public class Gui extends UserInterface{
+	
+	@Autowired
+	@Qualifier("loginView")
+	private LoginView loginView;
 	
 	@Override
 	public void run() {
 		this.open();
-		
 	}
 	
 	/**
@@ -17,7 +22,6 @@ public class GUI extends UserInterface{
 	 * Valutare l'utilizzo di altre classoi fatte per pagine dell'applicazione (e.g. UploaderLiteraryWorkView)
 	 */
 	private void open() {
-		LoginView loginView = new LoginView();
 		loginView.startupLogin();
 	}
 

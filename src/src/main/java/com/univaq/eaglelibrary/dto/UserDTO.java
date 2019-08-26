@@ -7,15 +7,29 @@ import com.univaq.eaglelibrary.utility.Permission;
 public class UserDTO {
 	
 	private Long id;
+	private Boolean activated;
 	private String username;
 	private String firstName;
-	private String secondName;
+	private String lastName;
 	private String email;
 	private Enum<Permission> permission;
 	private List<TranscriptionDTO> transcriptionList;
-	
+	private String password;
 	
 	//-- Getter and Setter --//
+
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public Boolean getActivated() {
+		return activated;
+	}
+	public void setActivated(Boolean activated) {
+		this.activated = activated;
+	}
 	
 	public Enum<Permission> getPermission() {
 		return permission;
@@ -47,16 +61,16 @@ public class UserDTO {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public String getSecondName() {
-		return secondName;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setSecondName(String secondName) {
-		this.secondName = secondName;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-	public String getEmailAddress() {
+	public String getEmail() {
 		return email;
 	}
-	public void setEmailAddress(String emailAddress) {
+	public void setEmail(String emailAddress) {
 		this.email = emailAddress;
 	}
 

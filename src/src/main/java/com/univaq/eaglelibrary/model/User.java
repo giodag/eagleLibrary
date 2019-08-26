@@ -1,16 +1,57 @@
 package com.univaq.eaglelibrary.model;
 
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user")
 public class User {
 
+	@Id
+    @GeneratedValue
 	private Long id;
+	
+	@Column(name = "firstName")
 	private String firstName;
+	
+	@Column(name = "lastName")
 	private String lastName;
+	
+	@Column(name = "userName")
 	private String userName;
+	
+	@Column(name = "password")
 	private String password;
+	
+	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "activated")
 	private boolean activated;
 	
+	@ManyToMany
+	@JoinTable(
+			  name = "user_transcription", 
+			  joinColumns = @JoinColumn(name = "user_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "transcription_id"))
+	private List<Transcription> listTranscription;
 	
+	// -- Getter and Setter --//
+	
+	public List<Transcription> getListTranscription() {
+		return listTranscription;
+	}
+	public void setListTranscription(List<Transcription> listTranscription) {
+		this.listTranscription = listTranscription;
+	}
 	public Long getId() {
 		return id;
 	}
