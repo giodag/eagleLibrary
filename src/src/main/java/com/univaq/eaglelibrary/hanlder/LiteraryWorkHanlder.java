@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListDTO;
@@ -13,7 +14,7 @@ import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.persistence.PersistenceService;
 import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
 
-//@Slf4j
+@Component
 public class LiteraryWorkHanlder {
 	
 	private PersistenceService persistenceService;

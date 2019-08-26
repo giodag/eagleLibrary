@@ -35,7 +35,6 @@ public class UserRepository {
 		EntityTransaction tx = entityManager.getTransaction();
 		tx.begin();
 		User user = this.getEntityManager().find(User.class, id);
-		tx.commit();
 		entityManager.close();
 		return user;
 	}

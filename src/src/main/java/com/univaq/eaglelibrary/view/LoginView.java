@@ -2,6 +2,7 @@ package com.univaq.eaglelibrary.view;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.univaq.eaglelibrary.controllerImpl.UserControllerImpl;
 import com.univaq.eaglelibrary.dto.UserDTO;
@@ -11,7 +12,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class LoginView extends GUI {
+@Component("loginView")
+public class LoginView {
 	
 	private final Logger logger = LoggerFactory.getLogger(LoginView.class);
 	
@@ -34,29 +36,6 @@ public class LoginView extends GUI {
 		Scene scene = new Scene(rootNode);
 		stage.setScene(scene);
 		stage.show();
-
-		
-//		UserControllerImpl userProva = new UserControllerImpl();
-//		ResultDTO resultDTO = userProva.registration(userDTO);
-//		
-//		if(resultDTO != null && resultDTO.getSuccessfullyOperation()) { 
-//			System.out.println("Read ok");
-//		}else {
-//			System.out.println("Read no ok");
-//		}
-		
-//		FileInputStream fis;
-//		Properties properties = new Properties();
-//		try {
-//			fis = new FileInputStream( "D:\\Università\\EagleLibrary\\eagleLibrary\\src\\src\\main\\resources\\properties\\db.properties" );
-//			properties.load(fis);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 	
 	void startup() {
