@@ -1,8 +1,11 @@
 package com.univaq.eaglelibrary.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.univaq.eaglelibrary.controller.UserController;
+import com.univaq.eaglelibrary.controllerImpl.UserControllerImpl;
 import com.univaq.eaglelibrary.dto.UserDTO;
 
 import javafx.event.ActionEvent;
@@ -33,13 +36,23 @@ public class RegistrationControllerGUI {
     
     @FXML
     private PasswordField password;
-
+    
+    @Autowired
+    private ApplicationContext context;
+    
+    private ApplicationContext getContext() {
+    	ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+		return context;
+    }
+    
     @FXML
     void registration(ActionEvent event) {
-
+    	
+    	ApplicationContext context = getContext();
+    	UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
     	//TODO inserire messaggi dialog
     	UserDTO userDTO = decorateUserDTO();
-    	userController.registration(userDTO);
+    	userControllerImpl.registration(userDTO);
     		
     }
 
