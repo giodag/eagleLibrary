@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.univaq.eaglelibrary.model.User;
 
-@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query(value = "SELECT * FROM USER u WHERE u.activated = 1", nativeQuery = true)
