@@ -1,12 +1,11 @@
 package com.univaq.eaglelibrary.view;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.univaq.eaglelibrary.controller.UserController;
 import com.univaq.eaglelibrary.controllerImpl.UserControllerImpl;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.utility.Permission;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,9 +14,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class RegistrationControllerGUI {
-	
-	@Autowired
-	private UserController userController;
 	
 	@FXML
     private Button registration;
@@ -36,14 +32,6 @@ public class RegistrationControllerGUI {
     
     @FXML
     private PasswordField password;
-    
-    @Autowired
-    private ApplicationContext context;
-    
-    private ApplicationContext getContext() {
-    	ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
-		return context;
-    }
     
     @FXML
     void registration(ActionEvent event) {
@@ -65,7 +53,13 @@ public class RegistrationControllerGUI {
 		userDTO.setEmail(email.getText());
 		userDTO.setUsername(username.getText());
 		userDTO.setPassword(password.getText());
+		userDTO.setPermission(Permission.USER);
 		
 		return userDTO;
 	}
+	
+	private ApplicationContext getContext() {
+    	ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+		return context;
+    }
 }
