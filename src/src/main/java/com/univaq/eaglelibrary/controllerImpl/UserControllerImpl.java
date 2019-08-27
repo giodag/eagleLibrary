@@ -20,11 +20,6 @@ public class UserControllerImpl implements UserController {
 	private UserHanlder userHanlder;
 	private final Logger logger = LoggerFactory.getLogger(UserControllerImpl.class);
 
-
-	public UserControllerImpl() {
-		userHanlder = new UserHanlder();
-	}
-	
 	public UserDTO login(LoginRequestDTO loginRequestDTO) {
 		logger.debug("Start login");
 		UserDTO userDTO = this.userHanlder.login(loginRequestDTO); 

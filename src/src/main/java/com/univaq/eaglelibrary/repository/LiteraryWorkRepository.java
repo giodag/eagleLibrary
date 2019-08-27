@@ -5,8 +5,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import org.springframework.stereotype.Repository;
+
 import com.univaq.eaglelibrary.model.LiteraryWork;
 
+@Repository
 public class LiteraryWorkRepository {
 	
 	private EntityManager getEntityManager(){
