@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.univaq.eaglelibrary.converters.ConvertUserToModel;
+import com.univaq.eaglelibrary.converters.ConvertUser;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
@@ -24,7 +24,7 @@ public class UserHanlder {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private ConvertUserToModel convertUserToModel;
+	private ConvertUser convertUser;
 
 	public UserDTO login(LoginRequestDTO loginRequestDTO) {
 		return null;
@@ -33,7 +33,7 @@ public class UserHanlder {
 	public ResultDTO registration(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
 		ResultDTO resultDTO = null;
 		checkMandatory(userDTO);
-		User user = userRepository.save(convertUserToModel.convert(userDTO));
+		User user = userRepository.save(convertUser.convert(userDTO));
 		if(user != null) {
 			resultDTO = new ResultDTO();
 			resultDTO.setSuccessfullyOperation(Boolean.TRUE);

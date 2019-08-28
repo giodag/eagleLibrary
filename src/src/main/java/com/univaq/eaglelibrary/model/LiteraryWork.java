@@ -37,6 +37,14 @@ public class LiteraryWork {
 
 	//--Getter and Setter --//
 	
+	public List<Page> getPageList() {
+		return pageList;
+	}
+
+	public void setPageList(List<Page> pageList) {
+		this.pageList = pageList;
+	}
+
 	public Long getId() {
 		return id;
 	}
