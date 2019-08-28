@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "literary_work")
+@Table(name = "literaryWork")
 public class LiteraryWork {
 
 	@Id

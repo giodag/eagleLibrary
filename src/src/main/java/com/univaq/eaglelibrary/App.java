@@ -26,13 +26,12 @@ public class App extends Application {
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-
-		ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
 		try {
+			ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
 			UserInterface ui = (Gui) context.getBean("gui");
 			ui.run();
-		} catch (Exception sqlException) {
-			sqlException.printStackTrace();
+		} catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 }

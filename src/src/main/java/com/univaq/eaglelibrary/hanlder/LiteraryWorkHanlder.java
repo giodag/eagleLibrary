@@ -1,8 +1,5 @@
 package com.univaq.eaglelibrary.hanlder;
 
-import java.util.Map;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,28 +9,22 @@ import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListFilterDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
+import com.univaq.eaglelibrary.model.LiteraryWork;
 import com.univaq.eaglelibrary.repository.LiteraryWorkRepository;
 
 @Component
 public class LiteraryWorkHanlder {
-	
+
 	@Autowired
 	private LiteraryWorkRepository literaryWorkRepository;
-	
-	private final Logger logger = LoggerFactory.getLogger(LiteraryWorkHanlder.class);
-	
-	// Qua andrebbe ovviamente passato un filtro, solo che prima delle generazione
-	// dei TO
-	// queste classi non si possono completare.
-	public LiteraryWorkListDTO getLiteraryWorks(LiteraryWorkListFilterDTO literaryWorkListFilterDTO) {
-		LiteraryWorkListDTO result = null;
-		
-		return result;
-	}
 
+	private final Logger logger = LoggerFactory.getLogger(LiteraryWorkHanlder.class);
+
+	
 	public LiteraryWorkDTO getLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
-		Set<Map<String, String>> result = null;
-		return null;
+		LiteraryWork literaryWork = literaryWorkRepository.findLiteraryWorkByFilter(literaryWorkDTO.getId(), literaryWorkDTO.getCategory(),
+				literaryWorkDTO.getTitle(), literaryWorkDTO.getYear(), literaryWorkDTO.getAuthor());
+		return literaryWorkDTO;
 	}
 
 	public LiteraryWorkDTO getLiteraryWorkTranscribed(LiteraryWorkDTO literaryWorkDTO) {

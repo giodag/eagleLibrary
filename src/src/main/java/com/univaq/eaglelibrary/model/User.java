@@ -35,7 +35,7 @@ public class User {
 	private String email;
 	
 	@Column(name = "activated")
-	private boolean activated;
+	private Boolean activated;
 	
 	@ManyToMany
 	@JoinTable(
@@ -88,10 +88,10 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public boolean isActivated() {
+	public Boolean isActivated() {
 		return activated;
 	}
-	public void setActivated(boolean activated) {
+	public void setActivated(Boolean activated) {
 		this.activated = activated;
 	}
 }
