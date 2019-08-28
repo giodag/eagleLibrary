@@ -1,4 +1,4 @@
-package com.univaq.eaglelibrary.converters;
+package com.univaq.eaglelibrary.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

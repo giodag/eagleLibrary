@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.univaq.eaglelibrary.converters.ConvertUser;
+import com.univaq.eaglelibrary.converter.ConvertUser;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
