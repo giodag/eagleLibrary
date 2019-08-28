@@ -17,9 +17,7 @@ public class ConvertUserToModel {
 		if(userDTO != null) {
 			user = new User();
 			
-			if(userDTO.getActivated()!= null) {
-				user.setActivated(userDTO.getActivated());
-			}
+			user.setActivated(userDTO.getActivated());
 			user.setEmail(userDTO.getEmail());
 			user.setFirstName(userDTO.getFirstName());
 			user.setId(userDTO.getId());
