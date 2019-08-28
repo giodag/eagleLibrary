@@ -7,10 +7,10 @@ import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.model.User;
 
 @Component
-public class ConvertUserToModel {
+public class ConvertUser {
 	
 	@Autowired
-	private ConvertTranscriptionToModel convertTranscriptionToModel;
+	private ConvertTranscription convertTranscription;
 	
 	public User convert(UserDTO userDTO) {
 		User user = null;
@@ -24,7 +24,7 @@ public class ConvertUserToModel {
 			user.setLastName(userDTO.getLastName());
 			user.setPassword(userDTO.getPassword());
 			user.setUserName(userDTO.getUsername());
-			user.setListTranscription(convertTranscriptionToModel.convert(userDTO.getTranscriptionList()));
+			user.setListTranscription(convertTranscription.convert(userDTO.getTranscriptionList()));
 		}
 		return user;
 	}
