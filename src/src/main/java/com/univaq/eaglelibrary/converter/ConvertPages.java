@@ -1,7 +1,7 @@
 package com.univaq.eaglelibrary.converter;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -13,16 +13,16 @@ public class ConvertPages {
 
 	public List<PageDTO> convert(List<Page> pageModel) {
 		List<PageDTO> pagesDTO = null;
-//		if (pageModel != null && !pageModel.isEmpty()) {
-//			pagesDTO = pageModel.stream().map(x -> {
-//				PageDTO pageDTO = new PageDTO();
-//				pageDTO.setChapter(x.getChapter());
-//				pageDTO.setId(x.getId());
-//				pageDTO.setPageNumber(x.getPageNumber());
-//				return pageDTO;
-//			}).collect(Collectors.toList());
-//
-//		}
+		if (pageModel != null && !pageModel.isEmpty()) {
+			pagesDTO = new ArrayList<PageDTO>();
+			for (Page page : pageModel) {
+				PageDTO pageDTO = new PageDTO();
+				pageDTO.setChapter(page.getChapter());
+				pageDTO.setId(page.getId());
+				pageDTO.setPageNumber(page.getPageNumber());
+				pagesDTO.add(pageDTO);
+			}
+		}
 		return pagesDTO;
 	}
 

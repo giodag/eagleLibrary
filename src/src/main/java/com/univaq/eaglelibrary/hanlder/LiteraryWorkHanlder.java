@@ -45,20 +45,22 @@ public class LiteraryWorkHanlder {
 	}
 
 	public ResultDTO createUpdateLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
-		
-		LiteraryWork literaryWork = new LiteraryWork();
-		List<PageDTO> dtos = literaryWorkDTO.getPageList();
-		List<Page> pages = new ArrayList<Page>();
-		Page page = new Page();
-		page.setChapter(dtos.get(0).getChapter());
-		page.setPageNumber(dtos.get(0).getPageNumber());
-		pages.add(page);
-		literaryWork.setAuthor(literaryWorkDTO.getAuthor());
-		literaryWork.setCategory(literaryWorkDTO.getCategory());
-		literaryWork.setPageList(pages);
-		literaryWork.setTitle(literaryWorkDTO.getTitle());
-		literaryWork.setYear(literaryWorkDTO.getYear());
-		LiteraryWork result = literaryWorkRepository.save(literaryWork);
+		//TODO INSERIRE CONVERTER E REFATTORIZZARE IL CODICE
+		//LE ISTRUZIONI DI CUI SOTTO SERVIVANO SOLO PER UN TEST
+//		LiteraryWork literaryWork = new LiteraryWork();
+//		List<PageDTO> dtos = literaryWorkDTO.getPageList();
+//		List<Page> pages = new ArrayList<Page>();
+//		Page page = new Page();
+//		page.setChapter(dtos.get(0).getChapter());
+//		page.setPageNumber(dtos.get(0).getPageNumber());
+//		pages.add(page);
+//		page.setLiteraryWorkPage(literaryWork);
+//		literaryWork.setAuthor(literaryWorkDTO.getAuthor());
+//		literaryWork.setCategory(literaryWorkDTO.getCategory());
+//		literaryWork.setPageList(pages);
+//		literaryWork.setTitle(literaryWorkDTO.getTitle());
+//		literaryWork.setYear(literaryWorkDTO.getYear());
+//		LiteraryWork result = literaryWorkRepository.save(literaryWork);
 		return null;
 	}
 

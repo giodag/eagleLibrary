@@ -30,9 +30,26 @@ public class Page {
 	private Transcription transcription;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	LiteraryWork literaryWork;
+	@JoinColumn(name = "literaryWork_id")
+	LiteraryWork literaryWorkPage;
 
 	// -- Getter and Setter --//
+	
+	public Transcription getTranscription() {
+		return transcription;
+	}
+
+	public void setTranscription(Transcription transcription) {
+		this.transcription = transcription;
+	}
+
+	public LiteraryWork getLiteraryWorkPage() {
+		return literaryWorkPage;
+	}
+
+	public void setLiteraryWorkPage(LiteraryWork literaryWorkPage) {
+		this.literaryWorkPage = literaryWorkPage;
+	}
 
 	public Long getId() {
 		return id;
