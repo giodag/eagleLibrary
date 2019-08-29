@@ -13,16 +13,16 @@ public class ConvertPages {
 
 	public List<PageDTO> convert(List<Page> pageModel) {
 		List<PageDTO> pagesDTO = null;
-		if (pageModel != null && !pageModel.isEmpty()) {
-			pagesDTO = pageModel.stream().map(x -> {
-				PageDTO pageDTO = new PageDTO();
-				pageDTO.setChapter(x.getChapter());
-				pageDTO.setId(x.getId());
-				pageDTO.setPageNumber(x.getPageNumber());
-				return pageDTO;
-			}).collect(Collectors.toList());
-
-		}
+//		if (pageModel != null && !pageModel.isEmpty()) {
+//			pagesDTO = pageModel.stream().map(x -> {
+//				PageDTO pageDTO = new PageDTO();
+//				pageDTO.setChapter(x.getChapter());
+//				pageDTO.setId(x.getId());
+//				pageDTO.setPageNumber(x.getPageNumber());
+//				return pageDTO;
+//			}).collect(Collectors.toList());
+//
+//		}
 		return pagesDTO;
 	}
 
