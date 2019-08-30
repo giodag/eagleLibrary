@@ -26,7 +26,7 @@ public class Page {
 	private Integer chapter;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_transcription")
+	@JoinColumn(name = "transcription_id")
 	private Transcription transcription;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
