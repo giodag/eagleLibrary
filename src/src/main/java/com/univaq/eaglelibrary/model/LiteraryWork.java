@@ -32,7 +32,7 @@ public class LiteraryWork {
 	@Column(name = "author")
 	private String author;
 
-	@OneToMany(mappedBy = "literaryWorkPage", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "literaryWorkPage", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	private List<Page> pageList;
 
 	//--Getter and Setter --//

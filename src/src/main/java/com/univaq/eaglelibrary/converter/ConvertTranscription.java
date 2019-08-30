@@ -18,4 +18,9 @@ public class ConvertTranscription {
 	public List<Transcription> convert(List<TranscriptionDTO> transcriptionDTOs) {
 		return null;
 	}
+	
+	public TranscriptionDTO convert(Transcription transcription) {
+		return null;
+		
+	}
 }

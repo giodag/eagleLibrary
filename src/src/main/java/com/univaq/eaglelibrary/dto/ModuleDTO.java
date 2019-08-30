@@ -1,6 +1,6 @@
 package com.univaq.eaglelibrary.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class ModuleDTO {
 	

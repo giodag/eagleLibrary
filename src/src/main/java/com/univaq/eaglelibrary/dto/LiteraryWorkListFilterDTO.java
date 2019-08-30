@@ -1,10 +1,11 @@
 package com.univaq.eaglelibrary.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class LiteraryWorkListFilterDTO {
 	
-	private Long id;
+	private List<Long> idList;
 	private String category;
 	private String title;
 	private Date year;
@@ -13,11 +14,11 @@ public class LiteraryWorkListFilterDTO {
 	
 	//-- Getter and Setter --//
 	
-	public Long getId() {
-		return id;
+	public List<Long> getIdList() {
+		return idList;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdList(List<Long> ids) {
+		this.idList = ids;
 	}
 	public String getCategory() {
 		return category;
