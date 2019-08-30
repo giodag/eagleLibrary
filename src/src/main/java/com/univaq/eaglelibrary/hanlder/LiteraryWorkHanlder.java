@@ -43,9 +43,16 @@ public class LiteraryWorkHanlder {
 	private final Logger logger = LoggerFactory.getLogger(LiteraryWorkHanlder.class);
 
 	public LiteraryWorkDTO getLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
-		LiteraryWork literaryWork = literaryWorkRepository.findLiteraryWorkByFilter(literaryWorkDTO.getId(),
-				literaryWorkDTO.getCategory(), literaryWorkDTO.getTitle(), literaryWorkDTO.getYear(),
-				literaryWorkDTO.getAuthor());
+
+		LiteraryWork literaryWork = null;
+		if (literaryWorkDTO.getId() != null) {
+			literaryWork = literaryWorkRepository.findOne(literaryWorkDTO.getId());
+		} else {
+			literaryWork = literaryWorkRepository.findLiteraryWorkByFilter(literaryWorkDTO.getId(),
+					literaryWorkDTO.getCategory(), literaryWorkDTO.getTitle(), literaryWorkDTO.getYear(),
+					literaryWorkDTO.getAuthor());
+		}
+
 		return convertLiteraryWork.convert(literaryWork);
 	}
 
@@ -93,14 +100,26 @@ public class LiteraryWorkHanlder {
 
 	public ResultDTO createUpdateLiteraryWork(LiteraryWorkDTO literaryWorkDTO) throws MandatoryFieldException {
 		ResultDTO resultDTO = null;
-		checkMandatory(literaryWorkDTO);
-		LiteraryWork literaryWork = convertLiteraryWork.convert(literaryWorkDTO);
-
-		if (literaryWork != null && literaryWork.getPageList() != null) {
-			for (Page page : literaryWork.getPageList()) {
-				page.setLiteraryWorkPage(literaryWork);
+		LiteraryWork literaryWork = null;
+		LiteraryWorkDTO literaryWorkRead = getLiteraryWork(literaryWorkDTO);
+		
+		if(literaryWorkRead != null) {
+			literaryWorkRead.setAuthor(literaryWorkDTO.getAuthor() != null ? literaryWorkDTO.getAuthor() : literaryWorkRead.getAuthor());
+			literaryWorkRead.setCategory(literaryWorkDTO.getCategory() != null ? literaryWorkDTO.getCategory() : literaryWorkRead.getCategory());
+			literaryWorkRead.setId(literaryWorkDTO.getId() != null ? literaryWorkDTO.getId() : literaryWorkRead.getId());
+			literaryWorkRead.setPageList(literaryWorkDTO.getPageList() != null ? literaryWorkDTO.getPageList() : literaryWorkRead.getPageList());
+			literaryWorkRead.setTitle(literaryWorkDTO.getTitle() != null ? literaryWorkDTO.getTitle() : literaryWorkRead.getTitle());
+			literaryWorkRead.setYear(literaryWorkDTO.getYear() != null ? literaryWorkDTO.getYear() : literaryWorkRead.getYear());
+			literaryWork = convertLiteraryWork.convert(literaryWorkRead);
+		}else {
+			literaryWork = convertLiteraryWork.convert(literaryWorkDTO);
+			if (literaryWork != null && literaryWork.getPageList() != null) {
+				for (Page page : literaryWork.getPageList()) {
+					page.setLiteraryWorkPage(literaryWork);
+				}
 			}
 		}
+		checkMandatory(literaryWork);
 		LiteraryWork result = literaryWorkRepository.save(literaryWork);
 		if (result != null) {
 			resultDTO = new ResultDTO();
@@ -109,9 +128,9 @@ public class LiteraryWorkHanlder {
 		return resultDTO;
 	}
 
-	private void checkMandatory(LiteraryWorkDTO literaryWorkDTO) throws MandatoryFieldException {
-		if (literaryWorkDTO == null || literaryWorkDTO.getAuthor() == null || literaryWorkDTO.getCategory() == null
-				|| literaryWorkDTO.getTitle() == null) {
+	private void checkMandatory(LiteraryWork literaryWork) throws MandatoryFieldException {
+		if (literaryWork == null || literaryWork.getAuthor() == null || literaryWork.getCategory() == null
+				|| literaryWork.getTitle() == null) {
 			throw new MandatoryFieldException();
 		}
 	}
