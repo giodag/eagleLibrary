@@ -41,7 +41,6 @@ public class ConvertUser {
 			userDTO.setLastName(user.getLastName());
 			userDTO.setPassword(user.getPassword());
 			userDTO.setUsername(user.getUserName());
-//			userDTO.setListTranscription(convertTranscription.convert(user.getTranscriptionList()));
 		}
 		return userDTO;
 	}
