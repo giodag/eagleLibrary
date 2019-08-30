@@ -43,9 +43,16 @@ public class LiteraryWorkHanlder {
 	private final Logger logger = LoggerFactory.getLogger(LiteraryWorkHanlder.class);
 
 	public LiteraryWorkDTO getLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
-		LiteraryWork literaryWork = literaryWorkRepository.findLiteraryWorkByFilter(literaryWorkDTO.getId(),
-				literaryWorkDTO.getCategory(), literaryWorkDTO.getTitle(), literaryWorkDTO.getYear(),
-				literaryWorkDTO.getAuthor());
+
+		LiteraryWork literaryWork = null;
+		if (literaryWorkDTO.getId() != null) {
+			literaryWork = literaryWorkRepository.findOne(literaryWorkDTO.getId());
+		} else {
+			literaryWork = literaryWorkRepository.findLiteraryWorkByFilter(literaryWorkDTO.getId(),
+					literaryWorkDTO.getCategory(), literaryWorkDTO.getTitle(), literaryWorkDTO.getYear(),
+					literaryWorkDTO.getAuthor());
+		}
+
 		return convertLiteraryWork.convert(literaryWork);
 	}
 
@@ -94,13 +101,26 @@ public class LiteraryWorkHanlder {
 	public ResultDTO createUpdateLiteraryWork(LiteraryWorkDTO literaryWorkDTO) throws MandatoryFieldException {
 		ResultDTO resultDTO = null;
 		checkMandatory(literaryWorkDTO);
-		LiteraryWork literaryWork = convertLiteraryWork.convert(literaryWorkDTO);
-
-		if (literaryWork != null && literaryWork.getPageList() != null) {
-			for (Page page : literaryWork.getPageList()) {
-				page.setLiteraryWorkPage(literaryWork);
+		LiteraryWork literaryWork = null;
+		LiteraryWorkDTO literaryWorkRead = getLiteraryWork(literaryWorkDTO);
+		
+		if(literaryWorkRead != null) {
+			literaryWorkRead.setAuthor(literaryWorkDTO.getAuthor());
+			literaryWorkRead.setCategory(literaryWorkDTO.getCategory());
+			literaryWorkRead.setId(literaryWorkDTO.getId());
+			literaryWorkRead.setPageList(literaryWorkDTO.getPageList());
+			literaryWorkRead.setTitle(literaryWorkDTO.getTitle());
+			literaryWorkRead.setYear(literaryWorkDTO.getYear());
+			literaryWork = convertLiteraryWork.convert(literaryWorkRead);
+		}else {
+			literaryWork = convertLiteraryWork.convert(literaryWorkDTO);
+			if (literaryWork != null && literaryWork.getPageList() != null) {
+				for (Page page : literaryWork.getPageList()) {
+					page.setLiteraryWorkPage(literaryWork);
+				}
 			}
 		}
+		
 		LiteraryWork result = literaryWorkRepository.save(literaryWork);
 		if (result != null) {
 			resultDTO = new ResultDTO();
