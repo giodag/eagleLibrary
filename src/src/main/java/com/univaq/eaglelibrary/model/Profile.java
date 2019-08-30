@@ -1,6 +1,7 @@
 package com.univaq.eaglelibrary.model;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class Profile {
 	private String degreeCourse;
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_user")
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	// getter and setter 
