@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.univaq.eaglelibrary.controller.ProfileController;
 import com.univaq.eaglelibrary.dto.ProfileDTO;
 import com.univaq.eaglelibrary.hanlder.ProfileHandler;
+import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
 public class ProfileControllerImpl implements ProfileController {
 	
@@ -16,7 +17,7 @@ public class ProfileControllerImpl implements ProfileController {
 		this.profileHandler = new ProfileHandler();
 	}
 
-	public ProfileDTO createUpdateProfile(ProfileDTO profileDTO) {
+	public ProfileDTO createUpdateProfile(ProfileDTO profileDTO) throws MandatoryFieldException {
 		logger.debug("start createUpdateProfile");
 		ProfileDTO profileDTOCreated = this.profileHandler.createUpdateProfile(profileDTO);
 		logger.debug("finish createUpdateProfile");

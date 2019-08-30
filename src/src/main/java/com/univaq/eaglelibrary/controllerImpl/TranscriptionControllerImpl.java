@@ -11,6 +11,7 @@ import com.univaq.eaglelibrary.dto.LockTranscriptionResponseDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.hanlder.TranscriptionHanlder;
+import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
 public class TranscriptionControllerImpl implements TranscriptionController {
 	
@@ -23,14 +24,26 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 	
 	public TranscriptionDTO submitTranscription(TranscriptionDTO transcriptionDTO) {
 		logger.debug("start submitTranscription");
-		TranscriptionDTO transcriptionDTOUpdated = this.transcriptionHanlder.submitTranscription(transcriptionDTO);
+		TranscriptionDTO transcriptionDTOUpdated = null;
+		try {
+			transcriptionDTOUpdated = this.transcriptionHanlder.submitTranscription(transcriptionDTO);
+		} catch (MandatoryFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		logger.debug("finish submitTranscription");
 		return transcriptionDTOUpdated;
 	}
 
 	public ResultDTO validateTranscription(TranscriptionDTO transcriptionDTO) {
 		logger.debug("start validateTranscription");
-		ResultDTO resultDTO = this.transcriptionHanlder.validateTranscription(transcriptionDTO);
+		ResultDTO resultDTO = null;
+		try {
+			resultDTO = this.transcriptionHanlder.validateTranscription(transcriptionDTO);
+		} catch (MandatoryFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		logger.debug("finish validateTranscription");
 		return resultDTO;
 	}

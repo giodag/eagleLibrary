@@ -23,7 +23,7 @@ public class ConvertUser {
 			user.setId(userDTO.getId());
 			user.setLastName(userDTO.getLastName());
 			user.setPassword(userDTO.getPassword());
-			user.setUserName(userDTO.getUsername());
+			user.setUsername(userDTO.getUsername());
 			user.setListTranscription(convertTranscription.convert(userDTO.getTranscriptionList()));
 		}
 		return user;
@@ -40,7 +40,7 @@ public class ConvertUser {
 			userDTO.setId(user.getId());
 			userDTO.setLastName(user.getLastName());
 			userDTO.setPassword(user.getPassword());
-			userDTO.setUsername(user.getUserName());
+			userDTO.setUsername(user.getUsername());
 		}
 		return userDTO;
 	}
