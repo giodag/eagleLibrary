@@ -100,17 +100,16 @@ public class LiteraryWorkHanlder {
 
 	public ResultDTO createUpdateLiteraryWork(LiteraryWorkDTO literaryWorkDTO) throws MandatoryFieldException {
 		ResultDTO resultDTO = null;
-		checkMandatory(literaryWorkDTO);
 		LiteraryWork literaryWork = null;
 		LiteraryWorkDTO literaryWorkRead = getLiteraryWork(literaryWorkDTO);
 		
 		if(literaryWorkRead != null) {
-			literaryWorkRead.setAuthor(literaryWorkDTO.getAuthor());
-			literaryWorkRead.setCategory(literaryWorkDTO.getCategory());
-			literaryWorkRead.setId(literaryWorkDTO.getId());
-			literaryWorkRead.setPageList(literaryWorkDTO.getPageList());
-			literaryWorkRead.setTitle(literaryWorkDTO.getTitle());
-			literaryWorkRead.setYear(literaryWorkDTO.getYear());
+			literaryWorkRead.setAuthor(literaryWorkDTO.getAuthor() != null ? literaryWorkDTO.getAuthor() : literaryWorkRead.getAuthor());
+			literaryWorkRead.setCategory(literaryWorkDTO.getCategory() != null ? literaryWorkDTO.getCategory() : literaryWorkRead.getCategory());
+			literaryWorkRead.setId(literaryWorkDTO.getId() != null ? literaryWorkDTO.getId() : literaryWorkRead.getId());
+			literaryWorkRead.setPageList(literaryWorkDTO.getPageList() != null ? literaryWorkDTO.getPageList() : literaryWorkRead.getPageList());
+			literaryWorkRead.setTitle(literaryWorkDTO.getTitle() != null ? literaryWorkDTO.getTitle() : literaryWorkRead.getTitle());
+			literaryWorkRead.setYear(literaryWorkDTO.getYear() != null ? literaryWorkDTO.getYear() : literaryWorkRead.getYear());
 			literaryWork = convertLiteraryWork.convert(literaryWorkRead);
 		}else {
 			literaryWork = convertLiteraryWork.convert(literaryWorkDTO);
@@ -120,7 +119,7 @@ public class LiteraryWorkHanlder {
 				}
 			}
 		}
-		
+		checkMandatory(literaryWork);
 		LiteraryWork result = literaryWorkRepository.save(literaryWork);
 		if (result != null) {
 			resultDTO = new ResultDTO();
@@ -129,9 +128,9 @@ public class LiteraryWorkHanlder {
 		return resultDTO;
 	}
 
-	private void checkMandatory(LiteraryWorkDTO literaryWorkDTO) throws MandatoryFieldException {
-		if (literaryWorkDTO == null || literaryWorkDTO.getAuthor() == null || literaryWorkDTO.getCategory() == null
-				|| literaryWorkDTO.getTitle() == null) {
+	private void checkMandatory(LiteraryWork literaryWork) throws MandatoryFieldException {
+		if (literaryWork == null || literaryWork.getAuthor() == null || literaryWork.getCategory() == null
+				|| literaryWork.getTitle() == null) {
 			throw new MandatoryFieldException();
 		}
 	}
