@@ -28,4 +28,21 @@ public class ConvertUser {
 		}
 		return user;
 	}
+	
+	public UserDTO convert(User user) {
+		UserDTO userDTO = null;
+		if(user != null) {
+			userDTO = new UserDTO();
+			
+			userDTO.setActivated(user.isActivated());
+			userDTO.setEmail(user.getEmail());
+			userDTO.setFirstName(user.getFirstName());
+			userDTO.setId(user.getId());
+			userDTO.setLastName(user.getLastName());
+			userDTO.setPassword(user.getPassword());
+			userDTO.setUsername(user.getUserName());
+//			userDTO.setListTranscription(convertTranscription.convert(user.getTranscriptionList()));
+		}
+		return userDTO;
+	}
 }
