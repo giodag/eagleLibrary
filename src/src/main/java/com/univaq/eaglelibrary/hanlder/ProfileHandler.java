@@ -30,8 +30,9 @@ public class ProfileHandler{
 
 	public ProfileDTO createUpdateProfile(ProfileDTO profileDTO) throws MandatoryFieldException {
 		
-		
-		checkMandatory(profileDTO);
+		Profile profile = convertProfile.convert(profileDTO);
+		profileRepository.save(profile);
+		//checkMandatory(profileDTO);
 		
 		return profileDTO;
 	}
