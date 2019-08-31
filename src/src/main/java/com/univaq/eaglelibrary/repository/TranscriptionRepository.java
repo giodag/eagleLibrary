@@ -16,13 +16,13 @@ public interface TranscriptionRepository extends JpaRepository<Transcription, Lo
 	
 	public List<Transcription> findByTranscriptionLike(String partOfText);
 	
-	@Query("select t. from Transcription t "
+	@Query("select t from Transcription t "
 			+ "where 1=1 "
 			+ "and (coalesce(:transcription, null) is null or t.transcription in (:transcription)) "
 			+ "and (coalesce(:status, null) is null or t.status  =:status) "
-			+ "and (coalesce(:page_id, null) is null  or t.page_id =:page_id) ")
+			+ "and (coalesce(:page_id, null) is null  or t.page.id =:page_id) ")
 	public Transcription findByFilter(
-			@Param("idPage")String transcription,
+			@Param("transcription")String transcription,
 			@Param("status")String status,
 			@Param("page_id")Long page_id);
 
