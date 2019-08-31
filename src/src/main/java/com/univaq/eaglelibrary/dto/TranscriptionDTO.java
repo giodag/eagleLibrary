@@ -8,9 +8,16 @@ public class TranscriptionDTO {
 	private String transcription;
 	private String status;
 	private List<UserDTO> userList;
+	private PageDTO page;
 	
 	//-- Getter and Setter --//
 	
+	public PageDTO getPage() {
+		return page;
+	}
+	public void setPage(PageDTO page) {
+		this.page = page;
+	}
 	public Long getId() {
 		return id;
 	}
