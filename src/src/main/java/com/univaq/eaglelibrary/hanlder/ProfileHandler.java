@@ -31,7 +31,7 @@ public class ProfileHandler{
 	public ProfileDTO createUpdateProfile(ProfileDTO profileDTO) throws MandatoryFieldException {
 		
 		checkMandatory(profileDTO);
-		ProfileDTO profileRead = getProfile(profileDTO);
+		ProfileDTO profileRead = readProfile(profileDTO);
 		Profile profile = null;
 		
 		if(profileRead != null) {
@@ -57,7 +57,7 @@ public class ProfileHandler{
 	 * @param profileDTO
 	 * @return profileDTO
 	 */
-	public ProfileDTO getProfile(ProfileDTO profileDTO) {
+	public ProfileDTO readProfile(ProfileDTO profileDTO) {
 		Profile profile = null;
 		if (profileDTO.getId() != null) {
 			profile = profileRepository.findOne(profileDTO.getId());

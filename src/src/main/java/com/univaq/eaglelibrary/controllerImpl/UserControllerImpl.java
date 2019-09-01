@@ -30,7 +30,7 @@ public class UserControllerImpl implements UserController {
 		logger.debug("Start registration");
 		ResultDTO resultDTO = null;
 		try {
-			resultDTO = this.userHanlder.registration(userDTO);
+			resultDTO = this.userHanlder.createUpdateUser(userDTO);
 		} catch (MandatoryFieldException e) {
 			e.printStackTrace();
 		} catch (CreateUserException e) {

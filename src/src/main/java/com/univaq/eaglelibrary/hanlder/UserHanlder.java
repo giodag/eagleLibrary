@@ -46,7 +46,7 @@ public class UserHanlder {
 		return userRead;
 	}
 
-	public ResultDTO registration(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
+	public ResultDTO createUpdateUser(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
 		ResultDTO resultDTO = null;
 		checkMandatory(userDTO);
 		User user = userRepository.save(convertUser.convert(userDTO));

@@ -22,7 +22,7 @@ public class ModuleControllerImpl implements ModuleController {
 		logger.debug("start submitModule");
 		ResultDTO resultDTO = null;
 		try {
-			resultDTO = this.moduleHandler.submitModule(moduleDTO);
+			resultDTO = this.moduleHandler.createUpdateModule(moduleDTO);
 		} catch (MandatoryFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,7 +33,7 @@ public class ModuleControllerImpl implements ModuleController {
 
 	public ModuleDTO getModule(ModuleDTO moduleDTO) {
 		logger.debug("start getModule");
-		ModuleDTO moduleDTORead = this.moduleHandler.getModule(moduleDTO);
+		ModuleDTO moduleDTORead = this.moduleHandler.readModule(moduleDTO);
 		logger.debug("finish getModule");
 		return moduleDTORead;
 	}
@@ -42,7 +42,7 @@ public class ModuleControllerImpl implements ModuleController {
 		logger.debug("start validateModule");
 		ResultDTO resultDTO = null;
 		try {
-			resultDTO = this.moduleHandler.submitModule(moduleDTO);
+			resultDTO = this.moduleHandler.createUpdateModule(moduleDTO);
 		} catch (MandatoryFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
