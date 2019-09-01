@@ -31,9 +31,9 @@ public class ModuleHandler {
 	
 	private final Logger logger = LoggerFactory.getLogger(ModuleHandler.class);
 
-	public ResultDTO submitModule(ModuleDTO moduleDTO) throws MandatoryFieldException {
+	public ResultDTO createUpdateModule(ModuleDTO moduleDTO) throws MandatoryFieldException {
 		checkMandatory(moduleDTO);
-		ModuleDTO moduleRead = getModule(moduleDTO);
+		ModuleDTO moduleRead = readModule(moduleDTO);
 		Module module = null;
 		
 		if(moduleRead != null) {
@@ -60,7 +60,7 @@ public class ModuleHandler {
 		return resultDTO;
 	}
 
-	public ModuleDTO getModule(ModuleDTO moduleDTO) {
+	public ModuleDTO readModule(ModuleDTO moduleDTO) {
 		Module module = null;
 		if (moduleDTO.getId() != null) {
 			module = moduleRepository.findOne(moduleDTO.getId());

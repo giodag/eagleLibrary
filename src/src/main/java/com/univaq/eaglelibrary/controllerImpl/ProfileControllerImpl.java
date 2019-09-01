@@ -26,7 +26,7 @@ public class ProfileControllerImpl implements ProfileController {
 
 	public ProfileDTO getProfile(ProfileDTO profileDTO) {
 		logger.debug("start getProfile");
-		ProfileDTO profileDTORead = this.profileHandler.getProfile(profileDTO);
+		ProfileDTO profileDTORead = this.profileHandler.readProfile(profileDTO);
 		logger.debug("finish getProfile");
 		return profileDTORead;
 	}
