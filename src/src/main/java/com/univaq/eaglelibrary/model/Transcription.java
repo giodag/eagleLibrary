@@ -34,6 +34,14 @@ public class Transcription {
 	private Page page;
 
 	// -- Getter and Setter --//
+	
+	public List<User> getUsersWorkTranscription() {
+		return usersWorkTranscription;
+	}
+
+	public void setUsersWorkTranscription(List<User> usersWorkTranscription) {
+		this.usersWorkTranscription = usersWorkTranscription;
+	}
 
 	public Page getPage() {
 		return page;
