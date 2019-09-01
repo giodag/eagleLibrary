@@ -1,5 +1,8 @@
 package com.univaq.eaglelibrary.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,5 +46,27 @@ public class ConvertUser {
 			userDTO.setUsername(user.getUsername());
 		}
 		return userDTO;
+	}
+	
+	public List<User> convertToModel(List<UserDTO> userDTOs){
+		List<User> users = null;
+		if(userDTOs != null && !userDTOs.isEmpty()) {
+			users = new ArrayList<User>();
+			for (UserDTO userDTO : userDTOs) {
+				users.add(convert(userDTO));
+			}
+		}
+		return users;
+	}
+	
+	public List<UserDTO> convert(List<User> users){
+		List<UserDTO> usersDTO = null;
+		if(users != null && !users.isEmpty()) {
+			usersDTO = new ArrayList<UserDTO>();
+			for (User user : users) {
+				usersDTO.add(convert(user));
+			}
+		}
+		return usersDTO;
 	}
 }

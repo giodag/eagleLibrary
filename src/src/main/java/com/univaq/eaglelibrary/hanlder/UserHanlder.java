@@ -29,6 +29,22 @@ public class UserHanlder {
 	public UserDTO login(LoginRequestDTO loginRequestDTO) {
 		return null;
 	}
+	
+	public UserDTO getUserDTO(UserDTO userDTO) {
+		UserDTO userRead = null;
+		if(userDTO != null) {
+			User user = null;
+			if(userDTO.getId() != null) {
+				user = userRepository.findOne(userDTO.getId());
+			}else {
+				user = userRepository.findByUsername(userDTO.getUsername());
+			}
+			if(user != null) {
+				userRead = convertUser.convert(user);
+			}
+		}
+		return userRead;
+	}
 
 	public ResultDTO registration(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
 		ResultDTO resultDTO = null;

@@ -6,9 +6,16 @@ public class PageDTO {
 	private Integer pageNumber;
 	private Integer chapter;
 	private TranscriptionDTO transcriptionDTO;
+	private Long idLiteraryWork;
 	
 	//-- Getter and Setter
 	
+	public Long getIdLiteraryWork() {
+		return idLiteraryWork;
+	}
+	public void setIdLiteraryWork(Long idLiteraryWork) {
+		this.idLiteraryWork = idLiteraryWork;
+	}
 	public Long getId() {
 		return id;
 	}
