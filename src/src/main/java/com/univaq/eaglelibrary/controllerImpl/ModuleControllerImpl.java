@@ -7,6 +7,7 @@ import com.univaq.eaglelibrary.controller.ModuleController;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.hanlder.ModuleHandler;
+import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
 public class ModuleControllerImpl implements ModuleController {
 	
@@ -19,7 +20,13 @@ public class ModuleControllerImpl implements ModuleController {
 	
 	public ResultDTO submitModule(ModuleDTO moduleDTO) {
 		logger.debug("start submitModule");
-		ResultDTO resultDTO = this.moduleHandler.submitModule(moduleDTO);
+		ResultDTO resultDTO = null;
+		try {
+			resultDTO = this.moduleHandler.submitModule(moduleDTO);
+		} catch (MandatoryFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		logger.debug("finish submitModule");
 		return resultDTO;
 	}
@@ -33,7 +40,13 @@ public class ModuleControllerImpl implements ModuleController {
 
 	public ResultDTO validateModule(ModuleDTO moduleDTO) {
 		logger.debug("start validateModule");
-		ResultDTO resultDTO = this.moduleHandler.validateModule(moduleDTO);
+		ResultDTO resultDTO = null;
+		try {
+			resultDTO = this.moduleHandler.submitModule(moduleDTO);
+		} catch (MandatoryFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		logger.debug("finish validateModule");
 		return resultDTO;
 	}

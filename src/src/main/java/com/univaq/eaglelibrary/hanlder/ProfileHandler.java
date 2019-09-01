@@ -30,9 +30,24 @@ public class ProfileHandler{
 
 	public ProfileDTO createUpdateProfile(ProfileDTO profileDTO) throws MandatoryFieldException {
 		
-		Profile profile = convertProfile.convert(profileDTO);
+		checkMandatory(profileDTO);
+		ProfileDTO profileRead = getProfile(profileDTO);
+		Profile profile = null;
+		
+		if(profileRead != null) {
+			profileRead.setAddress(StringUtils.isNullOrEmpty(profileDTO.getAddress()) ? profileDTO.getAddress() : profileRead.getAddress());
+			profileRead.setDateOfBirth(profileDTO.getDateOfBirth() != null ? profileDTO.getDateOfBirth() : profileRead.getDateOfBirth());
+			profileRead.setDegreeCourse(StringUtils.isNullOrEmpty(profileDTO.getDegreeCourse()) ? profileDTO.getDegreeCourse() : profileRead.getDegreeCourse());
+			profileRead.setEmail(StringUtils.isNullOrEmpty(profileDTO.getEmail()) ? profileDTO.getEmail() : profileRead.getEmail());
+			profileRead.setId(profileDTO.getId() != null ? profileDTO.getId() : profileRead.getId());
+			profileRead.setMatriculationNumber(StringUtils.isNullOrEmpty(profileDTO.getMatriculationNumber()) 
+					? profileDTO.getMatriculationNumber() : profileRead.getMatriculationNumber());
+			profile = convertProfile.convert(profileRead);
+			
+		} else {
+			profile = convertProfile.convert(profileDTO);
+		}
 		profileRepository.save(profile);
-		//checkMandatory(profileDTO);
 		
 		return profileDTO;
 	}
@@ -48,9 +63,8 @@ public class ProfileHandler{
 			profile = profileRepository.findOne(profileDTO.getId());
 		} else {
 			if(profileDTO.getUser() != null) {
-				// TODO non so come ricavarmi il profilo dallo user
 				User user = userRepository.findByUsername(profileDTO.getUser().getUsername());
-				profile = profileRepository.findOne(user.getId());
+				profile = profileRepository.findProfileByUser(user.getId());
 			}
 		}
 		return convertProfile.convert(profile);
