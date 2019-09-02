@@ -27,7 +27,7 @@ public class PageHandler {
 	public PageDTO createUpdatePage(PageDTO pageDTO) {
 		Page pageAlreadyExist = null;
 		if (pageDTO != null && pageDTO.getIdLiteraryWork() != null) {
-			pageAlreadyExist = getPage(pageDTO);
+			pageAlreadyExist = readPageEntity(pageDTO);
 			if (pageAlreadyExist == null) {
 				pageAlreadyExist = new Page();
 			}
@@ -45,7 +45,7 @@ public class PageHandler {
 		return pageDTO;
 	}
 
-	private Page getPage(PageDTO pageDTO) {
+	private Page readPageEntity(PageDTO pageDTO) {
 		Page page = null;
 		if (pageDTO != null) {
 			if (pageDTO.getId() != null) {
@@ -58,16 +58,16 @@ public class PageHandler {
 		return page;
 	}
 
-	public PageDTO getPageDTO(PageDTO pageDTO) {
+	public PageDTO readPage(PageDTO pageDTO) {
 		if (pageDTO != null) {
-				pageDTO = convertPages.convert(getPage(pageDTO));
+				pageDTO = convertPages.convert(readPageEntity(pageDTO));
 			}
 		return pageDTO;
 	}
 
 	public void deletePage(PageDTO pageDTO) {
 		if (pageDTO != null) {
-			Page page = getPage(pageDTO);
+			Page page = readPageEntity(pageDTO);
 			if (page != null) {
 				pageRepository.delete(page);
 			}
