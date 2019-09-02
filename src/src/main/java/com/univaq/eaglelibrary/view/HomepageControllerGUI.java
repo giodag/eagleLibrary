@@ -3,8 +3,11 @@ package com.univaq.eaglelibrary.view;
 
 
 import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -16,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class HomepageControllerGUI {
+public class HomepageControllerGUI implements Initializable{
 
     @FXML
     private Label l_profile,l_search,l_transcription,l_module,l_logout,l_upload;
@@ -28,7 +31,7 @@ public class HomepageControllerGUI {
     private Button b_chooseFile,b_send,b_saerchOpera;
     
     @FXML
-    private TextField t_year,t_author,t_title;
+    private TextField t_year,t_author,t_title,p_name,p_lastname,p_username,p_email,p_datebirth,p_matnumber,p_address,p_degree;
 
     @FXML
     private TextArea t_partOfText;
@@ -98,6 +101,11 @@ public class HomepageControllerGUI {
     		}
     	}
     }
+
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		p_degree.setText("ciaooooo");
+	}
 
 }
 

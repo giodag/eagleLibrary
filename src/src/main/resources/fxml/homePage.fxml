@@ -120,14 +120,14 @@
             <Label layoutX="167.0" layoutY="288.0" text="Corso di laurea" />
             <Button layoutX="316.0" layoutY="346.0" mnemonicParsing="false" text="Save" />
             <Polygon fill="#f3f3f3" layoutX="60.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
-            <TextField layoutX="355.0" layoutY="39.0" prefHeight="26.0" prefWidth="192.0" />
-            <TextField layoutX="355.0" layoutY="74.0" prefHeight="26.0" prefWidth="192.0" />
-            <TextField layoutX="355.0" layoutY="109.0" prefHeight="26.0" prefWidth="192.0" />
-            <TextField layoutX="355.0" layoutY="144.0" prefHeight="26.0" prefWidth="192.0" />
-            <TextField layoutX="355.0" layoutY="179.0" prefHeight="26.0" prefWidth="192.0" />
-            <TextField layoutX="355.0" layoutY="214.0" prefHeight="26.0" prefWidth="192.0" />
-            <TextField layoutX="355.0" layoutY="249.0" prefHeight="26.0" prefWidth="192.0" />
-            <TextField layoutX="355.0" layoutY="284.0" prefHeight="26.0" prefWidth="192.0" />
+            <TextField fx:id="p_name" layoutX="355.0" layoutY="39.0" prefHeight="26.0" prefWidth="192.0" />
+            <TextField fx:id="p_lastname" layoutX="355.0" layoutY="74.0" prefHeight="26.0" prefWidth="192.0" />
+            <TextField fx:id="p_username" layoutX="355.0" layoutY="109.0" prefHeight="26.0" prefWidth="192.0" />
+            <TextField fx:id="p_email" layoutX="355.0" layoutY="144.0" prefHeight="26.0" prefWidth="192.0" />
+            <TextField fx:id="p_datebirth" layoutX="355.0" layoutY="179.0" prefHeight="26.0" prefWidth="192.0" />
+            <TextField fx:id="p_matnumber" layoutX="355.0" layoutY="214.0" prefHeight="26.0" prefWidth="192.0" />
+            <TextField fx:id="p_address" layoutX="355.0" layoutY="249.0" prefHeight="26.0" prefWidth="192.0" />
+            <TextField fx:id="p_degree" layoutX="355.0" layoutY="284.0" prefHeight="26.0" prefWidth="192.0" />
          </children>
       </AnchorPane>
    </children>

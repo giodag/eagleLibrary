@@ -67,7 +67,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 				
 				UserDTO userFilter = new UserDTO();
 				userFilter.setUsername(assignTranscriptionRequestDTO.getUsername());
-				PageDTO pageRead = pageHandler.getPageDTO(pageDTO);
+				PageDTO pageRead = pageHandler.readPage(pageDTO);
 				UserDTO userRead = userHandler.getUserDTO(userFilter);
 				
 				if(userRead != null && pageRead != null) {
