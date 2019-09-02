@@ -10,7 +10,6 @@ import com.univaq.eaglelibrary.converter.ConvertTranscription;
 import com.univaq.eaglelibrary.converter.ConvertUser;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.model.Transcription;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.repository.TranscriptionRepository;
 
 public class TranscriptionHanlder {
@@ -46,14 +45,6 @@ public class TranscriptionHanlder {
 		return transcriptionDTO;
 	}
 
-	public TranscriptionDTO submitTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException {
-		checkMandatory(transcriptionDTO);
-		transcriptionDTO.setStatus("OPEN");
-		Transcription transcription = convertTranscription.convert(transcriptionDTO);
-		transcriptionRepository.save(transcription);
-		return null;
-	}
-
 	public TranscriptionDTO getTranscriptionDTO(TranscriptionDTO transcriptionDTO) {
 		TranscriptionDTO transcriptionDTORead = null;
 		if(transcriptionDTO != null) {
@@ -74,12 +65,5 @@ public class TranscriptionHanlder {
 			}
 		}
 		return transcription;
-	}
-
-	private void checkMandatory(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException {
-		if (transcriptionDTO == null || StringUtils.isEmpty(transcriptionDTO.getTranscription())
-				|| transcriptionDTO.getUserList() == null || transcriptionDTO.getUserList().isEmpty()) {
-			throw new MandatoryFieldException();
-		}
 	}
 }

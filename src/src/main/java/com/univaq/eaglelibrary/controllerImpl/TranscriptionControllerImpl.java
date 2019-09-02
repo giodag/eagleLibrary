@@ -20,7 +20,6 @@ import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.hanlder.PageHandler;
 import com.univaq.eaglelibrary.hanlder.TranscriptionHanlder;
 import com.univaq.eaglelibrary.hanlder.UserHanlder;
-import com.univaq.eaglelibrary.model.Transcription;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
 public class TranscriptionControllerImpl implements TranscriptionController {
@@ -134,10 +133,25 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 		return lockTranscriptionResponseDTO;
 	}
 
-	public ResultDTO publishTranscription(TranscriptionDTO transcriptionDTO) {
+	public ResultDTO publishTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException {
 		logger.debug("start publishTranscription");
+		ResultDTO resultDTO = null;
+		
+		checkMandatory(transcriptionDTO);
+		TranscriptionDTO transcriptionread = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		resultDTO = new ResultDTO();
+		
+		if(transcriptionread != null && "COMPLETED".equals(transcriptionread.getStatus())) {
+			transcriptionDTO.setStatus("PUBLISHED");
+			transcriptionDTO = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
+			resultDTO.setSuccessfullyOperation(Boolean.TRUE);
+		}else {
+			resultDTO.setSuccessfullyOperation(Boolean.FALSE);
+			resultDTO.setMessage("Cannot pusblish transcription until is not completed");
+		}
+		
 		logger.debug("finish publishTranscription");
-		return null;
+		return resultDTO;
 	}
 	
 	private void checkMandatory(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException {
