@@ -20,10 +20,12 @@ public interface TranscriptionRepository extends JpaRepository<Transcription, Lo
 			+ "where 1=1 "
 			+ "and (coalesce(:transcription, null) is null or t.transcription in (:transcription)) "
 			+ "and (coalesce(:status, null) is null or t.status  =:status) "
-			+ "and (coalesce(:page_id, null) is null  or t.page.id =:page_id) ")
+			+ "and (coalesce(:page_id, null) is null  or t.page.id =:page_id) "
+			+ "and (coalesce(:lockByUser, null) is null  or t.lockByUser =:lockByUser) ")
 	public Transcription findByFilter(
 			@Param("transcription")String transcription,
 			@Param("status")String status,
-			@Param("page_id")Long page_id);
+			@Param("page_id")Long page_id,
+			@Param("lockByUser")Long lockByUser);
 
 }

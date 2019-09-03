@@ -50,15 +50,23 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 		logger.debug("start submitTranscription");
 
 		checkMandatory(transcriptionDTO);
-		TranscriptionDTO transcriptionDTOUpdated = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
-		if (transcriptionDTOUpdated != null) {
+		TranscriptionDTO transcriptionDTORead = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		
+		UserDTO userFiter = new UserDTO();
+		userFiter.setUsername(transcriptionDTO.getUsername());
+		userFiter = userHandler.getUserDTO(userFiter);
+		if (transcriptionDTORead != null && userFiter.getId().equals(transcriptionDTORead.getLockedByuser())) {
+			
+			//--Setto questa info a null per permettere al prossimo utente di lockare, sia esso lo stesso di prima
+			//--oppure un altro
+			transcriptionDTO.setLockedByuser(null);
+			transcriptionDTO = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
 			LockTranscriptionRequestDTO lockTranscriptionRequestDTO = new LockTranscriptionRequestDTO();
-			lockTranscriptionRequestDTO.setTranscription(transcriptionDTOUpdated);
+			lockTranscriptionRequestDTO.setTranscription(transcriptionDTO);
 			unlockTranscription(lockTranscriptionRequestDTO);
 		}
-
 		logger.debug("finish submitTranscription");
-		return transcriptionDTOUpdated;
+		return transcriptionDTO;
 	}
 
 	public ResultDTO validateTranscription(TranscriptionDTO transcriptionDTO) {
@@ -143,6 +151,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 			if (userRead != null && transcriptionToLock != null && ("OPEN".equals(transcriptionToLock.getStatus())
 					|| "REJECTED".equals(transcriptionToLock.getStatus()))) {
 				transcriptionToLock.setStatus("LOCK");
+				transcriptionToLock.setLockedByuser(userRead.getId());
 				transcriptionHanlder.createUpdateTranscription(transcriptionToLock);
 				lockTranscriptionResponseDTO.setAssigned(Boolean.TRUE);
 				lockTranscriptionResponseDTO.setMessage("LOCK SUCCESSFULLY");

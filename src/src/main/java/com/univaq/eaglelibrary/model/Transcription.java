@@ -32,9 +32,20 @@ public class Transcription {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "page_id")
 	private Page page;
+	
+	@Column(name = "lockByUser")
+	private Long lockByUser;
 
 	// -- Getter and Setter --//
 	
+	public Long getLockByUser() {
+		return lockByUser;
+	}
+
+	public void setLockByUser(Long lockByUser) {
+		this.lockByUser = lockByUser;
+	}
+
 	public List<User> getUsersWorkTranscription() {
 		return usersWorkTranscription;
 	}
