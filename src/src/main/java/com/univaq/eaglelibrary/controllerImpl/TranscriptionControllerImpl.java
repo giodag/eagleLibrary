@@ -39,11 +39,18 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 		logger.debug("start submitTranscription");
 
 		checkMandatory(transcriptionDTO);
-		transcriptionDTO.setStatus("IN APPROVE");
-		TranscriptionDTO transcriptionDTOUpdated = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
-
+		
+		TranscriptionDTO transcriptionDTORead = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		UserDTO userFiter = new UserDTO();
+		userFiter.setUsername(transcriptionDTO.getUsername());
+		userFiter = userHandler.getUserDTO(userFiter);
+		if (userFiter != null && userFiter.getId().equals(transcriptionDTORead.getLockedByuser())) {
+			transcriptionDTO.setStatus("IN APPROVE");
+			transcriptionDTO.setLockedByuser(null);
+			transcriptionDTO = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
+		}
 		logger.debug("finish submitTranscription");
-		return transcriptionDTOUpdated;
+		return transcriptionDTO;
 	}
 
 	public TranscriptionDTO saveTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException {
@@ -55,7 +62,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 		UserDTO userFiter = new UserDTO();
 		userFiter.setUsername(transcriptionDTO.getUsername());
 		userFiter = userHandler.getUserDTO(userFiter);
-		if (transcriptionDTORead != null && userFiter.getId().equals(transcriptionDTORead.getLockedByuser())) {
+		if (transcriptionDTORead != null && userFiter != null && userFiter.getId().equals(transcriptionDTORead.getLockedByuser())) {
 			
 			//--Setto questa info a null per permettere al prossimo utente di lockare, sia esso lo stesso di prima
 			//--oppure un altro
