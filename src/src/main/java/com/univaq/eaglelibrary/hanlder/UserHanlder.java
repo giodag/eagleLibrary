@@ -27,10 +27,13 @@ public class UserHanlder {
 	private ConvertUser convertUser;
 
 	public UserDTO login(LoginRequestDTO loginRequestDTO) {
-		return null;
+		UserDTO user = new UserDTO();
+		
+		
+		return user;
 	}
 	
-	public UserDTO getUserDTO(UserDTO userDTO) {
+	public UserDTO readUser(UserDTO userDTO) {
 		UserDTO userRead = null;
 		if(userDTO != null) {
 			User user = null;

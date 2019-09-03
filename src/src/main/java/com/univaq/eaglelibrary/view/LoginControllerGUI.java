@@ -45,10 +45,12 @@ public class LoginControllerGUI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
-		
 		stage = new Stage();
 		Scene scene = new Scene(rootNode);
 		stage.setScene(scene);
+		stage.setUserData("ciao");
+		HomepageControllerGUI controller = (HomepageControllerGUI)loader.getController();
+		controller.init(stage);
 		stage.show();
     }
 

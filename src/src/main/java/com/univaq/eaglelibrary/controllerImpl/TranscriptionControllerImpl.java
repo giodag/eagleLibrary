@@ -68,7 +68,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 				UserDTO userFilter = new UserDTO();
 				userFilter.setUsername(assignTranscriptionRequestDTO.getUsername());
 				PageDTO pageRead = pageHandler.readPage(pageDTO);
-				UserDTO userRead = userHandler.getUserDTO(userFilter);
+				UserDTO userRead = userHandler.readUser(userFilter);
 				
 				if(userRead != null && pageRead != null) {
 					TranscriptionDTO transcriptionFilter = new TranscriptionDTO();
@@ -114,7 +114,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 			lockTranscriptionResponseDTO = new LockTranscriptionResponseDTO();
 			UserDTO userRead  = new UserDTO();
 			userRead.setUsername(lockTranscriptionRequestDTO.getUsername());
-			userRead  = userHandler.getUserDTO(userRead);
+			userRead  = userHandler.readUser(userRead);
 			TranscriptionDTO transcriptionToLock = getTranscription(lockTranscriptionRequestDTO.getTranscription());
 			
 			if(userRead != null && transcriptionToLock != null 
