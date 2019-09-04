@@ -47,7 +47,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 		// --sia lo stesso che ha sovrascritto la trascrizione. Se si salviamo le
 		// modifiche, lo status
 		// --diventerà IN APPROVE e rimuoveremo il lock dell'utente
-		TranscriptionDTO transcriptionDTORead = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		TranscriptionDTO transcriptionDTORead = transcriptionHanlder.readTranscription(transcriptionDTO);
 		if (transcriptionDTORead != null && "LOCK".equals(transcriptionDTORead.getStatus())) {
 			UserDTO userFiter = new UserDTO();
 			userFiter.setUsername(transcriptionDTO.getUsername());
@@ -66,7 +66,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 		logger.debug("start submitTranscription");
 
 		checkMandatory(transcriptionDTO);
-		TranscriptionDTO transcriptionDTORead = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		TranscriptionDTO transcriptionDTORead = transcriptionHanlder.readTranscription(transcriptionDTO);
 		if (transcriptionDTORead != null && "LOCK".equals(transcriptionDTORead.getStatus())) {
 			UserDTO userFiter = new UserDTO();
 			userFiter.setUsername(transcriptionDTO.getUsername());
@@ -90,7 +90,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 	public ResultDTO validateTranscription(TranscriptionDTO transcriptionDTO) {
 		logger.debug("start validateTranscription");
 		ResultDTO resultDTO = null;
-		TranscriptionDTO transcriptionRead = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		TranscriptionDTO transcriptionRead = transcriptionHanlder.readTranscription(transcriptionDTO);
 		if ("IN APPROVE".equals(transcriptionRead.getStatus())) {
 
 			// --Ho commentato di proposito la riga sotto perchè è un errore mettere
@@ -132,7 +132,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 					TranscriptionDTO transcriptionFilter = new TranscriptionDTO();
 					transcriptionFilter.setPage(new PageDTO());
 					transcriptionFilter.getPage().setId(pageRead.getId());
-					transcriptionFilter = transcriptionHanlder.getTranscriptionDTO(transcriptionFilter);
+					transcriptionFilter = transcriptionHanlder.readTranscription(transcriptionFilter);
 
 					if (transcriptionFilter != null) {
 						// -- La transcrizione esiste già qundi è stata creata precedentemente e adesso
@@ -161,7 +161,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 	}
 
 	public TranscriptionDTO getTranscription(TranscriptionDTO transcriptionDTO) {
-		return transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		return transcriptionHanlder.readTranscription(transcriptionDTO);
 	}
 
 	public LockTranscriptionResponseDTO lockTranscription(LockTranscriptionRequestDTO lockTranscriptionRequestDTO) {
@@ -224,7 +224,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 		logger.debug("start publishTranscription");
 		ResultDTO resultDTO = null;
 		checkMandatory(transcriptionDTO);
-		TranscriptionDTO transcriptionread = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		TranscriptionDTO transcriptionread = transcriptionHanlder.readTranscription(transcriptionDTO);
 		if (transcriptionread != null) {
 			resultDTO = new ResultDTO();
 			if ("COMPLETED".equals(transcriptionread.getStatus())) {

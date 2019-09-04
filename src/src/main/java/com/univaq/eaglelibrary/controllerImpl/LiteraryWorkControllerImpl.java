@@ -23,21 +23,21 @@ public class LiteraryWorkControllerImpl implements LiteraryWorkController {
 	
 	public LiteraryWorkDTO getLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
 		logger.debug("Start getLiteraryWork ");
-		LiteraryWorkDTO literaryWorkDTORead = literaryWorkHanlder.getLiteraryWork(literaryWorkDTO);
+		LiteraryWorkDTO literaryWorkDTORead = literaryWorkHanlder.readLiteraryWork(literaryWorkDTO);
 		logger.debug("Finish getLiteraryWork ");
 		return literaryWorkDTORead;
 	}
 
 	public LiteraryWorkDTO getLiteraryWorkTranscribed(LiteraryWorkDTO literaryWorkDTO) {
 		logger.debug("Start getLiteraryWorkTranscribed ");
-		LiteraryWorkDTO literaryWorkDTORead = literaryWorkHanlder.getLiteraryWorkTranscribed(literaryWorkDTO);
+		LiteraryWorkDTO literaryWorkDTORead = literaryWorkHanlder.readLiteraryWorkTranscribed(literaryWorkDTO);
 		logger.debug("Finish getLiteraryWorkTranscribed ");
 		return literaryWorkDTORead;
 	}
 
 	public LiteraryWorkListDTO getLiteraryWork(LiteraryWorkListFilterDTO literaryWorkListFilterDTO) {
 		logger.debug("Start getLiteraryWorkFilter ");
-		LiteraryWorkListDTO literaryWorkListDTO = literaryWorkHanlder.getLiteraryWork(literaryWorkListFilterDTO);
+		LiteraryWorkListDTO literaryWorkListDTO = literaryWorkHanlder.readLiteraryWorkList(literaryWorkListFilterDTO);
 		logger.debug("Finish getLiteraryWorkFilter ");
 		return literaryWorkListDTO;
 	}

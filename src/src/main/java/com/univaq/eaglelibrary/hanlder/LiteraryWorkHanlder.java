@@ -1,9 +1,7 @@
 package com.univaq.eaglelibrary.hanlder;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -42,7 +40,7 @@ public class LiteraryWorkHanlder {
 
 	private final Logger logger = LoggerFactory.getLogger(LiteraryWorkHanlder.class);
 
-	public LiteraryWorkDTO getLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
+	public LiteraryWorkDTO readLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
 
 		LiteraryWork literaryWork = null;
 		if (literaryWorkDTO.getId() != null) {
@@ -56,8 +54,8 @@ public class LiteraryWorkHanlder {
 		return convertLiteraryWork.convert(literaryWork);
 	}
 
-	public LiteraryWorkDTO getLiteraryWorkTranscribed(LiteraryWorkDTO literaryWorkDTO) {
-		LiteraryWorkDTO literaryWorkDTORead = getLiteraryWork(literaryWorkDTO);
+	public LiteraryWorkDTO readLiteraryWorkTranscribed(LiteraryWorkDTO literaryWorkDTO) {
+		LiteraryWorkDTO literaryWorkDTORead = readLiteraryWork(literaryWorkDTO);
 		if (literaryWorkDTORead != null && literaryWorkDTORead.getPageList() != null
 				&& !literaryWorkDTORead.getPageList().isEmpty()) {
 			for (PageDTO pageDTO : literaryWorkDTORead.getPageList()) {
@@ -68,7 +66,7 @@ public class LiteraryWorkHanlder {
 		return literaryWorkDTORead;
 	}
 
-	public LiteraryWorkListDTO getLiteraryWork(LiteraryWorkListFilterDTO literaryWorkListFilterDTO) {
+	public LiteraryWorkListDTO readLiteraryWorkList(LiteraryWorkListFilterDTO literaryWorkListFilterDTO) {
 		LiteraryWorkListDTO literaryWorkListDTO = null;
 		List<LiteraryWork> literaryWorksFiltered = null;
 		if (literaryWorkListFilterDTO != null) {
@@ -101,7 +99,7 @@ public class LiteraryWorkHanlder {
 	public ResultDTO createUpdateLiteraryWork(LiteraryWorkDTO literaryWorkDTO) throws MandatoryFieldException {
 		ResultDTO resultDTO = null;
 		LiteraryWork literaryWork = null;
-		LiteraryWorkDTO literaryWorkRead = getLiteraryWork(literaryWorkDTO);
+		LiteraryWorkDTO literaryWorkRead = readLiteraryWork(literaryWorkDTO);
 		
 		if(literaryWorkRead != null) {
 			literaryWorkRead.setAuthor(literaryWorkDTO.getAuthor() != null ? literaryWorkDTO.getAuthor() : literaryWorkRead.getAuthor());

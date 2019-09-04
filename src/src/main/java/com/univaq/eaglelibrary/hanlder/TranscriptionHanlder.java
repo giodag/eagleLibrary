@@ -30,7 +30,7 @@ public class TranscriptionHanlder {
 	
 	public TranscriptionDTO createUpdateTranscription(TranscriptionDTO transcriptionDTO) {
 		if(transcriptionDTO != null) {
-			Transcription transcription = getTranscription(transcriptionDTO);
+			Transcription transcription = getTranscriptionEntity(transcriptionDTO);
 			if(transcription == null) {
 				transcription = new Transcription();
 			}
@@ -46,16 +46,16 @@ public class TranscriptionHanlder {
 		return transcriptionDTO;
 	}
 
-	public TranscriptionDTO getTranscriptionDTO(TranscriptionDTO transcriptionDTO) {
+	public TranscriptionDTO readTranscription(TranscriptionDTO transcriptionDTO) {
 		TranscriptionDTO transcriptionDTORead = null;
 		if(transcriptionDTO != null) {
-			Transcription transcription = getTranscription(transcriptionDTO);
+			Transcription transcription = getTranscriptionEntity(transcriptionDTO);
 			transcriptionDTORead = convertTranscription.convert(transcription);
 		}
 		return transcriptionDTORead;
 	}
 	
-	private Transcription getTranscription(TranscriptionDTO transcriptionDTO) {
+	private Transcription getTranscriptionEntity(TranscriptionDTO transcriptionDTO) {
 		Transcription transcription = null;
 		if (transcriptionDTO != null) {
 			if (transcriptionDTO.getId() != null) {
