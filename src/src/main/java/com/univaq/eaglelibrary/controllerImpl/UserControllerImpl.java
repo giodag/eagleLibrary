@@ -12,6 +12,8 @@ import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.hanlder.UserHanlder;
 import com.univaq.eaglelibrary.persistence.exceptions.CreateUserException;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.persistence.exceptions.UserNotFoundException;
+import com.univaq.eaglelibrary.persistence.exceptions.WrongPasswordException;
 
 @Service
 public class UserControllerImpl implements UserController {
@@ -20,22 +22,15 @@ public class UserControllerImpl implements UserController {
 	private UserHanlder userHanlder;
 	private final Logger logger = LoggerFactory.getLogger(UserControllerImpl.class);
 
-	public UserDTO login(LoginRequestDTO loginRequestDTO) {
+	public UserDTO login(LoginRequestDTO loginRequestDTO) throws UserNotFoundException, MandatoryFieldException, WrongPasswordException {
 		logger.debug("Start login");
-		UserDTO userDTO = this.userHanlder.login(loginRequestDTO); 
+		UserDTO userDTO = userHanlder.login(loginRequestDTO);
 		return userDTO;
 	}
 
-	public ResultDTO registration(UserDTO userDTO) {
+	public ResultDTO registration(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
 		logger.debug("Start registration");
-		ResultDTO resultDTO = null;
-		try {
-			resultDTO = this.userHanlder.createUpdateUser(userDTO);
-		} catch (MandatoryFieldException e) {
-			e.printStackTrace();
-		} catch (CreateUserException e) {
-			e.printStackTrace();
-		}
+		ResultDTO resultDTO = userHanlder.createUpdateUser(userDTO);
 		return resultDTO;
 	}
 

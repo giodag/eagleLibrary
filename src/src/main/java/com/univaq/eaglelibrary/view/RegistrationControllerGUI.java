@@ -5,6 +5,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.univaq.eaglelibrary.controllerImpl.UserControllerImpl;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.persistence.exceptions.CreateUserException;
+import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.utility.Permission;
 
 import javafx.event.ActionEvent;
@@ -40,7 +42,15 @@ public class RegistrationControllerGUI {
     	UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
     	//TODO inserire messaggi dialog
     	UserDTO userDTO = decorateUserDTO();
-    	userControllerImpl.registration(userDTO);
+    	try {
+			userControllerImpl.registration(userDTO);
+		} catch (MandatoryFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CreateUserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     		
     }
 

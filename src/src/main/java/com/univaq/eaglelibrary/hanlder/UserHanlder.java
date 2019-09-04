@@ -1,11 +1,11 @@
 package com.univaq.eaglelibrary.hanlder;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mysql.cj.util.StringUtils;
 import com.univaq.eaglelibrary.converter.ConvertUser;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
@@ -13,6 +13,8 @@ import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.model.User;
 import com.univaq.eaglelibrary.persistence.exceptions.CreateUserException;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.persistence.exceptions.UserNotFoundException;
+import com.univaq.eaglelibrary.persistence.exceptions.WrongPasswordException;
 import com.univaq.eaglelibrary.repository.UserRepository;
 
 @Component
@@ -26,11 +28,28 @@ public class UserHanlder {
 	@Autowired
 	private ConvertUser convertUser;
 
-	public UserDTO login(LoginRequestDTO loginRequestDTO) {
-		UserDTO user = new UserDTO();
-		
-		
-		return user;
+	public UserDTO login(LoginRequestDTO loginRequestDTO) throws UserNotFoundException, MandatoryFieldException, WrongPasswordException {
+		UserDTO userDTO = null;
+		if(loginRequestDTO != null &&  !StringUtils.isNullOrEmpty(loginRequestDTO.getUser()) 
+				&& !StringUtils.isNullOrEmpty(loginRequestDTO.getPassword())) {
+			userDTO = new UserDTO();
+			userDTO.setUsername(loginRequestDTO.getUser());
+			UserDTO userRead = readUser(userDTO);
+			
+			if(userRead != null) {
+				if(!userRead.getPassword().equals(loginRequestDTO.getPassword())) {
+					logger.error("Wrong password");
+					throw new WrongPasswordException("Wrong password");
+				}
+			} else {
+				logger.error("User"+ loginRequestDTO.getUser() + "does not exist");
+				throw new UserNotFoundException("User "+ loginRequestDTO.getUser() + " does not exist");
+			}
+		} else  {
+			logger.error("Username or Password missing");
+			throw new MandatoryFieldException("Username and Password required");
+		}
+		return userDTO;
 	}
 	
 	public UserDTO readUser(UserDTO userDTO) {
@@ -66,11 +85,11 @@ public class UserHanlder {
 
 	private void checkMandatory(UserDTO userDTO)throws MandatoryFieldException{
 		if(userDTO == null
-				|| StringUtils.isEmpty(userDTO.getEmail())
-				|| StringUtils.isEmpty(userDTO.getFirstName())
-				|| StringUtils.isEmpty(userDTO.getLastName())
-				|| StringUtils.isEmpty(userDTO.getUsername())
-				|| StringUtils.isEmpty(userDTO.getPassword())
+				|| StringUtils.isNullOrEmpty(userDTO.getEmail())
+				|| StringUtils.isNullOrEmpty(userDTO.getFirstName())
+				|| StringUtils.isNullOrEmpty(userDTO.getLastName())
+				|| StringUtils.isNullOrEmpty(userDTO.getUsername())
+				|| StringUtils.isNullOrEmpty(userDTO.getPassword())
 				|| userDTO.getPermission() == null) {
 			throw new MandatoryFieldException();
 		}
