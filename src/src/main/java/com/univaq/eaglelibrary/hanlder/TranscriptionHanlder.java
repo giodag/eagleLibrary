@@ -39,6 +39,7 @@ public class TranscriptionHanlder {
 			transcription.setStatus(StringUtils.isNotEmpty(transcriptionDTO.getStatus()) ? transcriptionDTO.getStatus() : transcription.getStatus());
 			transcription.setUsersWorkTranscription(transcriptionDTO.getUserList() != null && !transcriptionDTO.getUserList().isEmpty() ? convertUser.convertToModel(transcriptionDTO.getUserList()) : transcription.getUsersWorkTranscription());
 			transcription.setTranscription(StringUtils.isNotEmpty(transcriptionDTO.getTranscription()) ? transcriptionDTO.getTranscription() : transcription.getTranscription());
+			transcription.setLockByUser(transcriptionDTO.getLockedByuser() != null ? transcriptionDTO.getLockedByuser() : transcription.getLockByUser());
 			transcription = transcriptionRepository.save(transcription);
 			transcriptionDTO = convertTranscription.convert(transcription);
 		}
@@ -61,7 +62,8 @@ public class TranscriptionHanlder {
 				transcription = transcriptionRepository.findOne(transcriptionDTO.getId());
 			} else {
 				transcription = transcriptionRepository.findByFilter(transcriptionDTO.getTranscription(), transcriptionDTO.getStatus(),
-						transcriptionDTO.getPage() != null ? transcriptionDTO.getPage().getId() : null);
+						transcriptionDTO.getPage() != null ? transcriptionDTO.getPage().getId() : null,
+								transcriptionDTO.getLockedByuser() != null ? transcriptionDTO.getLockedByuser() : null);
 			}
 		}
 		return transcription;

@@ -30,5 +30,4 @@ public class ProfileControllerImpl implements ProfileController {
 		logger.debug("finish getProfile");
 		return profileDTORead;
 	}
-
 }

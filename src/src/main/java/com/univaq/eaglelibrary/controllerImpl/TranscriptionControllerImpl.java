@@ -23,33 +23,93 @@ import com.univaq.eaglelibrary.hanlder.UserHanlder;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
 public class TranscriptionControllerImpl implements TranscriptionController {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(TranscriptionControllerImpl.class);
-	
+
 	@Autowired
 	private TranscriptionHanlder transcriptionHanlder;
-	
+
 	@Autowired
-	private UserHanlder userHandler; 
-	
+	private UserHanlder userHandler;
+
 	@Autowired
 	private PageHandler pageHandler;
-	
+
 	public TranscriptionDTO submitTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException {
 		logger.debug("start submitTranscription");
-		
+
 		checkMandatory(transcriptionDTO);
-		transcriptionDTO.setStatus("IN APPROVE");
-		TranscriptionDTO transcriptionDTOUpdated = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
-		
+
+		// --Come prima cosa vado a leggere la trascrizione senza filtrare per
+		// lockByUser, dopodichè
+		// --verifico che lo status della trascrizione sia lock e che l'utente che
+		// l'abbia lockato
+		// --sia lo stesso che ha sovrascritto la trascrizione. Se si salviamo le
+		// modifiche, lo status
+		// --diventerà IN APPROVE e rimuoveremo il lock dell'utente
+		TranscriptionDTO transcriptionDTORead = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		if (transcriptionDTORead != null && "LOCK".equals(transcriptionDTORead.getStatus())) {
+			UserDTO userFiter = new UserDTO();
+			userFiter.setUsername(transcriptionDTO.getUsername());
+			userFiter = userHandler.readUser(userFiter);
+			if (userFiter != null && userFiter.getId().equals(transcriptionDTORead.getLockedByuser())) {
+				transcriptionDTO.setStatus("IN APPROVE");
+				transcriptionDTO.setLockedByuser(null);
+				transcriptionDTO = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
+			}
+		}
 		logger.debug("finish submitTranscription");
-		return transcriptionDTOUpdated;
+		return transcriptionDTO;
+	}
+
+	public TranscriptionDTO saveTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException {
+		logger.debug("start submitTranscription");
+
+		checkMandatory(transcriptionDTO);
+		TranscriptionDTO transcriptionDTORead = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		if (transcriptionDTORead != null && "LOCK".equals(transcriptionDTORead.getStatus())) {
+			UserDTO userFiter = new UserDTO();
+			userFiter.setUsername(transcriptionDTO.getUsername());
+			userFiter = userHandler.readUser(userFiter);
+			if (userFiter != null && userFiter.getId().equals(transcriptionDTORead.getLockedByuser())) {
+
+				// --Setto questa info a null per permettere al prossimo utente di lockare, sia
+				// esso lo stesso di prima
+				// --oppure un altro
+				transcriptionDTO.setLockedByuser(null);
+				transcriptionDTO = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
+				LockTranscriptionRequestDTO lockTranscriptionRequestDTO = new LockTranscriptionRequestDTO();
+				lockTranscriptionRequestDTO.setTranscription(transcriptionDTO);
+				unlockTranscription(lockTranscriptionRequestDTO);
+			}
+		}
+		logger.debug("finish submitTranscription");
+		return transcriptionDTO;
 	}
 
 	public ResultDTO validateTranscription(TranscriptionDTO transcriptionDTO) {
 		logger.debug("start validateTranscription");
 		ResultDTO resultDTO = null;
-		
+		TranscriptionDTO transcriptionRead = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
+		if ("IN APPROVE".equals(transcriptionRead.getStatus())) {
+
+			// --Ho commentato di proposito la riga sotto perchè è un errore mettere
+			// completed direttamente,
+			// --lo status in questo caso deve essere passato dalla GUI perchè potrebbe
+			// anche essere REJECT
+			// --quindi a DB andiamo a scrivere quello che ci arriva.
+			// transcriptionDTO.setStatus("COMPLETED");
+
+			TranscriptionDTO transcriptionDTOUpdated = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
+			// --Per la validate della trascrizione assumiamo che, l'utente che revisionerà
+			// la trascrizione all'atto della validazione
+			// --decide se accettare le modifiche o evidenziare le cose che non vanno nella
+			// trascrizione e rigettare la modifica
+			if (transcriptionDTOUpdated != null) {
+				resultDTO = new ResultDTO();
+				resultDTO.setSuccessfullyOperation(Boolean.TRUE);
+			}
+		}
 		logger.debug("finish validateTranscription");
 		return resultDTO;
 	}
@@ -57,14 +117,12 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 	public AssignTranscriptionResponseDTO assignTrascription(
 			AssignTranscriptionRequestDTO assignTranscriptionRequestDTO) {
 		logger.debug("start getTranscription");
-		
-		if(assignTranscriptionRequestDTO != null 
-				&& assignTranscriptionRequestDTO.getPageList() != null
+		if (assignTranscriptionRequestDTO != null && assignTranscriptionRequestDTO.getPageList() != null
 				&& !assignTranscriptionRequestDTO.getPageList().isEmpty()
 				&& StringUtils.isNotEmpty(assignTranscriptionRequestDTO.getUsername())) {
-			
+
 			for (PageDTO pageDTO : assignTranscriptionRequestDTO.getPageList()) {
-				
+
 				UserDTO userFilter = new UserDTO();
 				userFilter.setUsername(assignTranscriptionRequestDTO.getUsername());
 				PageDTO pageRead = pageHandler.readPage(pageDTO);
@@ -75,14 +133,15 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 					transcriptionFilter.setPage(new PageDTO());
 					transcriptionFilter.getPage().setId(pageRead.getId());
 					transcriptionFilter = transcriptionHanlder.getTranscriptionDTO(transcriptionFilter);
-					
-					if(transcriptionFilter != null) {
-						//-- La transcrizione esiste già qundi è stata creata precedentemente e adesso vogliamo 
-						//-- solo settare il nuovo user
-						//-- N.B. : qui anche lo status della trascrizione sto lasciando invariato
+
+					if (transcriptionFilter != null) {
+						// -- La transcrizione esiste già qundi è stata creata precedentemente e adesso
+						// vogliamo
+						// -- solo settare il nuovo user
+						// -- N.B. : qui anche lo status della trascrizione sto lasciando invariato
 						transcriptionFilter.getUserList().add(userRead);
-					}else {
-						//--Scenario in cui la trascrizione la stiamo creando in questo momento
+					} else {
+						// --Scenario in cui la trascrizione la stiamo creando in questo momento
 						transcriptionFilter = new TranscriptionDTO();
 						List<UserDTO> usersWorkOnTranscription = Arrays.asList(userRead);
 						transcriptionFilter.setPage(pageRead);
@@ -90,7 +149,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 						transcriptionFilter.setStatus("OPEN");
 					}
 					transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
-										
+
 				}
 			}
 		}
@@ -108,25 +167,53 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 	public LockTranscriptionResponseDTO lockTranscription(LockTranscriptionRequestDTO lockTranscriptionRequestDTO) {
 		logger.debug("start lockTranscription");
 		LockTranscriptionResponseDTO lockTranscriptionResponseDTO = null;
-		if(lockTranscriptionRequestDTO != null 
-				&& lockTranscriptionRequestDTO.getTranscription() != null
+		if (lockTranscriptionRequestDTO != null && lockTranscriptionRequestDTO.getTranscription() != null
 				&& StringUtils.isNotEmpty(lockTranscriptionRequestDTO.getUsername())) {
+
 			lockTranscriptionResponseDTO = new LockTranscriptionResponseDTO();
-			UserDTO userRead  = new UserDTO();
+			UserDTO userRead = new UserDTO();
 			userRead.setUsername(lockTranscriptionRequestDTO.getUsername());
 			userRead  = userHandler.readUser(userRead);
 			TranscriptionDTO transcriptionToLock = getTranscription(lockTranscriptionRequestDTO.getTranscription());
-			
-			if(userRead != null && transcriptionToLock != null 
-					&& ("OPEN".equals(transcriptionToLock.getStatus())
-							|| "REJECTED".equals(transcriptionToLock.getStatus()))) {
+
+			if (userRead != null && transcriptionToLock != null && ("OPEN".equals(transcriptionToLock.getStatus())
+					|| "REJECTED".equals(transcriptionToLock.getStatus()))) {
 				transcriptionToLock.setStatus("LOCK");
+				transcriptionToLock.setLockedByuser(userRead.getId());
 				transcriptionHanlder.createUpdateTranscription(transcriptionToLock);
 				lockTranscriptionResponseDTO.setAssigned(Boolean.TRUE);
 				lockTranscriptionResponseDTO.setMessage("LOCK SUCCESSFULLY");
-			}else {
+			} else {
 				lockTranscriptionResponseDTO.setAssigned(Boolean.FALSE);
 				lockTranscriptionResponseDTO.setMessage("LOCK UNSUCCESSFULLY");
+			}
+		}
+		logger.debug("finish lockTranscription");
+		return lockTranscriptionResponseDTO;
+	}
+
+	public LockTranscriptionResponseDTO unlockTranscription(LockTranscriptionRequestDTO lockTranscriptionRequestDTO) {
+		logger.debug("start lockTranscription");
+		LockTranscriptionResponseDTO lockTranscriptionResponseDTO = null;
+		if (lockTranscriptionRequestDTO != null && lockTranscriptionRequestDTO.getTranscription() != null
+				&& StringUtils.isNotEmpty(lockTranscriptionRequestDTO.getUsername())) {
+
+			lockTranscriptionResponseDTO = new LockTranscriptionResponseDTO();
+			UserDTO userRead = new UserDTO();
+			userRead.setUsername(lockTranscriptionRequestDTO.getUsername());
+			userRead = userHandler.readUser(userRead);
+			TranscriptionDTO transcriptionToUnlock = getTranscription(lockTranscriptionRequestDTO.getTranscription());
+
+			if (userRead != null && transcriptionToUnlock != null && "LOCK".equals(transcriptionToUnlock.getStatus())
+					&& userRead.getId().equals(transcriptionToUnlock.getLockedByuser())) {
+				transcriptionToUnlock.setStatus("OPEN");
+				transcriptionToUnlock.setLockedByuser(null);
+				transcriptionHanlder.createUpdateTranscription(transcriptionToUnlock);
+				lockTranscriptionResponseDTO.setAssigned(Boolean.TRUE);
+				lockTranscriptionResponseDTO.setMessage("UNLOCK SUCCESSFULLY");
+			} else {
+				lockTranscriptionResponseDTO.setAssigned(Boolean.FALSE);
+				lockTranscriptionResponseDTO.setMessage("UNLOCK UNSUCCESSFULLY");
 			}
 		}
 		logger.debug("finish lockTranscription");
@@ -136,24 +223,23 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 	public ResultDTO publishTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException {
 		logger.debug("start publishTranscription");
 		ResultDTO resultDTO = null;
-		
 		checkMandatory(transcriptionDTO);
 		TranscriptionDTO transcriptionread = transcriptionHanlder.getTranscriptionDTO(transcriptionDTO);
-		resultDTO = new ResultDTO();
-		
-		if(transcriptionread != null && "COMPLETED".equals(transcriptionread.getStatus())) {
-			transcriptionDTO.setStatus("PUBLISHED");
-			transcriptionDTO = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
-			resultDTO.setSuccessfullyOperation(Boolean.TRUE);
-		}else {
-			resultDTO.setSuccessfullyOperation(Boolean.FALSE);
-			resultDTO.setMessage("Cannot pusblish transcription until is not completed");
+		if (transcriptionread != null) {
+			resultDTO = new ResultDTO();
+			if ("COMPLETED".equals(transcriptionread.getStatus())) {
+				transcriptionDTO.setStatus("PUBLISHED");
+				transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
+				resultDTO.setSuccessfullyOperation(Boolean.TRUE);
+			} else {
+				resultDTO.setSuccessfullyOperation(Boolean.FALSE);
+				resultDTO.setMessage("Cannot pusblish transcription until is not completed");
+			}
 		}
-		
 		logger.debug("finish publishTranscription");
 		return resultDTO;
 	}
-	
+
 	private void checkMandatory(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException {
 		if (transcriptionDTO == null || StringUtils.isEmpty(transcriptionDTO.getTranscription())
 				|| transcriptionDTO.getUserList() == null || transcriptionDTO.getUserList().isEmpty()) {

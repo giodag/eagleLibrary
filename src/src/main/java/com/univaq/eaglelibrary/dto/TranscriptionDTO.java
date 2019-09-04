@@ -9,9 +9,23 @@ public class TranscriptionDTO {
 	private String status;
 	private List<UserDTO> userList;
 	private PageDTO page;
+	private Long lockedByuser;
+	private String username;
 	
 	//-- Getter and Setter --//
 	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public Long getLockedByuser() {
+		return lockedByuser;
+	}
+	public void setLockedByuser(Long lockedByuser) {
+		this.lockedByuser = lockedByuser;
+	}
 	public PageDTO getPage() {
 		return page;
 	}

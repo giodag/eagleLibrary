@@ -16,5 +16,7 @@ public interface TranscriptionController {
 	public TranscriptionDTO getTranscription(TranscriptionDTO transcriptionDTO);
 	public LockTranscriptionResponseDTO lockTranscription(LockTranscriptionRequestDTO lockTranscriptionRequestDTO);
 	public ResultDTO publishTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException;
+	public TranscriptionDTO saveTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException;
+	
 	
 }
