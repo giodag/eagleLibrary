@@ -107,19 +107,20 @@ public class HomepageControllerGUI{
 		ApplicationContext context = getContext();
 		UserDTO user = (UserDTO) stage.getUserData();
 		ProfileDTO profile = getProfile(context,user);
-		decorateProfileInfo(profile,user);
-
-		
+		decorateProfileInfo(profile,user);		
 	}
 
 	private void decorateProfileInfo(ProfileDTO profile, UserDTO user) {
-		p_address.setText(profile.getAddress());
-		//TODO RIGURDARE LA DATA
-		p_datebirth.setText(profile.getDateOfBirth().toString());
-		p_degree.setText(profile.getDegreeCourse());
-		p_email.setText(profile.getEmail());
+		
+		if(profile != null) {
+			p_address.setText(profile.getAddress());
+			//TODO RIGURDARE LA DATA
+			p_datebirth.setText(profile.getDateOfBirth().toString());
+			p_degree.setText(profile.getDegreeCourse());
+			p_email.setText(profile.getEmail());
+			p_matnumber.setText(profile.getMatriculationNumber());
+		}
 		p_lastname.setText(user.getLastName());
-		p_matnumber.setText(profile.getMatriculationNumber());
 		p_name.setText(user.getFirstName());
 		p_username.setText(user.getUsername());
 	}

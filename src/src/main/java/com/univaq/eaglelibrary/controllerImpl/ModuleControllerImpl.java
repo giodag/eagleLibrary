@@ -2,6 +2,7 @@ package com.univaq.eaglelibrary.controllerImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.univaq.eaglelibrary.controller.ModuleController;
@@ -14,11 +15,9 @@ import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 public class ModuleControllerImpl implements ModuleController {
 	
 	private final Logger logger = LoggerFactory.getLogger(ModuleControllerImpl.class);
-	private ModuleHandler moduleHandler;
 	
-	public ModuleControllerImpl() {
-		this.moduleHandler = new ModuleHandler();
-	}
+	@Autowired
+	private ModuleHandler moduleHandler;
 	
 	public ResultDTO submitModule(ModuleDTO moduleDTO) {
 		logger.debug("start submitModule");

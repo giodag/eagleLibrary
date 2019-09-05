@@ -29,12 +29,12 @@ public class UserHanlder {
 	private ConvertUser convertUser;
 
 	public UserDTO login(LoginRequestDTO loginRequestDTO) throws UserNotFoundException, MandatoryFieldException, WrongPasswordException {
-		UserDTO userDTO = null;
+		UserDTO userRead = null;
 		if(loginRequestDTO != null &&  !StringUtils.isNullOrEmpty(loginRequestDTO.getUser()) 
 				&& !StringUtils.isNullOrEmpty(loginRequestDTO.getPassword())) {
-			userDTO = new UserDTO();
+			UserDTO userDTO = new UserDTO();
 			userDTO.setUsername(loginRequestDTO.getUser());
-			UserDTO userRead = readUser(userDTO);
+			userRead = readUser(userDTO);
 			
 			if(userRead != null) {
 				if(!userRead.getPassword().equals(loginRequestDTO.getPassword())) {
@@ -49,7 +49,7 @@ public class UserHanlder {
 			logger.error("Username or Password missing");
 			throw new MandatoryFieldException("Username and Password required");
 		}
-		return userDTO;
+		return userRead;
 	}
 	
 	public UserDTO readUser(UserDTO userDTO) {

@@ -2,6 +2,7 @@ package com.univaq.eaglelibrary.controllerImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.univaq.eaglelibrary.controller.ProfileController;
@@ -12,12 +13,10 @@ import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 @Service
 public class ProfileControllerImpl implements ProfileController {
 	
-	private final Logger logger = LoggerFactory.getLogger(ProfileControllerImpl.class);
+	@Autowired
 	private ProfileHandler profileHandler;
 	
-	public ProfileControllerImpl () {
-		this.profileHandler = new ProfileHandler();
-	}
+	private final Logger logger = LoggerFactory.getLogger(ProfileControllerImpl.class);
 
 	public ProfileDTO createUpdateProfile(ProfileDTO profileDTO) throws MandatoryFieldException {
 		logger.debug("start createUpdateProfile");
