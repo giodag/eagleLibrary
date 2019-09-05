@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.univaq.eaglelibrary.converter.ConvertPages;
 import com.univaq.eaglelibrary.converter.ConvertTranscription;
@@ -12,6 +13,7 @@ import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.model.Transcription;
 import com.univaq.eaglelibrary.repository.TranscriptionRepository;
 
+@Component
 public class TranscriptionHanlder {
 
 	@Autowired

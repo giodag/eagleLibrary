@@ -2,6 +2,7 @@ package com.univaq.eaglelibrary.controllerImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.univaq.eaglelibrary.controller.ModuleController;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
@@ -9,6 +10,7 @@ import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.hanlder.ModuleHandler;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
+@Service
 public class ModuleControllerImpl implements ModuleController {
 	
 	private final Logger logger = LoggerFactory.getLogger(ModuleControllerImpl.class);

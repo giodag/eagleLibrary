@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.univaq.eaglelibrary.controller.TranscriptionController;
 import com.univaq.eaglelibrary.dto.AssignTranscriptionRequestDTO;
@@ -22,6 +23,7 @@ import com.univaq.eaglelibrary.hanlder.TranscriptionHanlder;
 import com.univaq.eaglelibrary.hanlder.UserHanlder;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
+@Service
 public class TranscriptionControllerImpl implements TranscriptionController {
 
 	private final Logger logger = LoggerFactory.getLogger(TranscriptionControllerImpl.class);

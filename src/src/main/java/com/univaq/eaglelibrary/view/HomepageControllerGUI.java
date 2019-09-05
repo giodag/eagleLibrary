@@ -2,6 +2,13 @@ package com.univaq.eaglelibrary.view;
 
 import java.io.File;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.univaq.eaglelibrary.controllerImpl.ProfileControllerImpl;
+import com.univaq.eaglelibrary.dto.ProfileDTO;
+import com.univaq.eaglelibrary.dto.UserDTO;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -97,9 +104,38 @@ public class HomepageControllerGUI{
     }
 
 	public void init(Stage stage) {
-		p_username.setText(stage.getUserData().toString());
-		p_degree.setText("ciaooooo");
+		ApplicationContext context = getContext();
+		UserDTO user = (UserDTO) stage.getUserData();
+		ProfileDTO profile = getProfile(context,user);
+		decorateProfileInfo(profile,user);
+
+		
 	}
 
+	private void decorateProfileInfo(ProfileDTO profile, UserDTO user) {
+		p_address.setText(profile.getAddress());
+		//TODO RIGURDARE LA DATA
+		p_datebirth.setText(profile.getDateOfBirth().toString());
+		p_degree.setText(profile.getDegreeCourse());
+		p_email.setText(profile.getEmail());
+		p_lastname.setText(user.getLastName());
+		p_matnumber.setText(profile.getMatriculationNumber());
+		p_name.setText(user.getFirstName());
+		p_username.setText(user.getUsername());
+	}
+
+	private ProfileDTO getProfile(ApplicationContext context, UserDTO user) {
+		ProfileDTO profile = new ProfileDTO();
+		profile.setUser(user);
+		ProfileControllerImpl profileControllerImpl = (ProfileControllerImpl)context.getBean("profileControllerImpl");
+		ProfileDTO profileRead = profileControllerImpl.getProfile(profile);
+		return profileRead;
+	}
+
+	private ApplicationContext getContext() {
+    	ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+		return context;
+    }
+	
 }
 

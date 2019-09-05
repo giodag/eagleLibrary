@@ -3,9 +3,9 @@ package com.univaq.eaglelibrary.view;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.mysql.cj.util.StringUtils;
 import com.univaq.eaglelibrary.controllerImpl.UserControllerImpl;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
+import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.persistence.exceptions.UserNotFoundException;
 import com.univaq.eaglelibrary.persistence.exceptions.WrongPasswordException;
@@ -47,7 +47,7 @@ public class LoginControllerGUI{
     	try {
     		ApplicationContext context = getContext();
         	UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
-        	userControllerImpl.login(loginRequestDTO);
+        	UserDTO user = userControllerImpl.login(loginRequestDTO);
         	
         	Stage stage = (Stage) login.getScene().getWindow();
             stage.close();
@@ -64,7 +64,7 @@ public class LoginControllerGUI{
     		stage = new Stage();
     		Scene scene = new Scene(rootNode);
     		stage.setScene(scene);
-    		stage.setUserData("ciao");
+    		stage.setUserData(user);
     		HomepageControllerGUI controller = (HomepageControllerGUI)loader.getController();
     		controller.init(stage);
     		stage.show();

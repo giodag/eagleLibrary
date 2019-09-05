@@ -2,12 +2,14 @@ package com.univaq.eaglelibrary.controllerImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.univaq.eaglelibrary.controller.ProfileController;
 import com.univaq.eaglelibrary.dto.ProfileDTO;
 import com.univaq.eaglelibrary.hanlder.ProfileHandler;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
+@Service
 public class ProfileControllerImpl implements ProfileController {
 	
 	private final Logger logger = LoggerFactory.getLogger(ProfileControllerImpl.class);
