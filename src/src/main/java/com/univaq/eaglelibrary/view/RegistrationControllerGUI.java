@@ -1,7 +1,5 @@
 package com.univaq.eaglelibrary.view;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,10 +12,10 @@ import com.univaq.eaglelibrary.utility.Permission;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class RegistrationControllerGUI {
@@ -57,10 +55,14 @@ public class RegistrationControllerGUI {
 			LoginView loginView = (LoginView)context.getBean("loginView");
 			loginView.startupLogin();
 		} catch (MandatoryFieldException e) {
-			// TODO Auto-generated catch block
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText(e.getMessage());
+			alert.showAndWait();
 			e.printStackTrace();
 		} catch (CreateUserException e) {
-			// TODO Auto-generated catch block
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText(e.getMessage());
+			alert.showAndWait();
 			e.printStackTrace();
 		}
     		

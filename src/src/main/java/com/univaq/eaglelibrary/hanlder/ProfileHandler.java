@@ -35,12 +35,12 @@ public class ProfileHandler{
 		Profile profile = null;
 		
 		if(profileRead != null) {
-			profileRead.setAddress(StringUtils.isNullOrEmpty(profileDTO.getAddress()) ? profileDTO.getAddress() : profileRead.getAddress());
+			profileRead.setAddress(!StringUtils.isNullOrEmpty(profileDTO.getAddress()) ? profileDTO.getAddress() : profileRead.getAddress());
 			profileRead.setDateOfBirth(profileDTO.getDateOfBirth() != null ? profileDTO.getDateOfBirth() : profileRead.getDateOfBirth());
-			profileRead.setDegreeCourse(StringUtils.isNullOrEmpty(profileDTO.getDegreeCourse()) ? profileDTO.getDegreeCourse() : profileRead.getDegreeCourse());
-			profileRead.setEmail(StringUtils.isNullOrEmpty(profileDTO.getEmail()) ? profileDTO.getEmail() : profileRead.getEmail());
+			profileRead.setDegreeCourse(!StringUtils.isNullOrEmpty(profileDTO.getDegreeCourse()) ? profileDTO.getDegreeCourse() : profileRead.getDegreeCourse());
+			profileRead.setEmail(!StringUtils.isNullOrEmpty(profileDTO.getEmail()) ? profileDTO.getEmail() : profileRead.getEmail());
 			profileRead.setId(profileDTO.getId() != null ? profileDTO.getId() : profileRead.getId());
-			profileRead.setMatriculationNumber(StringUtils.isNullOrEmpty(profileDTO.getMatriculationNumber()) 
+			profileRead.setMatriculationNumber(!StringUtils.isNullOrEmpty(profileDTO.getMatriculationNumber()) 
 					? profileDTO.getMatriculationNumber() : profileRead.getMatriculationNumber());
 			profile = convertProfile.convert(profileRead);
 			
