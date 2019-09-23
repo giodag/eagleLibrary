@@ -8,7 +8,7 @@ public class LiteraryWorkListFilterDTO {
 	private List<Long> idList;
 	private String category;
 	private String title;
-	private Date year;
+	private Integer year;
 	private String author;
 	private String partOfText;
 	
@@ -32,10 +32,10 @@ public class LiteraryWorkListFilterDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Date getYear() {
+	public Integer getYear() {
 		return year;
 	}
-	public void setYear(Date year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 	public String getAuthor() {

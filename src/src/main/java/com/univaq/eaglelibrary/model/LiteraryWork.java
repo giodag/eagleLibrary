@@ -27,7 +27,7 @@ public class LiteraryWork {
 	private String title;
 
 	@Column(name = "year")
-	private Date year;
+	private Integer year;
 
 	@Column(name = "author")
 	private String author;
@@ -69,11 +69,11 @@ public class LiteraryWork {
 		this.title = title;
 	}
 
-	public Date getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
-	public void setYear(Date year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 

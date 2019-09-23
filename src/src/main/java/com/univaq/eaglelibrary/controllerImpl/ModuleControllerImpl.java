@@ -9,25 +9,25 @@ import com.univaq.eaglelibrary.controller.ModuleController;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.hanlder.ModuleHandler;
+import com.univaq.eaglelibrary.persistence.exceptions.CreateModuleException;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
 @Service
 public class ModuleControllerImpl implements ModuleController {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(ModuleControllerImpl.class);
-	
+
 	@Autowired
 	private ModuleHandler moduleHandler;
-	
-	public ResultDTO submitModule(ModuleDTO moduleDTO) {
+
+	public ResultDTO submitModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CreateModuleException {
 		logger.debug("start submitModule");
 		ResultDTO resultDTO = null;
-		try {
-			resultDTO = this.moduleHandler.createUpdateModule(moduleDTO);
-		} catch (MandatoryFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		ModuleDTO moduleRead = this.moduleHandler.readModule(moduleDTO);
+		if(moduleRead != null) {
+			throw new CreateModuleException("Module already sent");
 		}
+		resultDTO = this.moduleHandler.createUpdateModule(moduleDTO);
 		logger.debug("finish submitModule");
 		return resultDTO;
 	}
@@ -39,15 +39,10 @@ public class ModuleControllerImpl implements ModuleController {
 		return moduleDTORead;
 	}
 
-	public ResultDTO validateModule(ModuleDTO moduleDTO) {
+	public ResultDTO validateModule(ModuleDTO moduleDTO) throws MandatoryFieldException {
 		logger.debug("start validateModule");
 		ResultDTO resultDTO = null;
-		try {
-			resultDTO = this.moduleHandler.createUpdateModule(moduleDTO);
-		} catch (MandatoryFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		resultDTO = this.moduleHandler.createUpdateModule(moduleDTO);
 		logger.debug("finish validateModule");
 		return resultDTO;
 	}

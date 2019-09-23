@@ -35,11 +35,11 @@ public class ModuleHandler {
 		Module module = null;
 		
 		if(moduleRead != null) {
-			moduleRead.setCode(StringUtils.isNullOrEmpty(moduleDTO.getCode()) ? moduleDTO.getCode() : moduleRead.getCode());
-			moduleRead.setComment(StringUtils.isNullOrEmpty(moduleDTO.getComment()) ? moduleDTO.getComment() : moduleRead.getComment());
+			moduleRead.setCode(!StringUtils.isNullOrEmpty(moduleDTO.getCode()) ? moduleDTO.getCode() : moduleRead.getCode());
+			moduleRead.setComment(!StringUtils.isNullOrEmpty(moduleDTO.getComment()) ? moduleDTO.getComment() : moduleRead.getComment());
 			moduleRead.setCreationDate(moduleDTO.getCreationDate() != null ? moduleDTO.getCreationDate() : moduleRead.getCreationDate());
 			moduleRead.setId(moduleDTO.getId() != null ? moduleDTO.getId() : moduleRead.getId());
-			moduleRead.setStatus(StringUtils.isNullOrEmpty(moduleDTO.getStatus()) ? moduleDTO.getStatus() : moduleRead.getStatus());
+			moduleRead.setStatus(!StringUtils.isNullOrEmpty(moduleDTO.getStatus()) ? moduleDTO.getStatus() : moduleRead.getStatus());
 			moduleRead.setYearOfTheStudy(moduleDTO.getYearOfTheStudy() != null ? moduleDTO.getYearOfTheStudy() : moduleRead.getYearOfTheStudy());
 			module = convertModule.convert(moduleRead);
 			

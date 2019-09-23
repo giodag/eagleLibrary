@@ -48,25 +48,25 @@
       <AnchorPane fx:id="a_module" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
          <children>
 			<Polygon fill="#f3f3f3" layoutX="511.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
-            <Button fx:id="b_send" layoutX="289.0" layoutY="331.0" mnemonicParsing="false" text="Send" />
-            <Label layoutX="137.0" layoutY="84.0" text="Anno di studio" />
+            <Button fx:id="b_send" layoutX="289.0" layoutY="331.0" mnemonicParsing="false" onAction="#sendForm" text="Send" />
+            <Label fx:id="l_yearOfStudy" layoutX="137.0" layoutY="84.0" text="Anno di studio" />
             <Label layoutX="137.0" layoutY="160.0" text="Commento" />
-            <TextField layoutX="316.0" layoutY="80.0" />
-            <TextArea layoutX="316.0" layoutY="152.0" prefHeight="110.0" prefWidth="293.0" />
+            <TextField fx:id="formYear" layoutX="316.0" layoutY="80.0" />
+            <TextArea fx:id="formComment" layoutX="316.0" layoutY="152.0" prefHeight="110.0" prefWidth="293.0" />
          </children></AnchorPane>
       <AnchorPane fx:id="a_upload" layoutY="92.0" prefHeight="430.0" prefWidth="686.0" visible="false">
          <children>
             <Polygon fill="#f3f3f3" layoutX="273.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
             <Button fx:id="b_chooseFile" layoutX="62.0" layoutY="199.0" mnemonicParsing="false" onMouseClicked="#chooseFile" prefHeight="32.0" prefWidth="129.0" text="Scegli il file..." />
-            <Label layoutX="63.0" layoutY="47.0" prefHeight="56.0" prefWidth="50.0" text="Titolo" />
-            <TextField fx:id="t_title1" layoutX="155.0" layoutY="62.0" prefHeight="26.0" prefWidth="181.0" />
-            <TextField fx:id="t_author1" layoutX="457.0" layoutY="62.0" prefHeight="26.0" prefWidth="182.0" />
+            <Label fx:id="l_titleUpload" layoutX="63.0" layoutY="47.0" prefHeight="56.0" prefWidth="50.0" text="Titolo" />
+            <TextField fx:id="t_titleUpload" layoutX="155.0" layoutY="62.0" prefHeight="26.0" prefWidth="181.0" />
+            <TextField fx:id="t_authorUpload" layoutX="457.0" layoutY="62.0" prefHeight="26.0" prefWidth="182.0" />
             <Label layoutX="380.0" layoutY="66.0" text="Autore" />
-            <ComboBox fx:id="co_category1" layoutX="127.0" layoutY="128.0" prefHeight="30.0" prefWidth="130.0" promptText="Genere" />
-            <Label layoutX="345.0" layoutY="133.0" text="Anno" />
-            <TextField fx:id="t_year1" layoutX="391.0" layoutY="130.0" prefHeight="26.0" prefWidth="104.0" />
-            <TextField editable="false" layoutX="246.0" layoutY="203.0" prefHeight="26.0" prefWidth="315.0" />
-            <Button layoutX="311.0" layoutY="302.0" mnemonicParsing="false" text="Upload" />
+            <ComboBox fx:id="co_categoryUpload" layoutX="127.0" layoutY="128.0" prefHeight="30.0" prefWidth="130.0" promptText="Genere" />
+            <Label fx:id="l_yearUpload" layoutX="345.0" layoutY="133.0" text="Anno" />
+            <TextField fx:id="t_yearUpload" layoutX="391.0" layoutY="130.0" prefHeight="26.0" prefWidth="104.0" />
+            <TextField fx:id="t_chooseFile" editable="false" layoutX="246.0" layoutY="203.0" prefHeight="26.0" prefWidth="315.0" />
+            <Button fx:id="uploadOpera" layoutX="311.0" layoutY="302.0" mnemonicParsing="false" onAction="#uploadOpera" text="Upload" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="a_trascription" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">

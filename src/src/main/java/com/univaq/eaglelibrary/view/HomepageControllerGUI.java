@@ -1,18 +1,28 @@
 package com.univaq.eaglelibrary.view;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.univaq.eaglelibrary.controllerImpl.LiteraryWorkControllerImpl;
+import com.univaq.eaglelibrary.controllerImpl.ModuleControllerImpl;
 import com.univaq.eaglelibrary.controllerImpl.ProfileControllerImpl;
+import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
+import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.ProfileDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.persistence.exceptions.CreateModuleException;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -26,25 +36,26 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class HomepageControllerGUI{
+public class HomepageControllerGUI implements Initializable{
 
 	@FXML
-	private Label l_profile,l_search,l_transcription,l_module,l_logout,l_upload;
+	private Label l_profile,l_search,l_transcription,l_module,l_logout,l_upload,l_yearOfStudy,l_yearUpload;
 
 	@FXML
 	private AnchorPane top,a_module,a_searchOpera,a_upload,a_trascription,a_profile;
 
 	@FXML
-	private Button b_chooseFile,b_send,b_saerchOpera,saveProfile;
+	private Button b_chooseFile,b_send,b_saerchOpera,saveProfile,uploadOpera;
 
 	@FXML
-	private TextField t_year,t_author,t_title,p_name,p_lastname,p_username,p_email,p_datebirth,p_matnumber,p_address,p_degree;
+	private TextField t_year,t_author,t_title,p_name,p_lastname,p_username,p_email,p_datebirth,p_matnumber,
+		p_address,p_degree,formYear,t_yearUpload,t_authorUpload,t_titleUpload,t_chooseFile;
 
 	@FXML
-	private TextArea t_partOfText;
+	private TextArea t_partOfText,formComment;
 
 	@FXML
-	private ComboBox<?> co_category;
+	private ComboBox<String> co_category,co_categoryUpload;
 
 	@FXML
 	private CheckBox c_trascription;
@@ -55,11 +66,60 @@ public class HomepageControllerGUI{
 	final FileChooser fileChooser = new FileChooser();
 
 	@FXML
+    void uploadOpera(ActionEvent event) {
+		LiteraryWorkDTO literaryWorkDTO = new LiteraryWorkDTO();
+		literaryWorkDTO.setAuthor(t_authorUpload.getText());
+		literaryWorkDTO.setTitle(t_titleUpload.getText());
+		literaryWorkDTO.setYear(integerController(t_yearUpload,l_yearUpload));
+		literaryWorkDTO.setCategory(co_categoryUpload.getValue());
+		if(literaryWorkDTO.getYear() != null) {
+			LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
+			try {
+				literaryWorkControllerImpl.createUpdateLiteraryWork(literaryWorkDTO);
+			} catch (MandatoryFieldException e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setHeaderText(e.getMessage());
+				alert.showAndWait();
+				e.printStackTrace();
+			}
+		}
+    }
+
+	@FXML
 	void chooseFile(MouseEvent event) {
 
 		File file = fileChooser.showOpenDialog(l_logout.getScene().getWindow());
 
 		//TODO call service to store file 
+	}
+	
+	@FXML
+	void sendForm(ActionEvent event) {
+		ModuleDTO module = new ModuleDTO();
+		module.setComment(formComment.getText());
+		module.setCreationDate(new Date());
+		module.setUser(user);
+		module.setUsername(user.getUsername());
+		module.setYearOfTheStudy(integerController(formYear,l_yearOfStudy));
+		module.setStatus("OPEN");
+		// generating code TODO
+		module.setCode("001");
+		if(module.getYearOfTheStudy() != null) {	
+			ModuleControllerImpl moduleControllerImpl = (ModuleControllerImpl)context.getBean("moduleControllerImpl");
+			try {
+				moduleControllerImpl.submitModule(module);
+			} catch (MandatoryFieldException e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setHeaderText(e.getMessage());
+				alert.showAndWait();
+				e.printStackTrace();
+			} catch (CreateModuleException e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setHeaderText(e.getMessage());
+				alert.showAndWait();
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@FXML
@@ -169,10 +229,29 @@ public class HomepageControllerGUI{
 		profile.setMatriculationNumber(p_matnumber.getText());
 		profile.setUser(user);
 	}
+	
+	private Integer integerController(TextField textField, Label label) {
+		Integer number = null;
+		try {
+			number = Integer.valueOf(textField.getText());
+		} catch(Exception e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText("Number not valid: "+label.getText());
+			alert.showAndWait();
+			e.printStackTrace();
+		}
+		return number;
+	}
 
 	private ApplicationContext getContext() {
 		context = new ClassPathXmlApplicationContext("spring-context.xml");
 		return context;
+	}
+
+	public void initialize(URL location, ResourceBundle resources) {
+		ObservableList<String> category = FXCollections.observableArrayList("Narrativo","Fantasy","Horror","Giallo","Romanzo","Storico","Fantascienza");
+		co_category.setItems(category);
+		co_categoryUpload.setItems(category);
 	}
 
 }

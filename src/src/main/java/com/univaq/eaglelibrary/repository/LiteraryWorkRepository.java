@@ -1,6 +1,5 @@
 package com.univaq.eaglelibrary.repository;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,7 +21,7 @@ public interface LiteraryWorkRepository extends JpaRepository<LiteraryWork, Long
 			@Param("id") Long id,
 			@Param("category") String category, 
 			@Param("title") String title,
-			@Param("year") Date year,
+			@Param("year") Integer year,
 			@Param("author") String author);
 	
 	@Query("select lt from LiteraryWork lt "
@@ -36,7 +35,7 @@ public interface LiteraryWorkRepository extends JpaRepository<LiteraryWork, Long
 			@Param("listId") List<Long> listId,
 			@Param("category") String category, 
 			@Param("title") String title,
-			@Param("year") Date year,
+			@Param("year") Integer year,
 			@Param("author") String author);
 	
 }
