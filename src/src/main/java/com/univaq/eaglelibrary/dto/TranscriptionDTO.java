@@ -9,6 +9,7 @@ public class TranscriptionDTO {
 	private String status;
 	private List<UserDTO> userList;
 	private PageDTO page;
+	private LiteraryWorkDTO literaryWork;
 	private Long lockedByuser;
 	private String username;
 	
@@ -31,6 +32,12 @@ public class TranscriptionDTO {
 	}
 	public void setPage(PageDTO page) {
 		this.page = page;
+	}
+	public LiteraryWorkDTO getLiteraryWork() {
+		return literaryWork;
+	}
+	public void setLiteraryWork(LiteraryWorkDTO literaryWork) {
+		this.literaryWork = literaryWork;
 	}
 	public Long getId() {
 		return id;

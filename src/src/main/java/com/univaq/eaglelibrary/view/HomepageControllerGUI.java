@@ -3,6 +3,7 @@ package com.univaq.eaglelibrary.view;
 import java.io.File;
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.springframework.context.ApplicationContext;
@@ -11,9 +12,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.univaq.eaglelibrary.controllerImpl.LiteraryWorkControllerImpl;
 import com.univaq.eaglelibrary.controllerImpl.ModuleControllerImpl;
 import com.univaq.eaglelibrary.controllerImpl.ProfileControllerImpl;
+import com.univaq.eaglelibrary.controllerImpl.TranscriptionControllerImpl;
 import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.ProfileDTO;
+import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.persistence.exceptions.CreateModuleException;
 import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
@@ -29,8 +32,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -59,7 +65,12 @@ public class HomepageControllerGUI implements Initializable{
 
 	@FXML
 	private CheckBox c_trascription;
+	
+    @FXML
+    private TableColumn<TranscriptionTable, String> titleColumn,authorColumn,yearColumn,stateColumn;
 
+    @FXML
+    private TableView<TranscriptionTable> trascriptionTable,trascriptionTableClosed;
 
 	private ApplicationContext context;
 	private UserDTO user;
@@ -76,6 +87,9 @@ public class HomepageControllerGUI implements Initializable{
 			LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
 			try {
 				literaryWorkControllerImpl.createUpdateLiteraryWork(literaryWorkDTO);
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setHeaderText("Profilo salvato correttamente");
+				alert.showAndWait();
 			} catch (MandatoryFieldException e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setHeaderText(e.getMessage());
@@ -108,6 +122,9 @@ public class HomepageControllerGUI implements Initializable{
 			ModuleControllerImpl moduleControllerImpl = (ModuleControllerImpl)context.getBean("moduleControllerImpl");
 			try {
 				moduleControllerImpl.submitModule(module);
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setHeaderText("Modulo inviato correttamente");
+				alert.showAndWait();
 			} catch (MandatoryFieldException e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setHeaderText(e.getMessage());
@@ -190,10 +207,10 @@ public class HomepageControllerGUI implements Initializable{
 	}
 
 	public void init(Stage stage) {
-		ApplicationContext context = getContext();
 		user = (UserDTO) stage.getUserData();
 		ProfileDTO profile = getProfile(context,user);
-		decorateProfileInfo(profile,user);		
+		decorateProfileInfo(profile,user);
+		initializeTrascriptionTable();
 	}
 
 	private ProfileDTO getProfile(ApplicationContext context, UserDTO user) {
@@ -249,9 +266,49 @@ public class HomepageControllerGUI implements Initializable{
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
+		getContext();
+		initializeGenre();
+	}
+
+	private void initializeGenre() {
 		ObservableList<String> category = FXCollections.observableArrayList("Narrativo","Fantasy","Horror","Giallo","Romanzo","Storico","Fantascienza");
 		co_category.setItems(category);
 		co_categoryUpload.setItems(category);
+	}
+
+	private void initializeTrascriptionTable() {
+		TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
+		TranscriptionDTO transcriptionDTO = new TranscriptionDTO();
+		transcriptionDTO.setUsername(user.getUsername());
+		List<TranscriptionDTO> transcriptions = transcriptionControllerImpl.getTrascriptionList(transcriptionDTO);
+		if(transcriptions != null && !transcriptions.isEmpty()) {
+			buildTransactionTable(transcriptions);
+		}	
+	}
+
+	private void buildTransactionTable(List<TranscriptionDTO> transcriptions) {
+		buildColumn();
+		ObservableList<TranscriptionTable> trascriptionOpen = FXCollections.observableArrayList();
+		ObservableList<TranscriptionTable> trascriptionClosed = FXCollections.observableArrayList();
+		for (TranscriptionDTO transcriptionRead : transcriptions) {
+			TranscriptionTable transcriptionTable = new TranscriptionTable(transcriptionRead);
+			if(transcriptionRead.getStatus() != null && transcriptionRead.getStatus().equals("OPEN")) {
+				trascriptionOpen.add(transcriptionTable);
+			} else {
+				trascriptionClosed.add(transcriptionTable);
+			}
+		}
+		trascriptionTable.setItems(trascriptionOpen);
+		trascriptionTableClosed.setItems(trascriptionClosed);
+		
+	}
+
+	private void buildColumn() {
+		stateColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("status"));
+		authorColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("author"));
+		titleColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("title"));
+		yearColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("year"));
+		
 	}
 
 }

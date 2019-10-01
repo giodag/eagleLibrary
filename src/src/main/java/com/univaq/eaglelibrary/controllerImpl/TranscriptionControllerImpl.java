@@ -165,6 +165,10 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 	public TranscriptionDTO getTranscription(TranscriptionDTO transcriptionDTO) {
 		return transcriptionHanlder.readTranscription(transcriptionDTO);
 	}
+	
+	public List<TranscriptionDTO> getTrascriptionList(TranscriptionDTO transcriptionDTO){
+		return transcriptionHanlder.readTranscriptionList(transcriptionDTO);
+	}
 
 	public LockTranscriptionResponseDTO lockTranscription(LockTranscriptionRequestDTO lockTranscriptionRequestDTO) {
 		logger.debug("start lockTranscription");

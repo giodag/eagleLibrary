@@ -76,12 +76,12 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="157.0" prefWidth="664.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="629.0">
+                        <TableView fx:id="trascriptionTable" layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="629.0">
                           <columns>
-                            <TableColumn prefWidth="207.19997787475586" text="Titolo" />
-                            <TableColumn prefWidth="231.2000274658203" text="Autore" />
-                              <TableColumn prefWidth="79.20001220703125" text="Anno" />
-                              <TableColumn minWidth="9.599990844726562" prefWidth="104.00006103515625" text="Stato" />
+                            <TableColumn fx:id="titleColumn" prefWidth="207.19997787475586" text="Titolo" />
+                            <TableColumn fx:id="authorColumn" prefWidth="231.2000274658203" text="Autore" />
+                              <TableColumn fx:id="yearColumn" prefWidth="79.20001220703125" text="Anno" />
+                              <TableColumn fx:id="stateColumn" minWidth="9.599990844726562" prefWidth="104.00006103515625" text="Stato" />
                           </columns>
                         </TableView>
                      </children>
@@ -94,7 +94,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="157.0" prefWidth="664.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="629.0">
+                        <TableView fx:id="trascriptionTableClosed" layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="629.0">
                            <columns>
                               <TableColumn prefWidth="207.19997787475586" text="Titolo" />
                               <TableColumn prefWidth="231.2000274658203" text="Autore" />

@@ -27,7 +27,7 @@ public class ConvertUser {
 			user.setLastName(userDTO.getLastName());
 			user.setPassword(userDTO.getPassword());
 			user.setUsername(userDTO.getUsername());
-			user.setListTranscription(convertTranscription.convert(userDTO.getTranscriptionList()));
+			user.setListTranscription(convertTranscription.convertToModel(userDTO.getTranscriptionList()));
 		}
 		return user;
 	}
@@ -43,7 +43,8 @@ public class ConvertUser {
 			userDTO.setId(user.getId());
 			userDTO.setLastName(user.getLastName());
 			userDTO.setPassword(user.getPassword());
-			userDTO.setUsername(user.getUsername());
+			userDTO.setUsername(user.getUsername());	
+//			userDTO.setTranscriptionList(transcriptionList);
 		}
 		return userDTO;
 	}

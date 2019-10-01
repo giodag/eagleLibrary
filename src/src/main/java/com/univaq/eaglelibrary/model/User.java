@@ -2,8 +2,10 @@ package com.univaq.eaglelibrary.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -37,7 +39,7 @@ public class User {
 	@Column(name = "activated")
 	private Boolean activated;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 			  name = "user_transcription", 
 			  joinColumns = @JoinColumn(name = "user_id"), 
