@@ -83,7 +83,7 @@ public class HomepageControllerGUI implements Initializable{
 	private UserDTO user;
 	final FileChooser fileChooser = new FileChooser();
 	//errorNumber mi serve per capire se sono stati inseriti dati sbagliati oppure nulli
-	private Boolean errorFormat;
+	private boolean errorFormat;
 
 	@FXML
     void uploadOpera(ActionEvent event) {
@@ -93,7 +93,7 @@ public class HomepageControllerGUI implements Initializable{
 			try {
 				literaryWorkControllerImpl.createUpdateLiteraryWork(literaryWorkDTO);
 				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setHeaderText("Profilo salvato correttamente");
+				alert.setHeaderText("Opera salvata correttamente");
 				alert.showAndWait();
 			} catch (MandatoryFieldException e) {
 				Alert alert = new Alert(AlertType.ERROR);
@@ -101,6 +101,8 @@ public class HomepageControllerGUI implements Initializable{
 				alert.showAndWait();
 				e.printStackTrace();
 			}
+		} else {
+			errorFormat = false;
 		}
     }
 
@@ -128,7 +130,9 @@ public class HomepageControllerGUI implements Initializable{
     		LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
         	LiteraryWorkListDTO literaryWorkListRead = literaryWorkControllerImpl.getLiteraryWork(literaryWorkListFilterDTO);
          	//TODO open a new window a lato di quella principale con la lista delle opere
-    	}
+    	} else {
+			errorFormat = false;
+		}
     }
 	
 	private LiteraryWorkListFilterDTO buildLiteraryWorkFilter() {
@@ -162,6 +166,8 @@ public class HomepageControllerGUI implements Initializable{
 				alert.showAndWait();
 				e.printStackTrace();
 			}
+		} else {
+			errorFormat = false;
 		}
 	}
 
@@ -174,8 +180,6 @@ public class HomepageControllerGUI implements Initializable{
 		module.setYearOfTheStudy(integerController(formYear,l_yearOfStudy));
 		//TODO check date
 		module.setStatus("OPEN");
-		//TODO generating code TODO
-		module.setCode("001");
 		return module;
 	}
 
@@ -197,6 +201,8 @@ public class HomepageControllerGUI implements Initializable{
 				alert.showAndWait();
 				e.printStackTrace();
 			}
+		} else {
+			errorFormat = false;
 		}
 	}
 
