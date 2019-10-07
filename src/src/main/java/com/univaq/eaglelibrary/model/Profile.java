@@ -3,6 +3,7 @@ package com.univaq.eaglelibrary.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +33,7 @@ public class Profile {
 	@Column(name = "degreeCourse")
 	private String degreeCourse;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
 	

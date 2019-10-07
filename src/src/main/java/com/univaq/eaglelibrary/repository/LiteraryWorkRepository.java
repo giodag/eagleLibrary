@@ -26,7 +26,7 @@ public interface LiteraryWorkRepository extends JpaRepository<LiteraryWork, Long
 	
 	@Query("select lt from LiteraryWork lt "
 			+ "where 1=1 "
-			+ "and (coalesce(:id, null) is null or lt.id in (:listId)) "
+			+ "and (coalesce(:listId, null) is null or lt.id in (:listId)) "
 			+ "and (coalesce(:category, null) is null or lt.category  =:category) "
 			+ "and (coalesce(:title, null) is null  or lt.title =:title) "
 			+ "and (coalesce(:author, null) is null  or lt.author =:author) "

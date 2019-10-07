@@ -38,10 +38,10 @@ public class ProfileHandler{
 			profileRead.setAddress(!StringUtils.isNullOrEmpty(profileDTO.getAddress()) ? profileDTO.getAddress() : profileRead.getAddress());
 			profileRead.setDateOfBirth(profileDTO.getDateOfBirth() != null ? profileDTO.getDateOfBirth() : profileRead.getDateOfBirth());
 			profileRead.setDegreeCourse(!StringUtils.isNullOrEmpty(profileDTO.getDegreeCourse()) ? profileDTO.getDegreeCourse() : profileRead.getDegreeCourse());
-			profileRead.setEmail(!StringUtils.isNullOrEmpty(profileDTO.getEmail()) ? profileDTO.getEmail() : profileRead.getEmail());
 			profileRead.setId(profileDTO.getId() != null ? profileDTO.getId() : profileRead.getId());
 			profileRead.setMatriculationNumber(!StringUtils.isNullOrEmpty(profileDTO.getMatriculationNumber()) 
 					? profileDTO.getMatriculationNumber() : profileRead.getMatriculationNumber());
+			profileRead.setUser(profileDTO.getUser());
 			profile = convertProfile.convert(profileRead);
 			
 		} else {
@@ -73,8 +73,7 @@ public class ProfileHandler{
 	private void checkMandatory(ProfileDTO profileDTO) throws MandatoryFieldException {
 		if(profileDTO == null || StringUtils.isNullOrEmpty(profileDTO.getAddress())
 				|| profileDTO.getDateOfBirth() == null || StringUtils.isNullOrEmpty(profileDTO.getDegreeCourse()) 
-				|| StringUtils.isNullOrEmpty(profileDTO.getEmail()) || StringUtils.isNullOrEmpty(profileDTO.getMatriculationNumber())
-				|| profileDTO.getUser() == null) {
+				|| StringUtils.isNullOrEmpty(profileDTO.getMatriculationNumber()) || profileDTO.getUser() == null) {
 			throw new MandatoryFieldException();
 		}
 	}

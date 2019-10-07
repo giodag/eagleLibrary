@@ -5,7 +5,6 @@ import java.util.Date;
 public class ProfileDTO {
 
 	private Long id;
-	private String email;
 	private Date dateOfBirth;
 	private String matriculationNumber;
 	private String address;
@@ -19,12 +18,6 @@ public class ProfileDTO {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public Date getDateOfBirth() {
 		return dateOfBirth;
