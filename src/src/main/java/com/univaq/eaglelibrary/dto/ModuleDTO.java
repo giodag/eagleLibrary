@@ -5,7 +5,6 @@ import java.util.Date;
 public class ModuleDTO {
 	
 	private Long id;
-	private String code;
 	private Integer yearOfTheStudy;
 	private Date creationDate;
 	private String comment;
@@ -32,12 +31,6 @@ public class ModuleDTO {
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
 	}
 	public Integer getYearOfTheStudy() {
 		return yearOfTheStudy;

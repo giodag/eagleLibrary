@@ -19,9 +19,6 @@ public class Module {
 	@Id
     @GeneratedValue
 	private Long id;
-
-	@Column(name = "code")
-	private String code;
 	
 	@Column(name = "yearOfTheStudy")
 	private Integer yearOfTheStudy;
@@ -47,14 +44,6 @@ public class Module {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	public Integer getYearOfTheStudy() {

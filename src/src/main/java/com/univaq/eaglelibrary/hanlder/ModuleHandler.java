@@ -27,7 +27,7 @@ public class ModuleHandler {
 	@Autowired
 	private UserRepository userRepository;
 	
-	private final Logger logger = LoggerFactory.getLogger(ModuleHandler.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(ModuleHandler.class);
 
 	public ResultDTO createUpdateModule(ModuleDTO moduleDTO) throws MandatoryFieldException {
 		checkMandatory(moduleDTO);
@@ -35,7 +35,6 @@ public class ModuleHandler {
 		Module module = null;
 		
 		if(moduleRead != null) {
-			moduleRead.setCode(!StringUtils.isNullOrEmpty(moduleDTO.getCode()) ? moduleDTO.getCode() : moduleRead.getCode());
 			moduleRead.setComment(!StringUtils.isNullOrEmpty(moduleDTO.getComment()) ? moduleDTO.getComment() : moduleRead.getComment());
 			moduleRead.setCreationDate(moduleDTO.getCreationDate() != null ? moduleDTO.getCreationDate() : moduleRead.getCreationDate());
 			moduleRead.setId(moduleDTO.getId() != null ? moduleDTO.getId() : moduleRead.getId());
@@ -72,8 +71,7 @@ public class ModuleHandler {
 	}
 
 	private void checkMandatory(ModuleDTO moduleDTO) throws MandatoryFieldException {
-		if(moduleDTO == null || StringUtils.isNullOrEmpty(moduleDTO.getCode())
-				|| moduleDTO.getCreationDate() == null || StringUtils.isNullOrEmpty(moduleDTO.getComment()) 
+		if(moduleDTO == null || moduleDTO.getCreationDate() == null || StringUtils.isNullOrEmpty(moduleDTO.getComment()) 
 				|| StringUtils.isNullOrEmpty(moduleDTO.getStatus()) || moduleDTO.getYearOfTheStudy() == null
 				|| moduleDTO.getUser() == null) {
 			throw new MandatoryFieldException();

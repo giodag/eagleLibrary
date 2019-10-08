@@ -70,6 +70,7 @@ public class LiteraryWorkHanlder {
 		LiteraryWorkListDTO literaryWorkListDTO = null;
 		List<LiteraryWork> literaryWorksFiltered = null;
 		if (literaryWorkListFilterDTO != null) {
+			//--Filter by part of text
 			if (StringUtils.isNotEmpty(literaryWorkListFilterDTO.getPartOfText())) {
 				List<Transcription> transcriptionList = transcriptionRepository
 						.findByTranscriptionLike(literaryWorkListFilterDTO.getPartOfText());
