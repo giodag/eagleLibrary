@@ -1,4 +1,4 @@
-package com.univaq.eaglelibrary.persistence.exceptions;
+package com.univaq.eaglelibrary.exceptions;
 
 public class MandatoryFieldException extends Exception{
 
@@ -17,6 +17,10 @@ public class MandatoryFieldException extends Exception{
 	
 	public MandatoryFieldException(String message, Throwable throwable){
 		super(message, throwable);
+	}
+	
+	public MandatoryFieldException(String message, Object object) throws MandatoryFieldException{
+		super(message+object.toString(), new Throwable());
 	}
 
 }

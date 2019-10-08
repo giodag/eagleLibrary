@@ -16,15 +16,21 @@ import com.univaq.eaglelibrary.dto.LiteraryWorkListDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListFilterDTO;
 import com.univaq.eaglelibrary.dto.PageDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.model.LiteraryWork;
 import com.univaq.eaglelibrary.model.Page;
 import com.univaq.eaglelibrary.model.Transcription;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.repository.LiteraryWorkRepository;
 import com.univaq.eaglelibrary.repository.TranscriptionRepository;
 
 @Component
 public class LiteraryWorkHanlder {
+
+	private static final String PAGES = "Pages";
+	private static final String TITLE = "Title";
+	private static final String CATEGORY = "Category";
+	private static final String AUTHOR = "Author";
+	private static final String ALL = "All";
 
 	@Autowired
 	private LiteraryWorkRepository literaryWorkRepository;
@@ -38,7 +44,8 @@ public class LiteraryWorkHanlder {
 	@Autowired
 	private ConvertTranscription convertTranscription;
 
-	private final Logger logger = LoggerFactory.getLogger(LiteraryWorkHanlder.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(LiteraryWorkHanlder.class);
+	private static final String MISSED_PARAMETER = "Missed parameter :{}";
 
 	public LiteraryWorkDTO readLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
 
@@ -128,9 +135,16 @@ public class LiteraryWorkHanlder {
 	}
 
 	private void checkMandatory(LiteraryWork literaryWork) throws MandatoryFieldException {
-		if (literaryWork == null || literaryWork.getAuthor() == null || literaryWork.getCategory() == null
-				|| literaryWork.getTitle() == null) {
-			throw new MandatoryFieldException();
+		if(literaryWork == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, ALL);
+		}else if(literaryWork.getAuthor() == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, AUTHOR);
+		}else if(literaryWork.getCategory() == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, CATEGORY);
+		}else if(literaryWork.getTitle() == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, TITLE);
+		}else if(literaryWork.getPageList() == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, PAGES);
 		}
 	}
 

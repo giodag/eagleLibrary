@@ -24,6 +24,9 @@ public class Page {
 
 	@Column(name = "chapter")
 	private Integer chapter;
+	
+	@Column(name = "image")
+	private byte[] image;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "transcription_id")

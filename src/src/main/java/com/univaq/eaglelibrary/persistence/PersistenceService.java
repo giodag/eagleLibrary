@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 
-import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
+import com.univaq.eaglelibrary.exceptions.DatabaseException;
 
 public interface PersistenceService {
 	

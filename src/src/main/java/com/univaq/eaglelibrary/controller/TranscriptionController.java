@@ -6,7 +6,7 @@ import com.univaq.eaglelibrary.dto.LockTranscriptionRequestDTO;
 import com.univaq.eaglelibrary.dto.LockTranscriptionResponseDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 
 public interface TranscriptionController {
 	

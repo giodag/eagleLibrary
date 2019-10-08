@@ -5,8 +5,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.univaq.eaglelibrary.controllerImpl.UserControllerImpl;
 import com.univaq.eaglelibrary.dto.UserDTO;
-import com.univaq.eaglelibrary.persistence.exceptions.CreateUserException;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.exceptions.CreateUserException;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.utility.Permission;
 
 import javafx.event.ActionEvent;

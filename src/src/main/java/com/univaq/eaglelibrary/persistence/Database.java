@@ -8,7 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
+import com.univaq.eaglelibrary.exceptions.DatabaseException;
 
 public abstract class Database implements PersistenceService {
 	

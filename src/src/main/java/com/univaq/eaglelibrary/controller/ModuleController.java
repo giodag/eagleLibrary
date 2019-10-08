@@ -2,8 +2,8 @@ package com.univaq.eaglelibrary.controller;
 
 import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
-import com.univaq.eaglelibrary.persistence.exceptions.CreateModuleException;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.exceptions.CreateModuleException;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 
 public interface ModuleController {
 

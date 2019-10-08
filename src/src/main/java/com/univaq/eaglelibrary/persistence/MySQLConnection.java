@@ -17,7 +17,7 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.univaq.eaglelibrary.persistence.exceptions.DatabaseException;
+import com.univaq.eaglelibrary.exceptions.DatabaseException;
 
 public class MySQLConnection extends Database {
 

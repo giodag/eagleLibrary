@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import com.univaq.eaglelibrary.controller.ModuleController;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
+import com.univaq.eaglelibrary.exceptions.CreateModuleException;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.hanlder.ModuleHandler;
-import com.univaq.eaglelibrary.persistence.exceptions.CreateModuleException;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
 @Service
 public class ModuleControllerImpl implements ModuleController {

@@ -9,9 +9,9 @@ import com.mysql.cj.util.StringUtils;
 import com.univaq.eaglelibrary.converter.ConvertModule;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.model.Module;
 import com.univaq.eaglelibrary.model.User;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.repository.ModuleRepository;
 import com.univaq.eaglelibrary.repository.UserRepository;
 

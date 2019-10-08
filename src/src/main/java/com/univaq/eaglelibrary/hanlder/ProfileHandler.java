@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import com.mysql.cj.util.StringUtils;
 import com.univaq.eaglelibrary.converter.ConvertProfile;
 import com.univaq.eaglelibrary.dto.ProfileDTO;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.model.Profile;
 import com.univaq.eaglelibrary.model.User;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.repository.ProfileRepository;
 import com.univaq.eaglelibrary.repository.UserRepository;
 

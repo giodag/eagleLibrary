@@ -1,7 +1,7 @@
 package com.univaq.eaglelibrary.controller;
 
 import com.univaq.eaglelibrary.dto.ProfileDTO;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 
 public interface ProfileController {
 	

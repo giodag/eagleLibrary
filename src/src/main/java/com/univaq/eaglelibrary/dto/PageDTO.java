@@ -7,9 +7,16 @@ public class PageDTO {
 	private Integer chapter;
 	private TranscriptionDTO transcriptionDTO;
 	private Long idLiteraryWork;
+	private byte[] image;
 	
 	//-- Getter and Setter
 	
+	public byte[] getImage() {
+		return image;
+	}
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 	public Long getIdLiteraryWork() {
 		return idLiteraryWork;
 	}

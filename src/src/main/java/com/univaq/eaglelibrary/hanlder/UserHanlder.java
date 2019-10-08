@@ -10,11 +10,11 @@ import com.univaq.eaglelibrary.converter.ConvertUser;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.exceptions.CreateUserException;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.exceptions.UserNotFoundException;
+import com.univaq.eaglelibrary.exceptions.WrongPasswordException;
 import com.univaq.eaglelibrary.model.User;
-import com.univaq.eaglelibrary.persistence.exceptions.CreateUserException;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
-import com.univaq.eaglelibrary.persistence.exceptions.UserNotFoundException;
-import com.univaq.eaglelibrary.persistence.exceptions.WrongPasswordException;
 import com.univaq.eaglelibrary.repository.UserRepository;
 
 @Component

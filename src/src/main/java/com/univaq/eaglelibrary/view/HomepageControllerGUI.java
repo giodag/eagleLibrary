@@ -24,8 +24,8 @@ import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.ProfileDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
-import com.univaq.eaglelibrary.persistence.exceptions.CreateModuleException;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.exceptions.CreateModuleException;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
