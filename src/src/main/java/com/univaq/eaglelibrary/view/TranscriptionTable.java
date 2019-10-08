@@ -1,5 +1,6 @@
 package com.univaq.eaglelibrary.view;
 
+import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 
 public class TranscriptionTable {
@@ -8,6 +9,16 @@ public class TranscriptionTable {
 	private String title;
 	private String year;
 	private String status;
+	
+	public TranscriptionTable(LiteraryWorkDTO literaryWorkDTO) {
+		if(literaryWorkDTO != null) {
+			author = literaryWorkDTO.getAuthor();
+			title = literaryWorkDTO.getTitle();
+			if(literaryWorkDTO.getYear() != null) {
+				year = literaryWorkDTO.getYear().toString();
+			}
+		}
+	}
 	
 	public TranscriptionTable(TranscriptionDTO transcription) {
 		if(transcription != null) {

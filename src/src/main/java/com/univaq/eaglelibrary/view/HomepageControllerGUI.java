@@ -54,7 +54,7 @@ public class HomepageControllerGUI implements Initializable{
 	private Label l_profile,l_search,l_transcription,l_module,l_logout,l_upload,l_yearOfStudy,l_yearUpload,l_year;
 
 	@FXML
-	private AnchorPane top,a_module,a_searchOpera,a_upload,a_trascription,a_profile;
+	private AnchorPane top,a_module,a_searchOpera,a_upload,a_trascription,a_profile,a_searchList;
 
 	@FXML
 	private Button b_chooseFile,b_send,b_saerchOpera,saveProfile,uploadOpera;
@@ -74,11 +74,12 @@ public class HomepageControllerGUI implements Initializable{
 	
     @FXML
     private TableColumn<TranscriptionTable, String> titleColumn,authorColumn,yearColumn,statusColumn,
-    	titleColumnC,authorColumnC,yearColumnC,statusColumnC;
+    	titleColumnC,authorColumnC,yearColumnC,statusColumnC,titleSearchColumn,authorSearchColumn,yearSearchColumn;
 
     @FXML
-    private TableView<TranscriptionTable> trascriptionTable,trascriptionTableClosed;
+    private TableView<TranscriptionTable> trascriptionTable,trascriptionTableClosed,searchTable;
 
+    private Stage ownStage;
 	private ApplicationContext context;
 	private UserDTO user;
 	final FileChooser fileChooser = new FileChooser();
@@ -129,12 +130,21 @@ public class HomepageControllerGUI implements Initializable{
     	if(!errorFormat) {
     		LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
         	LiteraryWorkListDTO literaryWorkListRead = literaryWorkControllerImpl.getLiteraryWork(literaryWorkListFilterDTO);
-         	//TODO open a new window a lato di quella principale con la lista delle opere
+         	if(literaryWorkListRead != null && literaryWorkListRead.getLiteraryWorkList() != null 
+         			&& !literaryWorkListRead.getLiteraryWorkList().isEmpty()) {
+         		buildSearchList(literaryWorkListRead.getLiteraryWorkList());
+         	} else {
+         		Alert alert = new Alert(AlertType.WARNING);
+				alert.setHeaderText("Nessuna opera corrisponde ai filtri inseriti");
+				alert.showAndWait();
+         	}
+         	a_searchList.setVisible(true);
+        	ownStage.setHeight(720);
     	} else {
 			errorFormat = false;
 		}
     }
-	
+
 	private LiteraryWorkListFilterDTO buildLiteraryWorkFilter() {
 		LiteraryWorkListFilterDTO literaryWorkListFilterDTO = new LiteraryWorkListFilterDTO();
 		literaryWorkListFilterDTO.setAuthor(StringUtils.isEmpty(t_author.getText()) ? null : t_author.getText());
@@ -214,6 +224,8 @@ public class HomepageControllerGUI implements Initializable{
 			a_module.setVisible(false);
 			a_trascription.setVisible(false);
 			a_upload.setVisible(false);
+			a_searchList.setVisible(false);
+			ownStage.setHeight(523);
 		} else {
 			if(eventMuose.getSource() == l_search) {
 				a_searchOpera.setVisible(true);
@@ -221,6 +233,8 @@ public class HomepageControllerGUI implements Initializable{
 				a_module.setVisible(false);
 				a_trascription.setVisible(false);
 				a_upload.setVisible(false);
+				a_searchList.setVisible(false);
+				ownStage.setHeight(523);
 			} else {
 				if(eventMuose.getSource() == l_module) {
 					a_profile.setVisible(false);
@@ -228,6 +242,8 @@ public class HomepageControllerGUI implements Initializable{
 					a_module.setVisible(true);
 					a_trascription.setVisible(false);
 					a_upload.setVisible(false);
+					a_searchList.setVisible(false);
+					ownStage.setHeight(523);
 				} else {
 					if(eventMuose.getSource() == l_upload) {
 						a_profile.setVisible(false);
@@ -235,6 +251,8 @@ public class HomepageControllerGUI implements Initializable{
 						a_module.setVisible(false);
 						a_trascription.setVisible(false);
 						a_upload.setVisible(true);
+						a_searchList.setVisible(false);
+						ownStage.setHeight(523);
 					} else {
 						if(eventMuose.getSource() == l_transcription) {
 							a_profile.setVisible(false);
@@ -242,6 +260,8 @@ public class HomepageControllerGUI implements Initializable{
 							a_module.setVisible(false);
 							a_trascription.setVisible(true);
 							a_upload.setVisible(false);
+							a_searchList.setVisible(false);
+							ownStage.setHeight(523);
 						} else {
 							if(eventMuose.getSource() == l_logout) {
 								Stage stage = (Stage) l_logout.getScene().getWindow();
@@ -255,6 +275,7 @@ public class HomepageControllerGUI implements Initializable{
 	}
 
 	public void init(Stage stage) {
+		ownStage = stage;
 		user = (UserDTO) stage.getUserData();
 		ProfileDTO profile = getProfile(context,user);
 		decorateProfileInfo(profile,user);
@@ -356,6 +377,16 @@ public class HomepageControllerGUI implements Initializable{
 		trascriptionTableClosed.setItems(trascriptionClosed);
 		
 	}
+	
+	private void buildSearchList(List<LiteraryWorkDTO> literaryWorkList) {
+		buildSearchColumn();
+		ObservableList<TranscriptionTable> operaList = FXCollections.observableArrayList();
+		for (LiteraryWorkDTO literaryWorkRead : literaryWorkList) {
+			TranscriptionTable transcriptionTable = new TranscriptionTable(literaryWorkRead);
+			operaList.add(transcriptionTable);
+		}
+		searchTable.setItems(operaList);
+	}
 
 	private void buildColumn() {
 		statusColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("status"));
@@ -366,6 +397,12 @@ public class HomepageControllerGUI implements Initializable{
 		authorColumnC.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("author"));
 		titleColumnC.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("title"));
 		yearColumnC.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("year"));
+	}
+	
+	private void buildSearchColumn() {
+		authorSearchColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("author"));
+		titleSearchColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("title"));
+		yearSearchColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("year"));
 	}
 	
 	private Date formatDate(String date) {  

@@ -131,5 +131,24 @@
             <TextField fx:id="p_dateBirth" layoutX="355.0" layoutY="179.0" prefHeight="26.0" prefWidth="192.0" promptText="gg/mm/aaaa" />
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="a_searchList" layoutY="526.0" prefHeight="197.0" prefWidth="686.0" visible="false">
+         <children>
+            <ScrollPane layoutY="-1.0" prefHeight="202.0" prefWidth="686.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="202.0" prefWidth="685.0">
+                     <children>
+                        <TableView fx:id="searchTable" layoutX="14.0" layoutY="14.0" prefHeight="138.0" prefWidth="670.0">
+                           <columns>
+                              <TableColumn fx:id="titleSearchColumn" prefWidth="234.40002727508545" text="Titolo" />
+                              <TableColumn fx:id="authorSearchColumn" prefWidth="204.7999725341797" text="Autore" />
+                              <TableColumn fx:id="yearSearchColumn" prefWidth="79.20001220703125" text="Anno" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
