@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.univaq.eaglelibrary.controller.ModuleController;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
+import com.univaq.eaglelibrary.exceptions.CannotUpdateModuleException;
 import com.univaq.eaglelibrary.exceptions.CreateModuleException;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.hanlder.ModuleHandler;
@@ -20,7 +21,7 @@ public class ModuleControllerImpl implements ModuleController {
 	@Autowired
 	private ModuleHandler moduleHandler;
 
-	public ResultDTO submitModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CreateModuleException {
+	public ResultDTO submitModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CreateModuleException, CannotUpdateModuleException {
 		logger.debug("start submitModule");
 		ResultDTO resultDTO = null;
 		ModuleDTO moduleRead = this.moduleHandler.readModule(moduleDTO);
@@ -39,7 +40,7 @@ public class ModuleControllerImpl implements ModuleController {
 		return moduleDTORead;
 	}
 
-	public ResultDTO validateModule(ModuleDTO moduleDTO) throws MandatoryFieldException {
+	public ResultDTO validateModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CannotUpdateModuleException {
 		logger.debug("start validateModule");
 		ResultDTO resultDTO = null;
 		resultDTO = this.moduleHandler.createUpdateModule(moduleDTO);

@@ -26,7 +26,7 @@ public class ProfileHandler{
 	@Autowired
 	private ConvertProfile convertProfile;
 	
-	private final Logger logger = LoggerFactory.getLogger(ProfileHandler.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(ProfileHandler.class);
 
 	public ProfileDTO createUpdateProfile(ProfileDTO profileDTO) throws MandatoryFieldException {
 		
