@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -13,7 +14,8 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.view.HomepageControllerGUI">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="686.0" 
+	xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.view.HomepageControllerGUI">
    <children>
       <AnchorPane fx:id="top" prefHeight="78.0" prefWidth="686.0" style="-fx-background-color: #e1cc4f;">
          <children>
@@ -45,7 +47,7 @@
             <Label layoutX="42.0" layoutY="167.0" text="Parte del testo" />
             <TextArea fx:id="t_partOfText" layoutX="200.0" layoutY="167.0" prefHeight="110.0" prefWidth="417.0" />
          </children>
-      </AnchorPane>
+	  </AnchorPane>
       <AnchorPane fx:id="a_module" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
          <children>
 			<Polygon fill="#f3f3f3" layoutX="511.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
@@ -67,11 +69,11 @@
             <Label fx:id="l_yearUpload" layoutX="345.0" layoutY="133.0" text="Anno" />
             <TextField fx:id="t_yearUpload" layoutX="391.0" layoutY="130.0" prefHeight="26.0" prefWidth="104.0" />
             <TextField fx:id="t_chooseFile" editable="false" layoutX="246.0" layoutY="203.0" prefHeight="26.0" prefWidth="315.0" />
-            <Button fx:id="uploadOpera" layoutX="311.0" layoutY="302.0" mnemonicParsing="false" onAction="#uploadOpera" text="Upload" />
+            <Button fx:id="uploadPage" layoutX="297.0" layoutY="302.0" mnemonicParsing="false" onAction="#uploadPage" text="Upload Page" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="a_trascription" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
-		<children>
+		 <children>
 			<Polygon fill="#f3f3f3" layoutX="384.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
             <ScrollPane layoutX="12.0" layoutY="41.0" prefHeight="155.0" prefWidth="662.0">
               <content>
@@ -109,7 +111,7 @@
             </ScrollPane>
 		 </children>
 	  </AnchorPane>
-      <AnchorPane fx:id="a_profile" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
+      <AnchorPane fx:id="a_profile" layoutY="92.0" prefHeight="429.0" prefWidth="694.0" visible="false">
          <children>
             <Label layoutX="167.0" layoutY="43.0" text="Nome" />
             <Label layoutX="167.0" layoutY="78.0" text="Cognome" />
@@ -125,10 +127,10 @@
             <TextField fx:id="p_lastname" layoutX="355.0" layoutY="74.0" prefHeight="26.0" prefWidth="192.0" />
             <TextField fx:id="p_username" layoutX="355.0" layoutY="109.0" prefHeight="26.0" prefWidth="192.0" />
             <TextField fx:id="p_email" layoutX="355.0" layoutY="144.0" prefHeight="26.0" prefWidth="192.0" />
+            <TextField fx:id="p_dateBirth" layoutX="355.0" layoutY="179.0" prefHeight="26.0" prefWidth="192.0" promptText="gg/mm/aaaa" />
             <TextField fx:id="p_matnumber" layoutX="355.0" layoutY="214.0" prefHeight="26.0" prefWidth="192.0" />
             <TextField fx:id="p_address" layoutX="355.0" layoutY="249.0" prefHeight="26.0" prefWidth="192.0" />
             <TextField fx:id="p_degree" layoutX="355.0" layoutY="284.0" prefHeight="26.0" prefWidth="192.0" />
-            <TextField fx:id="p_dateBirth" layoutX="355.0" layoutY="179.0" prefHeight="26.0" prefWidth="192.0" promptText="gg/mm/aaaa" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="a_searchList" layoutY="526.0" prefHeight="197.0" prefWidth="686.0" visible="false">
@@ -150,5 +152,20 @@
             </ScrollPane>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="a_uploadPage" layoutX="695.0" prefHeight="523.0" prefWidth="523.0">
+         <children>
+            <ScrollPane layoutX="14.0" layoutY="12.0" prefHeight="494.0" prefWidth="370.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="492.0">
+                     <children>
+                        <ImageView fx:id="pageView" fitHeight="571.0" fitWidth="492.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></AnchorPane>
+              </content>
+            </ScrollPane>
+            <Button fx:id="savePage" layoutX="409.0" layoutY="102.0" mnemonicParsing="false" onAction="#savePage" prefHeight="32.0" prefWidth="95.0" text="Save Page" />
+            <Button fx:id="discardPage" layoutX="409.0" layoutY="204.0" mnemonicParsing="false" onAction="#discardPage" style="-fx-background-color: red;" text="Discard Page" />
+            <Button fx:id="saveOpera" layoutX="430.0" layoutY="460.0" mnemonicParsing="false" onAction="#saveOpera" text="Finish" />
+         </children>
+	  </AnchorPane>
    </children>
 </AnchorPane>

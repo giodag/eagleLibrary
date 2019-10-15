@@ -5,6 +5,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -43,6 +44,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -54,10 +57,10 @@ public class HomepageControllerGUI implements Initializable{
 	private Label l_profile,l_search,l_transcription,l_module,l_logout,l_upload,l_yearOfStudy,l_yearUpload,l_year;
 
 	@FXML
-	private AnchorPane top,a_module,a_searchOpera,a_upload,a_trascription,a_profile,a_searchList;
+	private AnchorPane top,a_module,a_searchOpera,a_upload,a_trascription,a_profile,a_searchList,a_uploadPage;
 
 	@FXML
-	private Button b_chooseFile,b_send,b_saerchOpera,saveProfile,uploadOpera;
+	private Button b_chooseFile,b_send,b_saerchOpera,saveProfile,uploadPage;
 
 	@FXML
 	private TextField t_year,t_author,t_title,p_name,p_lastname,p_username,p_email,p_matnumber,p_dateBirth,
@@ -78,21 +81,27 @@ public class HomepageControllerGUI implements Initializable{
 
     @FXML
     private TableView<TranscriptionTable> trascriptionTable,trascriptionTableClosed,searchTable;
+    
+    @FXML
+    private ImageView pageView;
 
     private Stage ownStage;
 	private ApplicationContext context;
 	private UserDTO user;
+	private File page;
+	private List<File> pageList;
 	final FileChooser fileChooser = new FileChooser();
 	//errorNumber mi serve per capire se sono stati inseriti dati sbagliati oppure nulli
 	private boolean errorFormat;
 
 	@FXML
-    void uploadOpera(ActionEvent event) {
+    void saveOpera(ActionEvent event) {
 		LiteraryWorkDTO literaryWorkDTO = buildLiteraryWork(); 
 		if(!errorFormat) {
 			LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
 			try {
 				literaryWorkControllerImpl.createUpdateLiteraryWork(literaryWorkDTO);
+				pageList = null;
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setHeaderText("Opera salvata correttamente");
 				alert.showAndWait();
@@ -118,11 +127,36 @@ public class HomepageControllerGUI implements Initializable{
 
 	@FXML
 	void chooseFile(MouseEvent event) {
-
-		File file = fileChooser.showOpenDialog(l_logout.getScene().getWindow());
-
-		//TODO call service to store file 
+		page = fileChooser.showOpenDialog(l_logout.getScene().getWindow());
+		if(page != null) {
+			t_chooseFile.setText(page.getName());
+		}
 	}
+	
+    @FXML
+    void uploadPage(ActionEvent event) {
+    	if(page != null) {
+    		a_uploadPage.setVisible(true);
+    		ownStage.setWidth(1240);
+    		Image image = new Image(page.toURI().toString());
+    	    pageView.setImage(image);
+    	}
+    }
+	
+    @FXML
+    void discardPage(ActionEvent event) {
+    	page = null;
+    	pageView.setImage(null);
+    }
+   
+    @FXML
+    void savePage(ActionEvent event) {
+    	if(pageList == null) {
+    		pageList = new ArrayList<File>();
+    	}
+    	pageList.add(page);
+    	page = null;
+    }
 	
     @FXML
     void searchLiteraryWork(ActionEvent event) {
@@ -139,7 +173,7 @@ public class HomepageControllerGUI implements Initializable{
 				alert.showAndWait();
          	}
          	a_searchList.setVisible(true);
-        	ownStage.setHeight(720);
+        	ownStage.setHeight(774);
     	} else {
 			errorFormat = false;
 		}
@@ -225,7 +259,10 @@ public class HomepageControllerGUI implements Initializable{
 			a_trascription.setVisible(false);
 			a_upload.setVisible(false);
 			a_searchList.setVisible(false);
-			ownStage.setHeight(523);
+			a_uploadPage.setVisible(false);
+			ownStage.setHeight(570);
+			ownStage.setWidth(703);
+			pageList = null;
 		} else {
 			if(eventMuose.getSource() == l_search) {
 				a_searchOpera.setVisible(true);
@@ -234,7 +271,10 @@ public class HomepageControllerGUI implements Initializable{
 				a_trascription.setVisible(false);
 				a_upload.setVisible(false);
 				a_searchList.setVisible(false);
-				ownStage.setHeight(523);
+				a_uploadPage.setVisible(false);
+				ownStage.setHeight(570);
+				ownStage.setWidth(703);
+				pageList = null;
 			} else {
 				if(eventMuose.getSource() == l_module) {
 					a_profile.setVisible(false);
@@ -243,7 +283,10 @@ public class HomepageControllerGUI implements Initializable{
 					a_trascription.setVisible(false);
 					a_upload.setVisible(false);
 					a_searchList.setVisible(false);
-					ownStage.setHeight(523);
+					a_uploadPage.setVisible(false);
+					ownStage.setHeight(570);
+					ownStage.setWidth(703);
+					pageList = null;
 				} else {
 					if(eventMuose.getSource() == l_upload) {
 						a_profile.setVisible(false);
@@ -252,7 +295,10 @@ public class HomepageControllerGUI implements Initializable{
 						a_trascription.setVisible(false);
 						a_upload.setVisible(true);
 						a_searchList.setVisible(false);
-						ownStage.setHeight(523);
+						a_uploadPage.setVisible(false);
+						ownStage.setHeight(570);
+						ownStage.setWidth(703);
+						pageList = null;
 					} else {
 						if(eventMuose.getSource() == l_transcription) {
 							a_profile.setVisible(false);
@@ -261,7 +307,10 @@ public class HomepageControllerGUI implements Initializable{
 							a_trascription.setVisible(true);
 							a_upload.setVisible(false);
 							a_searchList.setVisible(false);
-							ownStage.setHeight(523);
+							a_uploadPage.setVisible(false);
+							ownStage.setHeight(570);
+							ownStage.setWidth(703);
+							pageList = null;
 						} else {
 							if(eventMuose.getSource() == l_logout) {
 								Stage stage = (Stage) l_logout.getScene().getWindow();
