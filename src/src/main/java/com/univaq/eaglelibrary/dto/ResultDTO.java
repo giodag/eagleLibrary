@@ -2,6 +2,15 @@ package com.univaq.eaglelibrary.dto;
 
 public class ResultDTO {
 	
+	public ResultDTO() {
+		super();
+	}
+	
+	public ResultDTO(Boolean successfullyOperation) {
+		super();
+		this.successfullyOperation = successfullyOperation;
+	}
+
 	private Boolean successfullyOperation;
 	private String message;
 	

@@ -38,7 +38,7 @@ public class TranscriptionHanlder {
 	@Autowired
 	private ConvertPages convertPages;
 
-	private final Logger logger = LoggerFactory.getLogger(TranscriptionHanlder.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(TranscriptionHanlder.class);
 	
 	public TranscriptionDTO createUpdateTranscription(TranscriptionDTO transcriptionDTO) {
 		if(transcriptionDTO != null) {

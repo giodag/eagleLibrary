@@ -10,15 +10,23 @@ import com.univaq.eaglelibrary.converter.ConvertUser;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.exceptions.CreateUserException;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.exceptions.UserNotFoundException;
+import com.univaq.eaglelibrary.exceptions.WrongPasswordException;
 import com.univaq.eaglelibrary.model.User;
-import com.univaq.eaglelibrary.persistence.exceptions.CreateUserException;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
-import com.univaq.eaglelibrary.persistence.exceptions.UserNotFoundException;
-import com.univaq.eaglelibrary.persistence.exceptions.WrongPasswordException;
 import com.univaq.eaglelibrary.repository.UserRepository;
 
 @Component
 public class UserHanlder {
+
+	private static final String PASSWORD = "Password";
+	private static final String USERNAME = "Username";
+	private static final String LAST_NAME = "LastName";
+	private static final String FIRST_NAME = "FirstName";
+	private static final String EMAIL = "Email";
+	private static final String ALL = "All";
+	private static final String MISSED_PARAMETER = "Missed parameter :{}";
 
 	private final Logger logger = LoggerFactory.getLogger(UserHanlder.class);
 	
@@ -42,7 +50,7 @@ public class UserHanlder {
 					throw new WrongPasswordException("Wrong password");
 				}
 			} else {
-				logger.error("User"+ loginRequestDTO.getUser() + "does not exist");
+				logger.error("User {} does not exist",loginRequestDTO.getUser());
 				throw new UserNotFoundException("User "+ loginRequestDTO.getUser() + " does not exist");
 			}
 		} else  {
@@ -76,7 +84,7 @@ public class UserHanlder {
 			resultDTO = new ResultDTO();
 			resultDTO.setSuccessfullyOperation(Boolean.TRUE);
 		}else {
-			logger.error("Error in creation User :"+userDTO.getUsername());
+			logger.error("Error in creation User : {}",userDTO.getUsername());
 			throw new CreateUserException("Error in creation User :"+userDTO.getUsername());
 		}
 		
@@ -84,19 +92,25 @@ public class UserHanlder {
 	}
 
 	private void checkMandatory(UserDTO userDTO)throws MandatoryFieldException{
-		if(userDTO == null
-				|| StringUtils.isNullOrEmpty(userDTO.getEmail())
-				|| StringUtils.isNullOrEmpty(userDTO.getFirstName())
-				|| StringUtils.isNullOrEmpty(userDTO.getLastName())
-				|| StringUtils.isNullOrEmpty(userDTO.getUsername())
-				|| StringUtils.isNullOrEmpty(userDTO.getPassword())
-				|| userDTO.getPermission() == null) {
-			throw new MandatoryFieldException();
-		}
 		
+			if(userDTO == null) {
+				throw new MandatoryFieldException(MISSED_PARAMETER, ALL);
+			}else if(StringUtils.isNullOrEmpty(userDTO.getEmail())) {
+				throw new MandatoryFieldException(MISSED_PARAMETER, EMAIL);
+			}else if(StringUtils.isNullOrEmpty(userDTO.getFirstName())) {
+				throw new MandatoryFieldException(MISSED_PARAMETER, FIRST_NAME);
+			}else if(StringUtils.isNullOrEmpty(userDTO.getLastName())) {
+				throw new MandatoryFieldException(MISSED_PARAMETER, LAST_NAME);
+			}else if(StringUtils.isNullOrEmpty(userDTO.getUsername())) {
+				throw new MandatoryFieldException(MISSED_PARAMETER, USERNAME);
+			}else if(StringUtils.isNullOrEmpty(userDTO.getPassword())) {
+				throw new MandatoryFieldException(MISSED_PARAMETER, PASSWORD);
+			}else if(userDTO.getPermission() == null) {
+				throw new MandatoryFieldException();
+			}
 	}
 
 	public ResultDTO logout(UserDTO userDTO) {
-		return null;
+		return new ResultDTO(Boolean.TRUE);
 	}
 }

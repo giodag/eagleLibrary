@@ -1,6 +1,5 @@
 package com.univaq.eaglelibrary.dto;
 
-import java.util.Date;
 import java.util.List;
 
 public class LiteraryWorkListFilterDTO {

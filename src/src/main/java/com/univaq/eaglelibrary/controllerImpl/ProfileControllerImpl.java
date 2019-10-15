@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.univaq.eaglelibrary.controller.ProfileController;
 import com.univaq.eaglelibrary.dto.ProfileDTO;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.hanlder.ProfileHandler;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
 @Service
 public class ProfileControllerImpl implements ProfileController {

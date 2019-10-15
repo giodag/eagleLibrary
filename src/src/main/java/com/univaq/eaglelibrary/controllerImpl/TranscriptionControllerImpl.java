@@ -18,10 +18,10 @@ import com.univaq.eaglelibrary.dto.PageDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.hanlder.PageHandler;
 import com.univaq.eaglelibrary.hanlder.TranscriptionHanlder;
 import com.univaq.eaglelibrary.hanlder.UserHanlder;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
 @Service
 public class TranscriptionControllerImpl implements TranscriptionController {

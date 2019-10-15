@@ -10,8 +10,8 @@ import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListFilterDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.hanlder.LiteraryWorkHanlder;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 
 @Service
 public class LiteraryWorkControllerImpl implements LiteraryWorkController {

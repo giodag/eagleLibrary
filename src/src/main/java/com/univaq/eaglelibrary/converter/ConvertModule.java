@@ -18,7 +18,6 @@ public class ConvertModule {
 		if(moduleDTO != null) {
 			module = new Module();
 			
-			module.setCode(moduleDTO.getCode());
 			module.setComment(moduleDTO.getComment());
 			module.setCreationDate(moduleDTO.getCreationDate());
 			module.setId(moduleDTO.getId());
@@ -35,7 +34,6 @@ public class ConvertModule {
 		if(module != null) {
 			moduleDTO = new ModuleDTO();
 			
-			moduleDTO.setCode(module.getCode());
 			moduleDTO.setComment(module.getComment());
 			moduleDTO.setCreationDate(module.getCreationDate());
 			moduleDTO.setId(module.getId());

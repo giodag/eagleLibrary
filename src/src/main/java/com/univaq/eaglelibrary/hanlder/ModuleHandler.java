@@ -1,5 +1,9 @@
 package com.univaq.eaglelibrary.hanlder;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +13,23 @@ import com.mysql.cj.util.StringUtils;
 import com.univaq.eaglelibrary.converter.ConvertModule;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
+import com.univaq.eaglelibrary.exceptions.CannotUpdateModuleException;
+import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.model.Module;
 import com.univaq.eaglelibrary.model.User;
-import com.univaq.eaglelibrary.persistence.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.repository.ModuleRepository;
 import com.univaq.eaglelibrary.repository.UserRepository;
 
 @Component
 public class ModuleHandler {
+	
+	private static final String UTENTE = "Utente";
+	private static final String ANNO_DI_STUDIO = "Anno di studio";
+	private static final String COMMENT = "Comment";
+	private static final String ALL = "All";
+	private static final String MISSED_PARAMETER = "Missed parameter :{}";
+	private static final String ERROR = "It is impossible to submit the request at the moment. \r\n" + 
+			"Please try again in days: {}.";
 	
 	@Autowired
 	private ConvertModule convertModule;
@@ -27,15 +40,27 @@ public class ModuleHandler {
 	@Autowired
 	private UserRepository userRepository;
 	
-	private final Logger logger = LoggerFactory.getLogger(ModuleHandler.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(ModuleHandler.class);
 
-	public ResultDTO createUpdateModule(ModuleDTO moduleDTO) throws MandatoryFieldException {
+	public ResultDTO createUpdateModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CannotUpdateModuleException {
 		checkMandatory(moduleDTO);
 		ModuleDTO moduleRead = readModule(moduleDTO);
+		
+		Date oneYearAgo = getOneYearAgo();
+		
+		if(moduleRead != null 
+				&& moduleRead.getCreationDate().compareTo(oneYearAgo)>0 
+				&& moduleRead.getStatus().equalsIgnoreCase("Rejected")) {
+			
+			long diffInMillies = Math.abs(moduleRead.getCreationDate().getTime() - oneYearAgo.getTime());
+		    Long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+		    LOGGER.error("Ancora non sono trascorsi i 365 giorni per poter inviare nuovamente il modulo. Mancano {}", diff.toString());
+			throw new CannotUpdateModuleException(ERROR+diff.toString());
+		}
+		
 		Module module = null;
 		
 		if(moduleRead != null) {
-			moduleRead.setCode(!StringUtils.isNullOrEmpty(moduleDTO.getCode()) ? moduleDTO.getCode() : moduleRead.getCode());
 			moduleRead.setComment(!StringUtils.isNullOrEmpty(moduleDTO.getComment()) ? moduleDTO.getComment() : moduleRead.getComment());
 			moduleRead.setCreationDate(moduleDTO.getCreationDate() != null ? moduleDTO.getCreationDate() : moduleRead.getCreationDate());
 			moduleRead.setId(moduleDTO.getId() != null ? moduleDTO.getId() : moduleRead.getId());
@@ -46,16 +71,20 @@ public class ModuleHandler {
 		} else {
 			module = convertModule.convert(moduleDTO);
 		}
-		
 		Module result = moduleRepository.save(module);
-		
 		ResultDTO resultDTO = null;
 		if (result != null) {
 			resultDTO = new ResultDTO();
 			resultDTO.setSuccessfullyOperation(Boolean.TRUE);
 		}
-		
 		return resultDTO;
+	}
+
+	private Date getOneYearAgo() {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, -1); 
+		Date previousYear = cal.getTime();
+		return previousYear;
 	}
 
 	public ModuleDTO readModule(ModuleDTO moduleDTO) {
@@ -72,11 +101,14 @@ public class ModuleHandler {
 	}
 
 	private void checkMandatory(ModuleDTO moduleDTO) throws MandatoryFieldException {
-		if(moduleDTO == null || StringUtils.isNullOrEmpty(moduleDTO.getCode())
-				|| moduleDTO.getCreationDate() == null || StringUtils.isNullOrEmpty(moduleDTO.getComment()) 
-				|| StringUtils.isNullOrEmpty(moduleDTO.getStatus()) || moduleDTO.getYearOfTheStudy() == null
-				|| moduleDTO.getUser() == null) {
-			throw new MandatoryFieldException();
+		if(moduleDTO == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, ALL);
+		}else if(StringUtils.isNullOrEmpty(moduleDTO.getComment())) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, COMMENT);
+		}else if(moduleDTO.getYearOfTheStudy() == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, ANNO_DI_STUDIO);
+		}else if(moduleDTO.getUser() == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, UTENTE);
 		}
 	}
 
