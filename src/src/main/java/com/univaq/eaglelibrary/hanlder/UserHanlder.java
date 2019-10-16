@@ -26,7 +26,7 @@ public class UserHanlder {
 	private static final String FIRST_NAME = "FirstName";
 	private static final String EMAIL = "Email";
 	private static final String ALL = "All";
-	private static final String MISSED_PARAMETER = "Missed parameter :{}";
+	private static final String MISSED_PARAMETER = "Missed parameter : ";
 
 	private final Logger logger = LoggerFactory.getLogger(UserHanlder.class);
 	

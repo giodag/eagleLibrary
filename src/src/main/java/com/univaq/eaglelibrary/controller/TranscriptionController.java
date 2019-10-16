@@ -18,5 +18,4 @@ public interface TranscriptionController {
 	public ResultDTO publishTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException;
 	public TranscriptionDTO saveTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException;
 	
-	
 }

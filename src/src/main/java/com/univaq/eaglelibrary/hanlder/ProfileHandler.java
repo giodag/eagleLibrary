@@ -17,6 +17,16 @@ import com.univaq.eaglelibrary.repository.UserRepository;
 @Component
 public class ProfileHandler{
 	
+	private static final String USER = "User";
+
+	private static final String MATRICULATION_NUMBER = "MatriculationNumber";
+
+	private static final String DEGREE_COURSE = "DegreeCourse";
+
+	private static final String DATE_OF_BIRTH = "DateOfBirth";
+
+	private static final String ADDRESS = "Address";
+
 	@Autowired
 	private ProfileRepository profileRepository;
 	
@@ -27,7 +37,15 @@ public class ProfileHandler{
 	private ConvertProfile convertProfile;
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(ProfileHandler.class);
+	private static final String MISSED_PARAMETER = "Missed parameter : ";
+	private static final String ALL = "All";
 
+	/**
+	 * 
+	 * @param profileDTO
+	 * @return
+	 * @throws MandatoryFieldException
+	 */
 	public ProfileDTO createUpdateProfile(ProfileDTO profileDTO) throws MandatoryFieldException {
 		
 		checkMandatory(profileDTO);
@@ -70,12 +88,24 @@ public class ProfileHandler{
 		return convertProfile.convert(profile);
 	}
 	
+	/**
+	 * 
+	 * @param profileDTO
+	 * @throws MandatoryFieldException
+	 */
 	private void checkMandatory(ProfileDTO profileDTO) throws MandatoryFieldException {
-		if(profileDTO == null || StringUtils.isNullOrEmpty(profileDTO.getAddress())
-				|| profileDTO.getDateOfBirth() == null || StringUtils.isNullOrEmpty(profileDTO.getDegreeCourse()) 
-				|| StringUtils.isNullOrEmpty(profileDTO.getMatriculationNumber()) || profileDTO.getUser() == null) {
-			throw new MandatoryFieldException();
+		if(profileDTO == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, ALL);
+		}else if(StringUtils.isNullOrEmpty(profileDTO.getAddress())) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, ADDRESS);
+		}else if(profileDTO.getDateOfBirth() == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, DATE_OF_BIRTH);
+		}else if(StringUtils.isNullOrEmpty(profileDTO.getDegreeCourse()) ) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, DEGREE_COURSE);
+		}else if(StringUtils.isNullOrEmpty(profileDTO.getMatriculationNumber())) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, MATRICULATION_NUMBER);
+		}else if(profileDTO.getUser() == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, USER);
 		}
 	}
-		
 }

@@ -3,7 +3,6 @@ package com.univaq.eaglelibrary.dto;
 import java.util.List;
 
 import com.univaq.eaglelibrary.utility.Permission;
-import com.univaq.eaglelibrary.view.TranscriptionTable;
 
 public class UserDTO {
 	
@@ -16,16 +15,9 @@ public class UserDTO {
 	private Enum<Permission> permission;
 	private List<TranscriptionDTO> transcriptionList;
 	private String password;
-	private TranscriptionTable transcriptionTable;
 	
 	//-- Getter and Setter --//
 
-	public TranscriptionTable getTranscriptionTable() {
-		return transcriptionTable;
-	}
-	public void setTranscriptionTable(TranscriptionTable transcriptionTable) {
-		this.transcriptionTable = transcriptionTable;
-	}
 	public String getPassword() {
 		return password;
 	}
@@ -38,7 +30,6 @@ public class UserDTO {
 	public void setActivated(Boolean activated) {
 		this.activated = activated;
 	}
-	
 	public Enum<Permission> getPermission() {
 		return permission;
 	}

@@ -40,6 +40,11 @@ public class TranscriptionHanlder {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(TranscriptionHanlder.class);
 	
+	/**
+	 * 
+	 * @param transcriptionDTO
+	 * @return
+	 */
 	public TranscriptionDTO createUpdateTranscription(TranscriptionDTO transcriptionDTO) {
 		if(transcriptionDTO != null) {
 			Transcription transcription = getTranscriptionEntity(transcriptionDTO);
@@ -81,6 +86,11 @@ public class TranscriptionHanlder {
 		return transcription;
 	}
 
+	/**
+	 * 
+	 * @param transcriptionDTO
+	 * @return
+	 */
 	@Transactional
 	public List<TranscriptionDTO> readTranscriptionList(TranscriptionDTO transcriptionDTO) {
 		List<TranscriptionDTO> transcriptionListRead = null;

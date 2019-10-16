@@ -45,7 +45,7 @@ public class LiteraryWorkHanlder {
 	private ConvertTranscription convertTranscription;
 
 	private final Logger LOGGER = LoggerFactory.getLogger(LiteraryWorkHanlder.class);
-	private static final String MISSED_PARAMETER = "Missed parameter :{}";
+	private static final String MISSED_PARAMETER = "Missed parameter : ";
 
 	public LiteraryWorkDTO readLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
 

@@ -27,7 +27,7 @@ public class ModuleHandler {
 	private static final String ANNO_DI_STUDIO = "Anno di studio";
 	private static final String COMMENT = "Comment";
 	private static final String ALL = "All";
-	private static final String MISSED_PARAMETER = "Missed parameter :{}";
+	private static final String MISSED_PARAMETER = "Missed parameter : ";
 	private static final String ERROR = "It is impossible to submit the request at the moment. \r\n" + 
 			"Please try again in days: {}.";
 	

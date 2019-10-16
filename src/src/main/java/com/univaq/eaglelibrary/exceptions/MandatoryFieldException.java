@@ -19,7 +19,7 @@ public class MandatoryFieldException extends Exception{
 		super(message, throwable);
 	}
 	
-	public MandatoryFieldException(String message, Object object) throws MandatoryFieldException{
+	public MandatoryFieldException(String message, Object object){
 		super(message+object.toString(), new Throwable());
 	}
 
