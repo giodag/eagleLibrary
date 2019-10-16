@@ -1,7 +1,9 @@
 package com.univaq.eaglelibrary.view;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +24,7 @@ import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListFilterDTO;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
+import com.univaq.eaglelibrary.dto.PageDTO;
 import com.univaq.eaglelibrary.dto.ProfileDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
@@ -32,8 +35,12 @@ import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -41,6 +48,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -51,6 +59,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class HomepageControllerGUI implements Initializable{
     
@@ -77,8 +86,8 @@ public class HomepageControllerGUI implements Initializable{
 	private CheckBox c_trascription;
 	
     @FXML
-    private TableColumn<TranscriptionTable, String> titleColumn,authorColumn,yearColumn,statusColumn,
-    	titleColumnC,authorColumnC,yearColumnC,statusColumnC,titleSearchColumn,authorSearchColumn,yearSearchColumn;
+    private TableColumn<TranscriptionTable, String> titleColumn,authorColumn,yearColumn,statusColumn,pageColumn,
+    	titleColumnC,authorColumnC,yearColumnC,statusColumnC,pageColumnC,titleSearchColumn,authorSearchColumn,yearSearchColumn;
 
     @FXML
     private TableView<TranscriptionTable> trascriptionTable,trascriptionTableClosed,searchTable;
@@ -123,7 +132,35 @@ public class HomepageControllerGUI implements Initializable{
 		literaryWorkDTO.setTitle(t_titleUpload.getText());
 		literaryWorkDTO.setYear(integerController(t_yearUpload,l_yearUpload));
 		literaryWorkDTO.setCategory(co_categoryUpload.getValue());
+		literaryWorkDTO.setPageList(buildPageList());
 		return literaryWorkDTO;
+	}
+
+	private List<PageDTO> buildPageList() {
+		List<PageDTO> pageListToStore = null;
+		if(pageList != null && !pageList.isEmpty()) {
+			pageListToStore = new ArrayList<PageDTO>();
+			Integer pageNumber = 0;
+			for (File filePage : pageList) {
+				pageListToStore.add(buildPageDTO(filePage, pageNumber));
+				pageNumber += 1;
+			}
+		}
+		return pageListToStore;
+	}
+
+	private PageDTO buildPageDTO(File filePage,Integer pageNumber){
+		PageDTO pageToStore = new PageDTO();
+		byte[] fileContent = null;
+		try {
+			fileContent = Files.readAllBytes(filePage.toPath());
+		} catch (IOException e) {
+			// TODO gestire l'errore
+			e.printStackTrace();
+		}
+		pageToStore.setImage(fileContent);
+		pageToStore.setPageNumber(pageNumber);
+		return pageToStore;
 	}
 
 	@FXML
@@ -402,6 +439,7 @@ public class HomepageControllerGUI implements Initializable{
 	}
 
 	private void initializeTrascriptionTable() {
+		setTableRowDoubleClick();
 		TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
 		TranscriptionDTO transcriptionDTO = new TranscriptionDTO();
 		transcriptionDTO.setUsername(user.getUsername());
@@ -409,6 +447,56 @@ public class HomepageControllerGUI implements Initializable{
 		if(transcriptions != null && !transcriptions.isEmpty()) {
 			buildTransactionTable(transcriptions);
 		}	
+	}
+
+	private void setTableRowDoubleClick() {
+		trascriptionTable.setRowFactory( new Callback<TableView<TranscriptionTable>, TableRow<TranscriptionTable>>() {
+			public TableRow<TranscriptionTable> call(TableView<TranscriptionTable> tv) {
+			    final TableRow<TranscriptionTable> row = new TableRow<TranscriptionTable>();
+			    row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+					    if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+					    	TranscriptionTable rowData = row.getItem();
+					    	Stage stage = (Stage) l_profile.getScene().getWindow();
+				            stage.close();
+				            
+				        	String fxmlFile = "/fxml/transcriptionPage.fxml";
+
+				    		FXMLLoader loader = new FXMLLoader();
+				    		Parent rootNode = null;
+				    		try {
+				    			rootNode = loader.load(getClass().getResourceAsStream(fxmlFile));
+				    		} catch (Exception e) {
+				    			e.printStackTrace();
+				    		}	
+				    		stage = new Stage();
+				    		Scene scene = new Scene(rootNode);
+				    		stage.setScene(scene);
+				    		user.setTranscriptionTable(rowData);
+				    		stage.setUserData(user);
+				    		TranscriptionControllerGUI controller = (TranscriptionControllerGUI)loader.getController();
+				    		controller.init(stage); 
+				    		stage.show();
+					    }
+					}
+				});
+			    return row ;
+			}
+		});
+		searchTable.setRowFactory( new Callback<TableView<TranscriptionTable>, TableRow<TranscriptionTable>>() {
+			public TableRow<TranscriptionTable> call(TableView<TranscriptionTable> tv) {
+			    final TableRow<TranscriptionTable> row = new TableRow<TranscriptionTable>();
+			    row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+					    if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+					    	TranscriptionTable rowData = row.getItem();
+					        System.out.println(rowData);
+					    }
+					}
+				});
+			    return row ;
+			}
+		});
 	}
 
 	private void buildTransactionTable(List<TranscriptionDTO> transcriptions) {
@@ -443,10 +531,12 @@ public class HomepageControllerGUI implements Initializable{
 		authorColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("author"));
 		titleColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("title"));
 		yearColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("year"));
+		pageColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("page"));
 		statusColumnC.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("status"));
 		authorColumnC.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("author"));
 		titleColumnC.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("title"));
 		yearColumnC.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("year"));
+		pageColumnC.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("page"));
 	}
 	
 	private void buildSearchColumn() {

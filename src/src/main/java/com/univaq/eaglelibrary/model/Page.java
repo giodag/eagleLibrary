@@ -78,4 +78,11 @@ public class Page {
 		this.chapter = chapter;
 	}
 
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 }

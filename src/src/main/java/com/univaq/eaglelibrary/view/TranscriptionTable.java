@@ -9,7 +9,8 @@ public class TranscriptionTable {
 	private String title;
 	private String year;
 	private String status;
-	
+	private String page;
+
 	public TranscriptionTable(LiteraryWorkDTO literaryWorkDTO) {
 		if(literaryWorkDTO != null) {
 			author = literaryWorkDTO.getAuthor();
@@ -29,6 +30,9 @@ public class TranscriptionTable {
 				if(transcription.getLiteraryWork().getYear() != null) {
 					year = transcription.getLiteraryWork().getYear().toString();
 				}
+			}
+			if(transcription.getPage() != null && transcription.getPage().getPageNumber() != null) {
+				page = transcription.getPage().getPageNumber().toString();
 			}
 		}		
 	}
@@ -56,5 +60,11 @@ public class TranscriptionTable {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getPage() {
+		return page;
+	}
+	public void setPage(String page) {
+		this.page = page;
 	}
 }
