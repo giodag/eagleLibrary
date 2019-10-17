@@ -16,19 +16,19 @@ import javafx.stage.Stage;
 
 public class TranscriptionControllerGUI implements Initializable{
 	
-    @FXML
-    private TextArea transcription;
-
-    @FXML
-    private ImageView viewPage;
+//    @FXML
+//    private TextArea transcription;
+//
+//    @FXML
+//    private ImageView viewPage;
     
-	private UserDTO user;
-	private ApplicationContext context;
+//	private UserDTO user;
+//	private ApplicationContext context;
 
 	public void init(Stage stage) {
 		//ownStage = stage;
-		user = (UserDTO) stage.getUserData();
-		initializeGUI();
+//		user = (UserDTO) stage.getUserData();
+//		initializeGUI();
 	}
 
 	private void initializeGUI() {
@@ -37,11 +37,11 @@ public class TranscriptionControllerGUI implements Initializable{
 	}
 	
 	public void initialize(URL location, ResourceBundle resources) {
-		getContext();
+//		getContext();
 	}
 	
-	private ApplicationContext getContext() {
-		context = new ClassPathXmlApplicationContext("spring-context.xml");
-		return context;
-	}
+//	private ApplicationContext getContext() {
+//		context = new ClassPathXmlApplicationContext("spring-context.xml");
+//		return context;
+//	}
 }
