@@ -7,7 +7,9 @@ import com.univaq.eaglelibrary.dto.LockTranscriptionResponseDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
-
+/**
+ * Controller per le trascrizione, funge da canale tra la parte view e la parte che fa logica computazionale.
+ */
 public interface TranscriptionController {
 	
 	public TranscriptionDTO submitTranscription(TranscriptionDTO transcriptionDTO) throws MandatoryFieldException;

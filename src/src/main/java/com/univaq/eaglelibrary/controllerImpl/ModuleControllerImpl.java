@@ -1,7 +1,5 @@
 package com.univaq.eaglelibrary.controllerImpl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,39 +11,34 @@ import com.univaq.eaglelibrary.exceptions.CreateModuleException;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.hanlder.ModuleHandler;
 
+/**
+ * L'implementazione dell'interfaccia controller, orchestra le chiamate verso il
+ * core computazionale del sistema minimizzando così gli impatti tra la parte
+ * view e la parte logica nel caso di change requests.
+ */
 @Service
 public class ModuleControllerImpl implements ModuleController {
 
-	private final Logger logger = LoggerFactory.getLogger(ModuleControllerImpl.class);
+	private static final String MODULE_ALREADY_SENT = "Module already sent";
+
 
 	@Autowired
 	private ModuleHandler moduleHandler;
 
-	public ResultDTO submitModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CreateModuleException, CannotUpdateModuleException {
-		logger.debug("start submitModule");
-		ResultDTO resultDTO = null;
+	public ResultDTO submitModule(ModuleDTO moduleDTO)throws MandatoryFieldException, CreateModuleException, CannotUpdateModuleException {
 		ModuleDTO moduleRead = this.moduleHandler.readModule(moduleDTO);
-		if(moduleRead != null) {
-			throw new CreateModuleException("Module already sent");
+		if (moduleRead != null) {
+			throw new CreateModuleException(MODULE_ALREADY_SENT);
 		}
-		resultDTO = this.moduleHandler.createUpdateModule(moduleDTO);
-		logger.debug("finish submitModule");
-		return resultDTO;
+		return this.moduleHandler.createUpdateModule(moduleDTO);
 	}
 
 	public ModuleDTO getModule(ModuleDTO moduleDTO) {
-		logger.debug("start getModule");
-		ModuleDTO moduleDTORead = this.moduleHandler.readModule(moduleDTO);
-		logger.debug("finish getModule");
-		return moduleDTORead;
+		return this.moduleHandler.readModule(moduleDTO);
 	}
 
 	public ResultDTO validateModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CannotUpdateModuleException {
-		logger.debug("start validateModule");
-		ResultDTO resultDTO = null;
-		resultDTO = this.moduleHandler.createUpdateModule(moduleDTO);
-		logger.debug("finish validateModule");
-		return resultDTO;
+		return this.moduleHandler.createUpdateModule(moduleDTO);
 	}
 
 }

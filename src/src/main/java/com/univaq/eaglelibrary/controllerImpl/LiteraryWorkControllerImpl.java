@@ -1,7 +1,5 @@
 package com.univaq.eaglelibrary.controllerImpl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,41 +10,30 @@ import com.univaq.eaglelibrary.dto.LiteraryWorkListFilterDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.hanlder.LiteraryWorkHanlder;
-
+/**
+ * L'implementazione dell'interfaccia controller, orchestra le chiamate verso il core computazionale 
+ * del sistema minimizzando così gli impatti tra la parte view e la parte logica nel caso di change requests.
+ */
 @Service
 public class LiteraryWorkControllerImpl implements LiteraryWorkController {
 
-	private final Logger logger = LoggerFactory.getLogger(LiteraryWorkControllerImpl.class);
-	
 	@Autowired
 	private LiteraryWorkHanlder literaryWorkHanlder; 
 	
 	public LiteraryWorkDTO getLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
-		logger.debug("Start getLiteraryWork ");
-		LiteraryWorkDTO literaryWorkDTORead = literaryWorkHanlder.readLiteraryWork(literaryWorkDTO);
-		logger.debug("Finish getLiteraryWork ");
-		return literaryWorkDTORead;
+		return literaryWorkHanlder.readLiteraryWork(literaryWorkDTO);
 	}
 
 	public LiteraryWorkDTO getLiteraryWorkTranscribed(LiteraryWorkDTO literaryWorkDTO) {
-		logger.debug("Start getLiteraryWorkTranscribed ");
-		LiteraryWorkDTO literaryWorkDTORead = literaryWorkHanlder.readLiteraryWorkTranscribed(literaryWorkDTO);
-		logger.debug("Finish getLiteraryWorkTranscribed ");
-		return literaryWorkDTORead;
+		return literaryWorkHanlder.readLiteraryWorkTranscribed(literaryWorkDTO);
 	}
 
 	public LiteraryWorkListDTO getLiteraryWork(LiteraryWorkListFilterDTO literaryWorkListFilterDTO) {
-		logger.debug("Start getLiteraryWorkFilter ");
-		LiteraryWorkListDTO literaryWorkListDTO = literaryWorkHanlder.readLiteraryWorkList(literaryWorkListFilterDTO);
-		logger.debug("Finish getLiteraryWorkFilter ");
-		return literaryWorkListDTO;
+		return literaryWorkHanlder.readLiteraryWorkList(literaryWorkListFilterDTO);
 	}
 
 	public ResultDTO createUpdateLiteraryWork(LiteraryWorkDTO literaryWorkDTO) throws MandatoryFieldException {
-		logger.debug("Start createUpdateLiteraryWork ");
-		ResultDTO resultDTO = literaryWorkHanlder.createUpdateLiteraryWork(literaryWorkDTO);
-		logger.debug("Finish createUpdateLiteraryWork ");
-		return resultDTO;
+		return literaryWorkHanlder.createUpdateLiteraryWork(literaryWorkDTO);
 	}
 
 }

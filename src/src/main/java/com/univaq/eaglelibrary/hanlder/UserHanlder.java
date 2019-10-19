@@ -110,7 +110,7 @@ public class UserHanlder {
 			}
 	}
 
-	public ResultDTO logout(UserDTO userDTO) {
+	public ResultDTO logout() {
 		return new ResultDTO(Boolean.TRUE);
 	}
 }

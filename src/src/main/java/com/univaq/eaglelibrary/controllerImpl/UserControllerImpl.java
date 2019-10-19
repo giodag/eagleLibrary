@@ -1,7 +1,5 @@
 package com.univaq.eaglelibrary.controllerImpl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,29 +12,25 @@ import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.exceptions.UserNotFoundException;
 import com.univaq.eaglelibrary.exceptions.WrongPasswordException;
 import com.univaq.eaglelibrary.hanlder.UserHanlder;
-
+/**
+ * L'implementazione dell'interfaccia controller, orchestra le chiamate verso il core computazionale 
+ * del sistema minimizzando così gli impatti tra la parte view e la parte logica nel caso di change requests.
+ */
 @Service
 public class UserControllerImpl implements UserController {
 	
 	@Autowired
 	private UserHanlder userHanlder;
-	private final Logger logger = LoggerFactory.getLogger(UserControllerImpl.class);
 
 	public UserDTO login(LoginRequestDTO loginRequestDTO) throws UserNotFoundException, MandatoryFieldException, WrongPasswordException {
-		logger.debug("Start login");
-		UserDTO userDTO = userHanlder.login(loginRequestDTO);
-		return userDTO;
+		return userHanlder.login(loginRequestDTO);
 	}
 
 	public ResultDTO registration(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
-		logger.debug("Start registration");
-		ResultDTO resultDTO = userHanlder.createUpdateUser(userDTO);
-		return resultDTO;
+		return userHanlder.createUpdateUser(userDTO);
 	}
 
-	public ResultDTO logout(UserDTO userDTO) {
-		logger.debug("Start logout");
-		ResultDTO resultDTO = this.userHanlder.logout(userDTO);
-		return resultDTO;
+	public ResultDTO logout() {
+		return this.userHanlder.logout();
 	}
 }

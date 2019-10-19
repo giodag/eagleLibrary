@@ -22,7 +22,10 @@ import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.hanlder.PageHandler;
 import com.univaq.eaglelibrary.hanlder.TranscriptionHanlder;
 import com.univaq.eaglelibrary.hanlder.UserHanlder;
-
+/**
+ * L'implementazione dell'interfaccia controller, orchestra le chiamate verso il core computazionale 
+ * del sistema minimizzando così gli impatti tra la parte view e la parte logica nel caso di change requests.
+ */
 @Service
 public class TranscriptionControllerImpl implements TranscriptionController {
 
