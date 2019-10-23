@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.view.AdministratorControllerGUI">
+   <children>
+      <AnchorPane fx:id="top" prefHeight="78.0" prefWidth="686.0" style="-fx-background-color: #e1cc4f;">
+         <children>
+            <Label fx:id="l_assign" layoutX="14.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Assegna Trascrizione" />
+            <Label fx:id="l_transcriptor" layoutX="161.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Trascrittori" />
+            <Label fx:id="l_transcription" layoutX="361.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Trascrizioni" />
+            <Label fx:id="l_module" layoutX="465.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Moduli Trascrittore" />
+            <Label fx:id="l_logout" layoutX="614.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Logout" />
+            <Label fx:id="l_upload" layoutX="249.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Upload Opera" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="161.0" layoutY="21.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="251.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="362.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="459.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="611.0" layoutY="23.0" startX="-19.600051879882812" startY="39.60000228881836" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="a_transcriptor" layoutY="92.0" prefHeight="430.0" prefWidth="686.0" visible="false">
+         <children>
+            <Polygon fill="#f3f3f3" layoutX="195.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+            <TableView fx:id="trascriptorTable1" layoutX="54.0" layoutY="54.0" prefHeight="188.0" prefWidth="195.0">
+               <columns>
+                  <TableColumn fx:id="usernameColumnT" prefWidth="193.6000213623047" text="Username" />
+               </columns>
+            </TableView>
+            <Label layoutX="54.0" layoutY="22.0" text="Trascrittori:" />
+            <Label layoutX="327.0" layoutY="173.0" text="Livello" />
+            <TextField fx:id="t_level" layoutX="473.0" layoutY="169.0" />
+            <Label layoutX="327.0" layoutY="42.0" text="Nome" />
+            <Label layoutX="328.0" layoutY="87.0" text="Cognome" />
+            <Label layoutX="328.0" layoutY="126.0" text="Corso" />
+            <TextField fx:id="t_nameT" editable="false" layoutX="473.0" layoutY="38.0" />
+            <TextField fx:id="t_lastNameT" editable="false" layoutX="473.0" layoutY="83.0" />
+            <TextField fx:id="t_degreeT" editable="false" layoutX="473.0" layoutY="122.0" />
+            <Button fx:id="saveTranscriptor" layoutX="421.0" layoutY="217.0" mnemonicParsing="false" onAction="#saveTranscriptor" text="Save" />
+            <TableView fx:id="trascriptionTable2" layoutX="28.0" layoutY="263.0" prefHeight="118.0" prefWidth="630.0">
+               <columns>
+                  <TableColumn fx:id="titleColumnT" prefWidth="207.19997787475586" text="Titolo" />
+                  <TableColumn fx:id="authorColumnT" prefWidth="231.2000274658203" text="Autore" />
+                  <TableColumn fx:id="yearColumnT" prefWidth="74.39996337890625" text="Anno" />
+                  <TableColumn fx:id="pageColumnT" prefWidth="73.60003662109375" text="Pagina" />
+                  <TableColumn fx:id="statusColumnT" minWidth="9.599990844726562" prefWidth="119.199951171875" text="Stato" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="a_module" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
+         <children>
+            <Polygon fill="#f3f3f3" layoutX="520.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+            <Button fx:id="b_acceptForm" layoutX="98.0" layoutY="336.0" mnemonicParsing="false" onAction="#acceptForm" text="Accetta" />
+            <Label fx:id="l_yearOfStudy" layoutX="367.0" layoutY="159.0" text="Anno di studio" />
+            <Label layoutX="367.0" layoutY="215.0" text="Commento" />
+            <TextField fx:id="t_yearStudy" editable="false" layoutX="512.0" layoutY="155.0" />
+            <TextArea fx:id="t_comment" editable="false" layoutX="367.0" layoutY="251.0" prefHeight="110.0" prefWidth="293.0" />
+            <Label layoutX="366.0" layoutY="35.0" text="Nome" />
+            <Label layoutX="367.0" layoutY="80.0" text="Cognome" />
+            <Label layoutX="367.0" layoutY="119.0" text="Corso" />
+            <TextField fx:id="t_name" editable="false" layoutX="512.0" layoutY="31.0" />
+            <TextField fx:id="t_lastName" editable="false" layoutX="512.0" layoutY="76.0" />
+            <TextField fx:id="t_degree" editable="false" layoutX="512.0" layoutY="115.0" />
+            <Button fx:id="rejectForm" layoutX="216.0" layoutY="336.0" mnemonicParsing="false" onAction="#rejectForm" text="Rifiuta" />
+            <TableView fx:id="formTable" layoutX="81.0" layoutY="28.0" prefHeight="279.0" prefWidth="195.0">
+               <columns>
+                  <TableColumn fx:id="usernameColumn" prefWidth="193.6000213623047" text="Username" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="a_upload" layoutY="92.0" prefHeight="430.0" prefWidth="686.0" visible="false">
+         <children>
+            <Polygon fill="#f3f3f3" layoutX="295.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+            <Button fx:id="b_chooseFile" layoutX="62.0" layoutY="199.0" mnemonicParsing="false" onMouseClicked="#chooseFile" prefHeight="32.0" prefWidth="129.0" text="Scegli il file..." />
+            <Label fx:id="l_titleUpload" layoutX="63.0" layoutY="47.0" prefHeight="56.0" prefWidth="50.0" text="Titolo" />
+            <TextField fx:id="t_titleUpload" layoutX="155.0" layoutY="62.0" prefHeight="26.0" prefWidth="181.0" />
+            <TextField fx:id="t_authorUpload" layoutX="457.0" layoutY="62.0" prefHeight="26.0" prefWidth="182.0" />
+            <Label layoutX="380.0" layoutY="66.0" text="Autore" />
+            <ComboBox fx:id="co_categoryUpload" layoutX="127.0" layoutY="128.0" prefHeight="30.0" prefWidth="130.0" promptText="Genere" />
+            <Label fx:id="l_yearUpload" layoutX="345.0" layoutY="133.0" text="Anno" />
+            <TextField fx:id="t_yearUpload" layoutX="391.0" layoutY="130.0" prefHeight="26.0" prefWidth="104.0" />
+            <TextField fx:id="t_chooseFile" editable="false" layoutX="246.0" layoutY="203.0" prefHeight="26.0" prefWidth="315.0" />
+            <Button fx:id="uploadPage" layoutX="297.0" layoutY="302.0" mnemonicParsing="false" onAction="#uploadPage" text="Upload Page" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="a_trascription" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
+         <children>
+            <Polygon fill="#f3f3f3" layoutX="400.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+            <ScrollPane layoutX="14.0" layoutY="238.0" prefHeight="155.0" prefWidth="662.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="157.0" prefWidth="664.0">
+                     <children>
+                        <TableView fx:id="trascriptionTable" layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="629.0">
+                           <columns>
+                              <TableColumn fx:id="titleColumnC" prefWidth="207.19997787475586" text="Titolo" />
+                              <TableColumn fx:id="authorColumnC" prefWidth="231.2000274658203" text="Autore" />
+                              <TableColumn fx:id="yearColumnC" prefWidth="74.39996337890625" text="Anno" />
+                              <TableColumn fx:id="pageColumnC" prefWidth="73.60003662109375" text="Pagina" />
+                              <TableColumn fx:id="statusColumnC" minWidth="9.599990844726562" prefWidth="119.199951171875" text="Stato" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+            <Label layoutX="55.0" layoutY="26.0" prefHeight="56.0" prefWidth="50.0" text="Titolo" />
+            <TextField fx:id="t_titleSearch" layoutX="147.0" layoutY="41.0" prefHeight="26.0" prefWidth="181.0" />
+            <TextField fx:id="t_authorSearch" layoutX="449.0" layoutY="41.0" prefHeight="26.0" prefWidth="182.0" />
+            <Label layoutX="372.0" layoutY="45.0" text="Autore" />
+            <ComboBox fx:id="co_categorySearch" layoutX="119.0" layoutY="107.0" prefHeight="30.0" prefWidth="130.0" promptText="Genere" />
+            <Label fx:id="l_yearSearch" layoutX="337.0" layoutY="112.0" text="Anno" />
+            <TextField fx:id="t_yearSearch" layoutX="383.0" layoutY="109.0" prefHeight="26.0" prefWidth="104.0" />
+            <Button fx:id="search" layoutX="303.0" layoutY="170.0" mnemonicParsing="false" onAction="#search" text="Search" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="a_assign" layoutY="92.0" prefHeight="429.0" prefWidth="694.0">
+         <children>
+            <TableView fx:id="assignTable" layoutX="32.0" layoutY="41.0" prefHeight="118.0" prefWidth="630.0">
+               <columns>
+                  <TableColumn fx:id="titleColumnA" prefWidth="207.19997787475586" text="Titolo" />
+                  <TableColumn fx:id="authorColumnA" prefWidth="231.2000274658203" text="Autore" />
+                  <TableColumn fx:id="yearColumnA" prefWidth="74.39996337890625" text="Anno" />
+                  <TableColumn fx:id="pageColumnA" prefWidth="73.60003662109375" text="Pagina" />
+                  <TableColumn fx:id="statusColumnA" minWidth="9.599990844726562" prefWidth="119.199951171875" text="Stato" />
+               </columns>
+            </TableView>
+            <Polygon fill="#f3f3f3" layoutX="80.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+            <Label layoutX="32.0" layoutY="5.0" text="Lista trascrizioni:" />
+            <TableView fx:id="transcriptorTableAA" layoutX="32.0" layoutY="222.0" prefHeight="127.0" prefWidth="254.0">
+               <columns>
+                  <TableColumn fx:id="usernameColumnAA" prefWidth="168.00003051757812" text="Username" />
+                  <TableColumn fx:id="levelColumnAA" prefWidth="80.00006103515625" text="Livello" />
+               </columns>
+            </TableView>
+            <Label layoutX="32.0" layoutY="182.0" text="Trascrittori assegnati:" />
+            <TableView fx:id="transcriptorTableA" layoutX="355.0" layoutY="222.0" prefHeight="127.0" prefWidth="254.0">
+               <columns>
+                  <TableColumn fx:id="usernameColumnA" prefWidth="168.00003051757812" text="Username" />
+                  <TableColumn fx:id="usernameColumnA" prefWidth="80.00006103515625" text="Livello" />
+               </columns>
+            </TableView>
+            <Label layoutX="355.0" layoutY="182.0" text="Trascrittori disponibili:" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="a_uploadPage" layoutX="686.0" layoutY="-8.0" prefHeight="523.0" prefWidth="523.0" visible="false">
+         <children>
+            <ScrollPane layoutX="14.0" layoutY="12.0" prefHeight="494.0" prefWidth="370.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="492.0">
+                     <children>
+                        <ImageView fx:id="viewPage" fitHeight="513.0" fitWidth="495.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+            <Button fx:id="savePage" layoutX="409.0" layoutY="102.0" mnemonicParsing="false" onAction="#savePage" prefHeight="32.0" prefWidth="95.0" text="Save Page" />
+            <Button fx:id="discardPage" layoutX="409.0" layoutY="204.0" mnemonicParsing="false" onAction="#discardPage" style="-fx-background-color: red;" text="Discard Page" />
+            <Button fx:id="saveOpera" layoutX="430.0" layoutY="460.0" mnemonicParsing="false" onAction="#saveOpera" text="Finish" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

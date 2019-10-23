@@ -5,7 +5,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -13,28 +12,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="686.0" 
 	xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.view.HomepageControllerGUI">
-   <children>
+    <children>
       <AnchorPane fx:id="top" prefHeight="78.0" prefWidth="686.0" style="-fx-background-color: #e1cc4f;">
          <children>
             <Label fx:id="l_profile" layoutX="34.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Profilo" />
-            <Label fx:id="l_search" layoutX="117.0" layoutY="30.0" onMousePressed="#handleButtonAction" text="Cerca Opera" />
-            <Label fx:id="l_transcription" layoutX="343.0" layoutY="30.0" onMousePressed="#handleButtonAction" text="Trascrizioni" />
-            <Label fx:id="l_module" layoutX="450.0" layoutY="29.0" onMousePressed="#handleButtonAction" text="Modulo Trascrittore" />
-            <Label fx:id="l_logout" layoutX="614.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Logout" />
-            <Label fx:id="l_upload" layoutX="220.0" layoutY="30.0" onMousePressed="#handleButtonAction" text="Upload Opera" />
-            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="117.0" layoutY="23.0" startX="-19.600051879882812" startY="39.60000228881836" />
-            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="231.0" layoutY="23.0" startX="-19.600051879882812" startY="39.60000228881836" />
-            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="347.0" layoutY="23.0" startX="-19.600051879882812" startY="39.60000228881836" />
-            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="453.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
-            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="611.0" layoutY="23.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Label fx:id="l_search" layoutX="139.0" layoutY="30.0" onMousePressed="#handleButtonAction" text="Cerca Opera" />
+            <Label fx:id="l_transcription" layoutX="285.0" layoutY="29.0" onMousePressed="#handleButtonAction" text="Trascrizioni" />
+            <Label fx:id="l_module" layoutX="428.0" layoutY="30.0" onMousePressed="#handleButtonAction" text="Modulo Trascrittore" />
+            <Label fx:id="l_logout" layoutX="604.0" layoutY="30.0" onMousePressed="#handleButtonAction" text="Logout" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="127.0" layoutY="23.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="268.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="414.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="598.0" layoutY="23.0" startX="-19.600051879882812" startY="39.60000228881836" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="a_searchOpera" layoutY="92.0" prefHeight="430.0" prefWidth="686.0">
          <children>
-            <Polygon fill="#f3f3f3" layoutX="162.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+            <Polygon fill="#f3f3f3" layoutX="187.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
             <Label layoutX="42.0" layoutY="21.0" prefHeight="56.0" prefWidth="50.0" text="Titolo" />
             <TextField fx:id="t_title" layoutX="134.0" layoutY="36.0" prefHeight="26.0" prefWidth="181.0" />
             <ComboBox fx:id="co_category" layoutX="42.0" layoutY="90.0" prefHeight="30.0" prefWidth="130.0" promptText="Genere" />
@@ -50,31 +48,16 @@
 	  </AnchorPane>
       <AnchorPane fx:id="a_module" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
          <children>
-			<Polygon fill="#f3f3f3" layoutX="511.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+			<Polygon fill="#f3f3f3" layoutX="490.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
             <Button fx:id="b_send" layoutX="289.0" layoutY="331.0" mnemonicParsing="false" onAction="#sendForm" text="Send" />
             <Label fx:id="l_yearOfStudy" layoutX="137.0" layoutY="84.0" text="Anno di studio" />
             <Label layoutX="137.0" layoutY="160.0" text="Commento" />
             <TextField fx:id="formYear" layoutX="316.0" layoutY="80.0" />
             <TextArea fx:id="formComment" layoutX="316.0" layoutY="152.0" prefHeight="110.0" prefWidth="293.0" />
          </children></AnchorPane>
-      <AnchorPane fx:id="a_upload" layoutY="92.0" prefHeight="430.0" prefWidth="686.0" visible="false">
-         <children>
-            <Polygon fill="#f3f3f3" layoutX="273.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
-            <Button fx:id="b_chooseFile" layoutX="62.0" layoutY="199.0" mnemonicParsing="false" onMouseClicked="#chooseFile" prefHeight="32.0" prefWidth="129.0" text="Scegli il file..." />
-            <Label fx:id="l_titleUpload" layoutX="63.0" layoutY="47.0" prefHeight="56.0" prefWidth="50.0" text="Titolo" />
-            <TextField fx:id="t_titleUpload" layoutX="155.0" layoutY="62.0" prefHeight="26.0" prefWidth="181.0" />
-            <TextField fx:id="t_authorUpload" layoutX="457.0" layoutY="62.0" prefHeight="26.0" prefWidth="182.0" />
-            <Label layoutX="380.0" layoutY="66.0" text="Autore" />
-            <ComboBox fx:id="co_categoryUpload" layoutX="127.0" layoutY="128.0" prefHeight="30.0" prefWidth="130.0" promptText="Genere" />
-            <Label fx:id="l_yearUpload" layoutX="345.0" layoutY="133.0" text="Anno" />
-            <TextField fx:id="t_yearUpload" layoutX="391.0" layoutY="130.0" prefHeight="26.0" prefWidth="104.0" />
-            <TextField fx:id="t_chooseFile" editable="false" layoutX="246.0" layoutY="203.0" prefHeight="26.0" prefWidth="315.0" />
-            <Button fx:id="uploadPage" layoutX="297.0" layoutY="302.0" mnemonicParsing="false" onAction="#uploadPage" text="Upload Page" />
-         </children>
-      </AnchorPane>
       <AnchorPane fx:id="a_trascription" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
 		 <children>
-			<Polygon fill="#f3f3f3" layoutX="384.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+			<Polygon fill="#f3f3f3" layoutX="330.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
             <ScrollPane layoutX="12.0" layoutY="41.0" prefHeight="155.0" prefWidth="662.0">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="157.0" prefWidth="664.0">
@@ -154,20 +137,10 @@
             </ScrollPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="a_uploadPage" layoutX="695.0" prefHeight="523.0" prefWidth="523.0">
-         <children>
-            <ScrollPane layoutX="14.0" layoutY="12.0" prefHeight="494.0" prefWidth="370.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="492.0">
-                     <children>
-                        <ImageView fx:id="pageView" fitHeight="571.0" fitWidth="492.0" pickOnBounds="true" preserveRatio="true" />
-                     </children></AnchorPane>
-              </content>
-            </ScrollPane>
-            <Button fx:id="savePage" layoutX="409.0" layoutY="102.0" mnemonicParsing="false" onAction="#savePage" prefHeight="32.0" prefWidth="95.0" text="Save Page" />
-            <Button fx:id="discardPage" layoutX="409.0" layoutY="204.0" mnemonicParsing="false" onAction="#discardPage" style="-fx-background-color: red;" text="Discard Page" />
-            <Button fx:id="saveOpera" layoutX="430.0" layoutY="460.0" mnemonicParsing="false" onAction="#saveOpera" text="Finish" />
-         </children>
-	  </AnchorPane>
-   </children>
+      <Label fx:id="l_admin" layoutX="612.0" layoutY="78.0" onMousePressed="#admin" text="Admin Page" textFill="#4913ed" visible="false">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+     </children>
 </AnchorPane>

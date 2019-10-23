@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.model.User;
+import com.univaq.eaglelibrary.utility.Permission;
 
 @Component
 public class ConvertUser {
@@ -27,6 +28,10 @@ public class ConvertUser {
 			user.setLastName(userDTO.getLastName());
 			user.setPassword(userDTO.getPassword());
 			user.setUsername(userDTO.getUsername());
+			if(userDTO.getPermission() != null) {
+				user.setPermission(userDTO.getPermission().toString());
+			}
+			user.setLevel(userDTO.getLevel());
 			user.setListTranscription(convertTranscription.convertToModel(userDTO.getTranscriptionList()));
 		}
 		return user;
@@ -43,8 +48,9 @@ public class ConvertUser {
 			userDTO.setId(user.getId());
 			userDTO.setLastName(user.getLastName());
 			userDTO.setPassword(user.getPassword());
-			userDTO.setUsername(user.getUsername());	
-//			userDTO.setTranscriptionList(transcriptionList);
+			userDTO.setUsername(user.getUsername());
+			userDTO.setPermission(Permission.valueOf(user.getPermission()));
+			userDTO.setLevel(user.getLevel());
 		}
 		return userDTO;
 	}

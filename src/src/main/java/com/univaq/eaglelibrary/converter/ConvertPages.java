@@ -44,6 +44,7 @@ public class ConvertPages {
 			pageDTO.setChapter(page.getChapter());
 			pageDTO.setId(page.getId());
 			pageDTO.setPageNumber(page.getPageNumber());
+			pageDTO.setImage(page.getImage());
 			pageDTO.setTranscriptionDTO(convertTranscription.convert(page.getTranscription()));
 		}
 		return pageDTO;

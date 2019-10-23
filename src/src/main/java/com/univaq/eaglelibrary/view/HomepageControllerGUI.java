@@ -1,13 +1,9 @@
 package com.univaq.eaglelibrary.view;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,6 +27,7 @@ import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.exceptions.CannotUpdateModuleException;
 import com.univaq.eaglelibrary.exceptions.CreateModuleException;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
+import com.univaq.eaglelibrary.utility.Permission;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,169 +50,72 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class HomepageControllerGUI implements Initializable{
-    
-	@FXML
-	private Label l_profile,l_search,l_transcription,l_module,l_logout,l_upload,l_yearOfStudy,l_yearUpload,l_year;
 
 	@FXML
-	private AnchorPane top,a_module,a_searchOpera,a_upload,a_trascription,a_profile,a_searchList,a_uploadPage;
+	private Label l_profile,l_search,l_transcription,l_module,l_logout,l_yearOfStudy,l_year,l_admin;
 
 	@FXML
-	private Button b_chooseFile,b_send,b_saerchOpera,saveProfile,uploadPage;
+	private AnchorPane top,a_module,a_searchOpera,a_trascription,a_profile,a_searchList;
+
+	@FXML
+	private Button b_send,b_saerchOpera,saveProfile;
 
 	@FXML
 	private TextField t_year,t_author,t_title,p_name,p_lastname,p_username,p_email,p_matnumber,p_dateBirth,
-		p_address,p_degree,formYear,t_yearUpload,t_authorUpload,t_titleUpload,t_chooseFile;
+	p_address,p_degree,formYear,t_yearUpload,t_authorUpload,t_titleUpload,t_chooseFile;
 
 	@FXML
 	private TextArea t_partOfText,formComment;
 
 	@FXML
-	private ComboBox<String> co_category,co_categoryUpload;
+	private ComboBox<String> co_category;
 
 	@FXML
 	private CheckBox c_trascription;
-	
-    @FXML
-    private TableColumn<TranscriptionTable, String> titleColumn,authorColumn,yearColumn,statusColumn,pageColumn,
-    	titleColumnC,authorColumnC,yearColumnC,statusColumnC,pageColumnC,titleSearchColumn,authorSearchColumn,yearSearchColumn;
 
-    @FXML
-    private TableView<TranscriptionTable> trascriptionTable,trascriptionTableClosed,searchTable;
-    
-    @FXML
-    private ImageView pageView;
+	@FXML
+	private TableColumn<TranscriptionTable, String> titleColumn,authorColumn,yearColumn,statusColumn,pageColumn,
+	titleColumnC,authorColumnC,yearColumnC,statusColumnC,pageColumnC,titleSearchColumn,authorSearchColumn,yearSearchColumn;
 
-    private Stage ownStage;
+	@FXML
+	private TableView<TranscriptionTable> trascriptionTable,trascriptionTableClosed,searchTable;
+
+	@FXML
+	private ImageView pageView;
+
+	private Stage ownStage;
 	private ApplicationContext context;
 	private UserDTO user;
-	private File page;
-	private List<File> pageList;
-	final FileChooser fileChooser = new FileChooser();
 	//errorNumber mi serve per capire se sono stati inseriti dati sbagliati oppure nulli
 	private boolean errorFormat;
 
 	@FXML
-    void saveOpera(ActionEvent event) {
-		LiteraryWorkDTO literaryWorkDTO = buildLiteraryWork(); 
+	void searchLiteraryWork(ActionEvent event) {
+		LiteraryWorkListFilterDTO literaryWorkListFilterDTO = buildLiteraryWorkFilter();
 		if(!errorFormat) {
 			LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
-			try {
-				literaryWorkControllerImpl.createUpdateLiteraryWork(literaryWorkDTO);
-				pageList = null;
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setHeaderText("Opera salvata correttamente");
+			LiteraryWorkListDTO literaryWorkListRead = literaryWorkControllerImpl.getLiteraryWork(literaryWorkListFilterDTO);
+			if(literaryWorkListRead != null && literaryWorkListRead.getLiteraryWorkList() != null 
+					&& !literaryWorkListRead.getLiteraryWorkList().isEmpty()) {
+				buildSearchList(literaryWorkListRead.getLiteraryWorkList());
+			} else {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setHeaderText("Nessuna opera corrisponde ai filtri inseriti");
 				alert.showAndWait();
-			} catch (MandatoryFieldException e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setHeaderText(e.getMessage());
-				alert.showAndWait();
-				e.printStackTrace();
 			}
+			a_searchList.setVisible(true);
+			ownStage.setHeight(774);
 		} else {
 			errorFormat = false;
 		}
-    }
-
-	private LiteraryWorkDTO buildLiteraryWork() {
-		LiteraryWorkDTO literaryWorkDTO = new LiteraryWorkDTO();
-		literaryWorkDTO.setAuthor(t_authorUpload.getText());
-		literaryWorkDTO.setTitle(t_titleUpload.getText());
-		literaryWorkDTO.setYear(integerController(t_yearUpload,l_yearUpload));
-		literaryWorkDTO.setCategory(co_categoryUpload.getValue());
-		literaryWorkDTO.setPageList(buildPageList());
-		return literaryWorkDTO;
 	}
-
-	private List<PageDTO> buildPageList() {
-		List<PageDTO> pageListToStore = null;
-		if(pageList != null && !pageList.isEmpty()) {
-			pageListToStore = new ArrayList<PageDTO>();
-			Integer pageNumber = 0;
-			for (File filePage : pageList) {
-				pageListToStore.add(buildPageDTO(filePage, pageNumber));
-				pageNumber += 1;
-			}
-		}
-		return pageListToStore;
-	}
-
-	private PageDTO buildPageDTO(File filePage,Integer pageNumber){
-		PageDTO pageToStore = new PageDTO();
-		byte[] fileContent = null;
-		try {
-			fileContent = Files.readAllBytes(filePage.toPath());
-		} catch (IOException e) {
-			// TODO gestire l'errore
-			e.printStackTrace();
-		}
-		pageToStore.setImage(fileContent);
-		pageToStore.setPageNumber(pageNumber);
-		return pageToStore;
-	}
-
-	@FXML
-	void chooseFile(MouseEvent event) {
-		page = fileChooser.showOpenDialog(l_logout.getScene().getWindow());
-		if(page != null) {
-			t_chooseFile.setText(page.getName());
-		}
-	}
-	
-    @FXML
-    void uploadPage(ActionEvent event) {
-    	if(page != null) {
-    		a_uploadPage.setVisible(true);
-    		ownStage.setWidth(1240);
-    		Image image = new Image(page.toURI().toString());
-    	    pageView.setImage(image);
-    	}
-    }
-	
-    @FXML
-    void discardPage(ActionEvent event) {
-    	page = null;
-    	pageView.setImage(null);
-    }
-   
-    @FXML
-    void savePage(ActionEvent event) {
-    	if(pageList == null) {
-    		pageList = new ArrayList<File>();
-    	}
-    	pageList.add(page);
-    	page = null;
-    }
-	
-    @FXML
-    void searchLiteraryWork(ActionEvent event) {
-    	LiteraryWorkListFilterDTO literaryWorkListFilterDTO = buildLiteraryWorkFilter();
-    	if(!errorFormat) {
-    		LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
-        	LiteraryWorkListDTO literaryWorkListRead = literaryWorkControllerImpl.getLiteraryWork(literaryWorkListFilterDTO);
-         	if(literaryWorkListRead != null && literaryWorkListRead.getLiteraryWorkList() != null 
-         			&& !literaryWorkListRead.getLiteraryWorkList().isEmpty()) {
-         		buildSearchList(literaryWorkListRead.getLiteraryWorkList());
-         	} else {
-         		Alert alert = new Alert(AlertType.WARNING);
-				alert.setHeaderText("Nessuna opera corrisponde ai filtri inseriti");
-				alert.showAndWait();
-         	}
-         	a_searchList.setVisible(true);
-        	ownStage.setHeight(774);
-    	} else {
-			errorFormat = false;
-		}
-    }
 
 	private LiteraryWorkListFilterDTO buildLiteraryWorkFilter() {
 		LiteraryWorkListFilterDTO literaryWorkListFilterDTO = new LiteraryWorkListFilterDTO();
@@ -260,7 +160,6 @@ public class HomepageControllerGUI implements Initializable{
 		module.setUser(user);
 		module.setUsername(user.getUsername());
 		module.setYearOfTheStudy(integerController(formYear,l_yearOfStudy));
-		//TODO check date
 		module.setStatus("OPEN");
 		return module;
 	}
@@ -289,71 +188,69 @@ public class HomepageControllerGUI implements Initializable{
 	}
 
 	@FXML
+	private void admin(MouseEvent eventMuose) {
+		Stage stage = (Stage) l_profile.getScene().getWindow();
+		stage.close();
+
+		String fxmlFile = "/fxml/administrator.fxml";
+
+		FXMLLoader loader = new FXMLLoader();
+		Parent rootNode = null;
+		try {
+			rootNode = loader.load(getClass().getResourceAsStream(fxmlFile));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		stage = new Stage();
+		Scene scene = new Scene(rootNode);
+		stage.setScene(scene);
+		stage.setUserData(user);
+		AdministratorControllerGUI controller = (AdministratorControllerGUI)loader.getController();
+		controller.init(stage); 
+		stage.show();
+	}
+	
+	@FXML
 	private void handleButtonAction(MouseEvent eventMuose) {
 		if(eventMuose.getSource() == l_profile) {
 			a_profile.setVisible(true);
 			a_searchOpera.setVisible(false);
 			a_module.setVisible(false);
 			a_trascription.setVisible(false);
-			a_upload.setVisible(false);
 			a_searchList.setVisible(false);
-			a_uploadPage.setVisible(false);
 			ownStage.setHeight(570);
 			ownStage.setWidth(703);
-			pageList = null;
 		} else {
 			if(eventMuose.getSource() == l_search) {
 				a_searchOpera.setVisible(true);
 				a_profile.setVisible(false);
 				a_module.setVisible(false);
 				a_trascription.setVisible(false);
-				a_upload.setVisible(false);
 				a_searchList.setVisible(false);
-				a_uploadPage.setVisible(false);
 				ownStage.setHeight(570);
 				ownStage.setWidth(703);
-				pageList = null;
 			} else {
 				if(eventMuose.getSource() == l_module) {
 					a_profile.setVisible(false);
 					a_searchOpera.setVisible(false);
 					a_module.setVisible(true);
 					a_trascription.setVisible(false);
-					a_upload.setVisible(false);
 					a_searchList.setVisible(false);
-					a_uploadPage.setVisible(false);
 					ownStage.setHeight(570);
 					ownStage.setWidth(703);
-					pageList = null;
 				} else {
-					if(eventMuose.getSource() == l_upload) {
+					if(eventMuose.getSource() == l_transcription) {
 						a_profile.setVisible(false);
 						a_searchOpera.setVisible(false);
 						a_module.setVisible(false);
-						a_trascription.setVisible(false);
-						a_upload.setVisible(true);
+						a_trascription.setVisible(true);
 						a_searchList.setVisible(false);
-						a_uploadPage.setVisible(false);
 						ownStage.setHeight(570);
 						ownStage.setWidth(703);
-						pageList = null;
 					} else {
-						if(eventMuose.getSource() == l_transcription) {
-							a_profile.setVisible(false);
-							a_searchOpera.setVisible(false);
-							a_module.setVisible(false);
-							a_trascription.setVisible(true);
-							a_upload.setVisible(false);
-							a_searchList.setVisible(false);
-							a_uploadPage.setVisible(false);
-							ownStage.setHeight(570);
-							ownStage.setWidth(703);
-							pageList = null;
-						} else {
-							if(eventMuose.getSource() == l_logout) {
-								Stage stage = (Stage) l_logout.getScene().getWindow();
-								stage.close();
-							}
+						if(eventMuose.getSource() == l_logout) {
+							Stage stage = (Stage) l_logout.getScene().getWindow();
+							stage.close();
 						}
 					}
 				}
@@ -361,15 +258,19 @@ public class HomepageControllerGUI implements Initializable{
 		}
 	}
 
+
 	public void init(Stage stage) {
 		ownStage = stage;
 		user = (UserDTO) stage.getUserData();
-		ProfileDTO profile = getProfile(context,user);
-		decorateProfileInfo(profile,user);
+		if(user.getPermission().equals(Permission.ADMIN)) {
+			l_admin.setVisible(true);
+		}
+		ProfileDTO profile = getProfile();
+		decorateProfileInfo(profile);
 		initializeTrascriptionTable();
 	}
 
-	private ProfileDTO getProfile(ApplicationContext context, UserDTO user) {
+	private ProfileDTO getProfile() {
 		ProfileDTO profile = new ProfileDTO();
 		profile.setUser(user);
 		ProfileControllerImpl profileControllerImpl = (ProfileControllerImpl)context.getBean("profileControllerImpl");
@@ -377,7 +278,7 @@ public class HomepageControllerGUI implements Initializable{
 		return profileRead;
 	}
 
-	private void decorateProfileInfo(ProfileDTO profile, UserDTO user) {
+	private void decorateProfileInfo(ProfileDTO profile) {
 
 		if(profile != null) {
 			p_address.setText(profile.getAddress());
@@ -392,7 +293,7 @@ public class HomepageControllerGUI implements Initializable{
 		p_name.setText(user.getFirstName());
 		p_username.setText(user.getUsername());
 	}
-	
+
 	private void decorateProfileToSave(ProfileDTO profile) {
 		profile.setAddress(p_address.getText());
 		profile.setDateOfBirth(formatDate(p_dateBirth.getText()));
@@ -403,7 +304,7 @@ public class HomepageControllerGUI implements Initializable{
 		user.setUsername(p_username.getText());
 		profile.setUser(user);
 	}
-	
+
 	private Integer integerController(TextField textField, Label label) {
 		Integer number = null;
 		if(!StringUtils.isEmpty(textField.getText())) {
@@ -411,7 +312,7 @@ public class HomepageControllerGUI implements Initializable{
 				number = Integer.valueOf(textField.getText());
 			} catch(Exception e) {
 				Alert alert = new Alert(AlertType.ERROR);
-				alert.setHeaderText("Number not valid: "+label.getText());
+				alert.setHeaderText("Formato del numero non valido: "+label.getText());
 				alert.showAndWait();
 				e.printStackTrace();
 				errorFormat = true;
@@ -435,7 +336,6 @@ public class HomepageControllerGUI implements Initializable{
 	private void initializeGenre() {
 		ObservableList<String> category = FXCollections.observableArrayList("Narrativo","Fantasy","Horror","Giallo","Romanzo","Storico","Fantascienza");
 		co_category.setItems(category);
-		co_categoryUpload.setItems(category);
 	}
 
 	private void initializeTrascriptionTable() {
@@ -452,49 +352,78 @@ public class HomepageControllerGUI implements Initializable{
 	private void setTableRowDoubleClick() {
 		trascriptionTable.setRowFactory( new Callback<TableView<TranscriptionTable>, TableRow<TranscriptionTable>>() {
 			public TableRow<TranscriptionTable> call(TableView<TranscriptionTable> tv) {
-			    final TableRow<TranscriptionTable> row = new TableRow<TranscriptionTable>();
-			    row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				final TableRow<TranscriptionTable> row = new TableRow<TranscriptionTable>();
+				row.setOnMouseClicked(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent event) {
-					    if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-					    	TranscriptionTable rowData = row.getItem();
-					    	Stage stage = (Stage) l_profile.getScene().getWindow();
-				            stage.close();
-				            
-				        	String fxmlFile = "/fxml/transcriptionPage.fxml";
+						if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+							TranscriptionTable rowData = row.getItem();
+							Stage stage = (Stage) l_profile.getScene().getWindow();
+							stage.close();
 
-				    		FXMLLoader loader = new FXMLLoader();
-				    		Parent rootNode = null;
-				    		try {
-				    			rootNode = loader.load(getClass().getResourceAsStream(fxmlFile));
-				    		} catch (Exception e) {
-				    			e.printStackTrace();
-				    		}	
-				    		stage = new Stage();
-				    		Scene scene = new Scene(rootNode);
-				    		stage.setScene(scene);
-				    		user.setTranscriptionTable(rowData);
-				    		stage.setUserData(user);
-				    		TranscriptionControllerGUI controller = (TranscriptionControllerGUI)loader.getController();
-				    		controller.init(stage); 
-				    		stage.show();
-					    }
+							String fxmlFile = "/fxml/transcriptionPage.fxml";
+
+							FXMLLoader loader = new FXMLLoader();
+							Parent rootNode = null;
+							try {
+								rootNode = loader.load(getClass().getResourceAsStream(fxmlFile));
+							} catch (Exception e) {
+								e.printStackTrace();
+							}	
+							stage = new Stage();
+							Scene scene = new Scene(rootNode);
+							stage.setScene(scene);
+							user.setTranscriptionTable(rowData);
+							stage.setUserData(user);
+							TranscriptionControllerGUI controller = (TranscriptionControllerGUI)loader.getController();
+							controller.init(stage); 
+							stage.show();
+						}
 					}
 				});
-			    return row ;
+				return row ;
 			}
 		});
 		searchTable.setRowFactory( new Callback<TableView<TranscriptionTable>, TableRow<TranscriptionTable>>() {
 			public TableRow<TranscriptionTable> call(TableView<TranscriptionTable> tv) {
-			    final TableRow<TranscriptionTable> row = new TableRow<TranscriptionTable>();
-			    row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				final TableRow<TranscriptionTable> row = new TableRow<TranscriptionTable>();
+				row.setOnMouseClicked(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent event) {
-					    if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-					    	TranscriptionTable rowData = row.getItem();
-					        System.out.println(rowData);
-					    }
+						if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+							TranscriptionTable rowData = row.getItem();
+							Stage stage = (Stage) l_profile.getScene().getWindow();
+							stage.close();
+							String fxmlFile = null;
+							if(c_trascription.isSelected()) {
+								fxmlFile = "/fxml/viewOperaTranscription.fxml";
+							} else {
+								fxmlFile = "/fxml/viewOpera.fxml";
+							}
+
+							FXMLLoader loader = new FXMLLoader();
+							Parent rootNode = null;
+							try {
+								rootNode = loader.load(getClass().getResourceAsStream(fxmlFile));
+							} catch (Exception e) {
+								e.printStackTrace();
+							}	
+							stage = new Stage();
+							Scene scene = new Scene(rootNode);
+							stage.setScene(scene);
+							user.setTranscriptionTable(rowData);
+							stage.setUserData(user);
+							if(c_trascription.isSelected()) {
+								ViewOperaTranscriptionControllerGUI controller = (ViewOperaTranscriptionControllerGUI)loader.getController();
+								controller.init(stage); 
+							} else {
+								ViewOperaControllerGUI controller = (ViewOperaControllerGUI)loader.getController();
+								controller.init(stage); 
+							}
+							stage.show();
+
+						}
 					}
 				});
-			    return row ;
+				return row ;
 			}
 		});
 	}
@@ -505,7 +434,7 @@ public class HomepageControllerGUI implements Initializable{
 		ObservableList<TranscriptionTable> trascriptionClosed = FXCollections.observableArrayList();
 		for (TranscriptionDTO transcriptionRead : transcriptions) {
 			TranscriptionTable transcriptionTable = new TranscriptionTable(transcriptionRead);
-			if(transcriptionRead.getStatus() != null && transcriptionRead.getStatus().equals("OPEN")) {
+			if(transcriptionRead.getStatus() != null && (transcriptionRead.getStatus().equals("OPEN")) || transcriptionRead.getStatus().equals("REJECT")) {
 				trascriptionOpen.add(transcriptionTable);
 			} else {
 				trascriptionClosed.add(transcriptionTable);
@@ -513,17 +442,33 @@ public class HomepageControllerGUI implements Initializable{
 		}
 		trascriptionTable.setItems(trascriptionOpen);
 		trascriptionTableClosed.setItems(trascriptionClosed);
-		
+
 	}
-	
+
 	private void buildSearchList(List<LiteraryWorkDTO> literaryWorkList) {
 		buildSearchColumn();
 		ObservableList<TranscriptionTable> operaList = FXCollections.observableArrayList();
 		for (LiteraryWorkDTO literaryWorkRead : literaryWorkList) {
 			TranscriptionTable transcriptionTable = new TranscriptionTable(literaryWorkRead);
-			operaList.add(transcriptionTable);
+			if(c_trascription.isSelected()) {
+				if(isTranscribed(literaryWorkRead))
+					operaList.add(transcriptionTable);
+			} else {
+				operaList.add(transcriptionTable);
+			}
 		}
 		searchTable.setItems(operaList);
+	}
+
+	private boolean isTranscribed(LiteraryWorkDTO literaryWorkRead) {
+		if(literaryWorkRead.getPageList() != null && !literaryWorkRead.getPageList().isEmpty()) {
+			for (PageDTO pageDTO : literaryWorkRead.getPageList()) {
+				if(pageDTO.getTranscriptionDTO() != null && pageDTO.getTranscriptionDTO().getStatus().equals("CLOSED")) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void buildColumn() {
@@ -538,37 +483,37 @@ public class HomepageControllerGUI implements Initializable{
 		yearColumnC.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("year"));
 		pageColumnC.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("page"));
 	}
-	
+
 	private void buildSearchColumn() {
 		authorSearchColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("author"));
 		titleSearchColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("title"));
 		yearSearchColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("year"));
 	}
-	
+
 	private Date formatDate(String date) {  
-	    Date dated = null;
-	    if(date != null) {
-	    	try {
+		Date dated = null;
+		if(date != null) {
+			try {
 				dated = new SimpleDateFormat("dd/MM/yyyy").parse(date);
 			} catch (ParseException e) {
 				Alert alert = new Alert(AlertType.ERROR);
-				alert.setHeaderText("Date not valid");
+				alert.setHeaderText("Formato della data non valido");
 				alert.showAndWait();
 				e.printStackTrace();
 				errorFormat = true;
 			}  
-	    } else {
-	    	errorFormat = false;
-	    }
-		
-	    return dated;
+		} else {
+			errorFormat = false;
+		}
+
+		return dated;
 	}
-	
+
 	private String formatDate(Date date) {  
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
-	    String strDate = dateFormat.format(date);  
-	    return strDate;
+		String strDate = dateFormat.format(date);  
+		return strDate;
 	}
-    
+
 }
 

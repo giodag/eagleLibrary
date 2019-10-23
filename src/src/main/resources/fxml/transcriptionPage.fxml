@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="549.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.view.TranscriptionControllerGUI">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="525.0" prefWidth="711.0" VBox.vgrow="ALWAYS">
          <children>
-            <TextArea layoutX="322.0" layoutY="14.0" prefHeight="366.0" prefWidth="306.0" promptText="Trascrizione..." />
-            <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="366.0" prefWidth="306.0">
+            <TextArea fx:id="t_transcription" layoutX="396.0" layoutY="14.0" prefHeight="427.0" prefWidth="370.0" promptText="Trascrizione..." />
+            <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="427.0" prefWidth="370.0">
                <content>
-                  <Pane prefHeight="540.0" prefWidth="467.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="492.0">
+                     <children>
+                        <ImageView fx:id="viewPage" fitHeight="571.0" fitWidth="492.0" pickOnBounds="true" preserveRatio="true" />        			
+                     </children>
+                  </AnchorPane>
                </content>
             </ScrollPane>
+            <Button fx:id="home" layoutX="529.0" layoutY="469.0" mnemonicParsing="false" onAction="#comeBackHome" text="Home" />
+			<Button fx:id="saveTranscription" layoutX="189.0" layoutY="469.0" mnemonicParsing="false" onAction="#saveTranscription" text="Save" />
+			<Button fx:id="finish" layoutX="360.0" layoutY="469.0" mnemonicParsing="false" onAction="#finish" text="Finish" />
          </children>
     </AnchorPane>
   </children>

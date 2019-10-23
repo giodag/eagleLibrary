@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="549.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.view.ViewOperaTranscriptionControllerGUI">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="525.0" prefWidth="711.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TextArea fx:id="t_transcription" layoutX="396.0" layoutY="14.0" prefHeight="427.0" prefWidth="370.0" promptText="Trascrizione..." AnchorPane.bottomAnchor="109.0" AnchorPane.leftAnchor="396.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0" />
+            <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="427.0" prefWidth="370.0" AnchorPane.bottomAnchor="108.40000000000003" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="391.6" AnchorPane.topAnchor="14.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="626.0" prefWidth="551.0">
+                     <children>
+                        <ImageView fx:id="opera" fitHeight="628.0" fitWidth="552.0" pickOnBounds="true" preserveRatio="true" />     			
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+			<Button fx:id="b_home" contentDisplay="CENTER" layoutX="354.0" layoutY="468.0" mnemonicParsing="false" onAction="#comeBackHome" text="Home" AnchorPane.bottomAnchor="56.00000000000002" />
+            <Label fx:id="l_next" layoutX="619.0" layoutY="472.0" onMousePressed="#handleButtonAction" text="Pagina successiva -&gt;" />
+			<Label fx:id="l_previous" layoutX="40.0" layoutY="472.0" onMousePressed="#handleButtonAction" prefHeight="18.0" prefWidth="122.0" text="&lt;- Pagina precedente" /> 			
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>

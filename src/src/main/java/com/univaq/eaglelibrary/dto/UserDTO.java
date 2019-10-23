@@ -14,12 +14,19 @@ public class UserDTO {
 	private String lastName;
 	private String email;
 	private Enum<Permission> permission;
+	private Integer level;
 	private List<TranscriptionDTO> transcriptionList;
 	private String password;
 	private TranscriptionTable transcriptionTable;
 	
 	//-- Getter and Setter --//
 
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 	public TranscriptionTable getTranscriptionTable() {
 		return transcriptionTable;
 	}

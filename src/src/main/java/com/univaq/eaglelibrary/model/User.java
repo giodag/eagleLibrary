@@ -39,6 +39,12 @@ public class User {
 	@Column(name = "activated")
 	private Boolean activated;
 	
+	@Column(name = "permission")
+	private String permission;
+	
+	@Column(name = "level")
+	private Integer level;
+	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 			  name = "user_transcription", 
@@ -95,5 +101,18 @@ public class User {
 	}
 	public void setActivated(Boolean activated) {
 		this.activated = activated;
+	}
+	
+	public String getPermission() {
+		return permission;
+	}
+	public void setPermission(String permission) {
+		this.permission = permission;
+	}
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
 	}
 }
