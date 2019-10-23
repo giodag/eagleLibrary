@@ -5,7 +5,9 @@ import com.univaq.eaglelibrary.dto.LiteraryWorkListDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListFilterDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
-
+/**
+ * Controller per le opere, funge da canale tra la parte view e la parte che fa logica computazionale.
+ */
 public interface LiteraryWorkController {
 	
 	public LiteraryWorkDTO getLiteraryWork(LiteraryWorkDTO literaryWorkDTO);

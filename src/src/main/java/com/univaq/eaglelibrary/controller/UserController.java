@@ -7,11 +7,14 @@ import com.univaq.eaglelibrary.exceptions.CreateUserException;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.exceptions.UserNotFoundException;
 import com.univaq.eaglelibrary.exceptions.WrongPasswordException;
-
+/**
+ * Controller per la gestione degli utenti, 
+ * funge da canale tra la parte view e la parte che fa logica computazionale.
+ */
 public interface UserController {
 		
 		public UserDTO login(LoginRequestDTO loginRequestDTO) throws UserNotFoundException, MandatoryFieldException, WrongPasswordException;
 		public ResultDTO registration(UserDTO userDTO) throws MandatoryFieldException, CreateUserException;
-		public ResultDTO logout(UserDTO userDTO);
+		public ResultDTO logout();
 
 }

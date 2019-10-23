@@ -40,7 +40,7 @@ public class ModuleHandler {
 	@Autowired
 	private UserRepository userRepository;
 	
-	private final Logger LOGGER = LoggerFactory.getLogger(ModuleHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ModuleHandler.class);
 
 	public ResultDTO createUpdateModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CannotUpdateModuleException {
 		checkMandatory(moduleDTO);
@@ -54,7 +54,7 @@ public class ModuleHandler {
 			
 			long diffInMillies = Math.abs(moduleRead.getCreationDate().getTime() - oneYearAgo.getTime());
 		    Long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-		    LOGGER.error("Ancora non sono trascorsi i 365 giorni per poter inviare nuovamente il modulo. Mancano {}", diff.toString());
+		    LOGGER.error("Ancora non sono trascorsi i 365 giorni per poter inviare nuovamente il modulo. Mancano {}", String.valueOf(diff));
 			throw new CannotUpdateModuleException(ERROR+diff.toString());
 		}
 		
@@ -83,8 +83,7 @@ public class ModuleHandler {
 	private Date getOneYearAgo() {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.YEAR, -1); 
-		Date previousYear = cal.getTime();
-		return previousYear;
+		return cal.getTime();
 	}
 
 	public ModuleDTO readModule(ModuleDTO moduleDTO) {

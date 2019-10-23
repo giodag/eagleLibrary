@@ -45,6 +45,7 @@ public class UserDTO {
 	public void setActivated(Boolean activated) {
 		this.activated = activated;
 	}
+	
 	public Enum<Permission> getPermission() {
 		return permission;
 	}
@@ -87,5 +88,4 @@ public class UserDTO {
 	public void setEmail(String emailAddress) {
 		this.email = emailAddress;
 	}
-
 }
