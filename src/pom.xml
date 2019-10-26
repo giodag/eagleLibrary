@@ -68,4 +68,20 @@
 			<version>1.9.5.RELEASE</version>
 		</dependency>
 	</dependencies>
+	
+	<!-- PLUGINS -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<show>private</show>
+					<nohelp>true</nohelp>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>

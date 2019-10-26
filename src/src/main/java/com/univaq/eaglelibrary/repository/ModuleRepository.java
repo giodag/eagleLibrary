@@ -12,4 +12,7 @@ public interface ModuleRepository extends JpaRepository<Module, Long>{
 			+ "where (coalesce(:idUser, null) is null or m.user.id =:idUser) ")
 	public Module findModuleByUser(@Param("idUser")Long idUser);
 
+	@Query("select m from Module m "
+			+ "where (coalesce(:username, null) is null or m.user.username =:username) ")
+	public Module findModuleByUsername(@Param("username")String username);
 }

@@ -43,9 +43,8 @@ public class ModuleHandler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ModuleHandler.class);
 
 	public ResultDTO createUpdateModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CannotUpdateModuleException {
-		checkMandatory(moduleDTO);
-		ModuleDTO moduleRead = readModule(moduleDTO);
 		
+		ModuleDTO moduleRead = readModule(moduleDTO);
 		Date oneYearAgo = getOneYearAgo();
 		
 		if(moduleRead != null 
@@ -69,6 +68,8 @@ public class ModuleHandler {
 			module = convertModule.convert(moduleRead);
 			
 		} else {
+			//--Nello scenario di creazione andiamo a verificare le mandatorietà
+			checkMandatory(moduleDTO);
 			module = convertModule.convert(moduleDTO);
 		}
 		Module result = moduleRepository.save(module);
@@ -110,5 +111,25 @@ public class ModuleHandler {
 			throw new MandatoryFieldException(MISSED_PARAMETER, UTENTE);
 		}
 	}
-
+	
+	public ModuleDTO validateModule(ModuleDTO moduleDTO) throws CannotUpdateModuleException {
+		
+		if(moduleDTO != null) {
+			Module module = moduleRepository.findModuleByUsername(moduleDTO.getUsername());
+			Date oneYearAgo = getOneYearAgo();
+			if(module != null 
+					&& module.getCreationDate().compareTo(oneYearAgo)>0 
+					&& module.getStatus().equalsIgnoreCase("Rejected")) {
+				
+				long diffInMillies = Math.abs(module.getCreationDate().getTime() - oneYearAgo.getTime());
+			    Long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			    LOGGER.error("Ancora non sono trascorsi i 365 giorni per poter inviare nuovamente il modulo. Mancano {}", String.valueOf(diff));
+				throw new CannotUpdateModuleException(ERROR+diff.toString());
+			}else if(module != null) {
+				module.setStatus(moduleDTO.getStatus());
+				moduleDTO = convertModule.convert(moduleRepository.save(module));
+			}
+		}
+		return moduleDTO;
+	}
 }

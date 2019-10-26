@@ -7,6 +7,8 @@ import com.univaq.eaglelibrary.controller.UserController;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.dto.UserFilterDTO;
+import com.univaq.eaglelibrary.dto.UserListDTO;
 import com.univaq.eaglelibrary.exceptions.CreateUserException;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.exceptions.UserNotFoundException;
@@ -27,10 +29,18 @@ public class UserControllerImpl implements UserController {
 	}
 
 	public ResultDTO registration(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
-		return userHanlder.createUpdateUser(userDTO);
+		return userHanlder.createUser(userDTO);
 	}
 
 	public ResultDTO logout() {
 		return this.userHanlder.logout();
+	}
+	
+	public UserListDTO getUserList(UserFilterDTO userFilterDTO) {
+		return userHanlder.readUserListByFilter(userFilterDTO);
+	}
+
+	public ResultDTO updateUser(UserDTO userDTO) throws MandatoryFieldException {
+		return userHanlder.updateUser(userDTO);
 	}
 }
