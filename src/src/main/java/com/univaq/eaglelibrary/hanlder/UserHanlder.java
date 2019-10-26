@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.mysql.cj.util.StringUtils;
@@ -47,6 +48,7 @@ public class UserHanlder {
 	@Autowired
 	private ConvertTranscription convertTranscription;
 
+	@Transactional
 	public UserDTO login(LoginRequestDTO loginRequestDTO) throws UserNotFoundException, MandatoryFieldException, WrongPasswordException {
 		UserDTO userRead = null;
 		if(loginRequestDTO != null &&  !StringUtils.isNullOrEmpty(loginRequestDTO.getUser()) 

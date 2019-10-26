@@ -13,7 +13,7 @@ import com.univaq.eaglelibrary.model.Transcription;
 public class ConvertTranscription {
 	
 	@Autowired
-	private ConvertPages convertPages;
+	private ConvertUser convertUser;
 
 	public Transcription convert(TranscriptionDTO transcriptionDTO) {
 		return null;
@@ -50,6 +50,7 @@ public class ConvertTranscription {
 			transcriptionDTO.setLockedByuser(transcription.getLockByUser());
 			transcriptionDTO.setStatus(transcription.getStatus());
 			transcriptionDTO.setTranscription(transcription.getTranscription());
+			transcriptionDTO.setUserList(convertUser.convertNoTranscription(transcription.getUsersWorkTranscription()));
 		}
 		return transcriptionDTO;
 	}

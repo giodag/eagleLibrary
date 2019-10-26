@@ -5,6 +5,7 @@ import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 
 public class TranscriptionTable {
 
+	private Long id;
 	private String author;
 	private String title;
 	private String year;
@@ -37,6 +38,12 @@ public class TranscriptionTable {
 		}		
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getAuthor() {
 		return author;
 	}

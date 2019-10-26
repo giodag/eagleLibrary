@@ -51,6 +51,25 @@ public class ConvertUser {
 			userDTO.setUsername(user.getUsername());
 			userDTO.setPermission(Permission.valueOf(user.getPermission()));
 			userDTO.setLevel(user.getLevel());
+			userDTO.setTranscriptionList(convertTranscription.convert(user.getListTranscription()));
+		}
+		return userDTO;
+	}
+	
+	public UserDTO convertNoTranscription(User user) {
+		UserDTO userDTO = null;
+		if(user != null) {
+			userDTO = new UserDTO();
+			
+			userDTO.setActivated(user.isActivated());
+			userDTO.setEmail(user.getEmail());
+			userDTO.setFirstName(user.getFirstName());
+			userDTO.setId(user.getId());
+			userDTO.setLastName(user.getLastName());
+			userDTO.setPassword(user.getPassword());
+			userDTO.setUsername(user.getUsername());
+			userDTO.setPermission(Permission.valueOf(user.getPermission()));
+			userDTO.setLevel(user.getLevel());
 		}
 		return userDTO;
 	}
@@ -72,6 +91,17 @@ public class ConvertUser {
 			usersDTO = new ArrayList<UserDTO>();
 			for (User user : users) {
 				usersDTO.add(convert(user));
+			}
+		}
+		return usersDTO;
+	}
+	
+	public List<UserDTO> convertNoTranscription(List<User> users){
+		List<UserDTO> usersDTO = null;
+		if(users != null && !users.isEmpty()) {
+			usersDTO = new ArrayList<UserDTO>();
+			for (User user : users) {
+				usersDTO.add(convertNoTranscription(user));
 			}
 		}
 		return usersDTO;
