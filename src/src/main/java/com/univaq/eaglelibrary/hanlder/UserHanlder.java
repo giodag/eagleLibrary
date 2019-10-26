@@ -1,20 +1,28 @@
 package com.univaq.eaglelibrary.hanlder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.mysql.cj.util.StringUtils;
+import com.univaq.eaglelibrary.converter.ConvertTranscription;
 import com.univaq.eaglelibrary.converter.ConvertUser;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.dto.UserFilterDTO;
+import com.univaq.eaglelibrary.dto.UserListDTO;
 import com.univaq.eaglelibrary.exceptions.CreateUserException;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.exceptions.UserNotFoundException;
 import com.univaq.eaglelibrary.exceptions.WrongPasswordException;
+import com.univaq.eaglelibrary.model.Transcription;
 import com.univaq.eaglelibrary.model.User;
 import com.univaq.eaglelibrary.repository.UserRepository;
 
@@ -36,6 +44,9 @@ public class UserHanlder {
 	
 	@Autowired
 	private ConvertUser convertUser;
+	
+	@Autowired
+	private ConvertTranscription convertTranscription;
 
 	@Transactional
 	public UserDTO login(LoginRequestDTO loginRequestDTO) throws UserNotFoundException, MandatoryFieldException, WrongPasswordException {
@@ -78,7 +89,7 @@ public class UserHanlder {
 		return userRead;
 	}
 
-	public ResultDTO createUpdateUser(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
+	public ResultDTO createUser(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
 		ResultDTO resultDTO = null;
 		checkMandatory(userDTO);
 		User user = userRepository.save(convertUser.convert(userDTO));
@@ -91,6 +102,53 @@ public class UserHanlder {
 		}
 		
 		return resultDTO;
+	}
+	
+	public ResultDTO updateUser(UserDTO userDTO) throws MandatoryFieldException{
+		ResultDTO resultDTO = new ResultDTO(Boolean.FALSE);
+		if(userDTO == null) {
+			throw new MandatoryFieldException(MISSED_PARAMETER, ALL);
+		}
+		User user = userRepository.findByUsername(userDTO.getUsername());
+		if(user != null) {
+			user.setActivated(userDTO.getActivated() != null ? userDTO.getActivated() : user.isActivated());
+			user.setEmail(userDTO.getEmail() != null ? userDTO.getEmail() : user.getEmail());
+			user.setFirstName(userDTO.getFirstName() != null ? userDTO.getFirstName() : user.getFirstName());
+			user.setLastName(userDTO.getLastName() != null ? userDTO.getLastName() : user.getLastName());
+			user.setLevel(userDTO.getLevel() != null ? userDTO.getLevel() : user.getLevel());
+			user.setListTranscription(CollectionUtils.isEmpty(userDTO.getTranscriptionList()) ? convertTranscription.convertToModel(userDTO.getTranscriptionList()) : user.getListTranscription());
+			user.setPassword(userDTO.getPassword() != null ? userDTO.getPassword() : user.getPassword());
+			user.setPermission(userDTO.getPassword() != null ? userDTO.getPassword() : user.getPassword());
+			user.setUsername(userDTO.getUsername() != null ? userDTO.getUsername() : user.getUsername());
+			user = userRepository.save(convertUser.convert(userDTO));
+			if(user != null) {
+				resultDTO.setSuccessfullyOperation(Boolean.TRUE);
+			}
+		}
+		return resultDTO;
+	}
+	
+	/**
+	 * This method return a list of user transcriber if and only if is set as filter,
+	 * else return list of all active users;
+	 * @param userFilterDTO
+	 * @return
+	 */
+	public UserListDTO readUserListByFilter(UserFilterDTO userFilterDTO) {
+		List<User> transcriber = new ArrayList<User>();
+		List<User> userList = userRepository.findUsersByFilter(userFilterDTO.getId());
+		if(userFilterDTO.getTranscriber() != null && userFilterDTO.getTranscriber()) {
+			for (User user : userList) {
+				List<Transcription> listTranscription = user.getListTranscription();
+				if(!CollectionUtils.isEmpty(listTranscription)) {
+					transcriber.add(user);
+				}
+			}
+			return new UserListDTO(convertUser.convert(transcriber));
+		}
+		
+		return new UserListDTO(convertUser.convert(userList));
+		
 	}
 
 	private void checkMandatory(UserDTO userDTO)throws MandatoryFieldException{

@@ -19,18 +19,17 @@ import com.univaq.eaglelibrary.hanlder.ModuleHandler;
 @Service
 public class ModuleControllerImpl implements ModuleController {
 
-	private static final String MODULE_ALREADY_SENT = "Module already sent";
-
-
 	@Autowired
 	private ModuleHandler moduleHandler;
 
-	public ResultDTO submitModule(ModuleDTO moduleDTO)throws MandatoryFieldException, CreateModuleException, CannotUpdateModuleException {
+	public ResultDTO submitModule(ModuleDTO moduleDTO)
+			throws MandatoryFieldException, CreateModuleException, CannotUpdateModuleException {
 		ModuleDTO moduleRead = this.moduleHandler.readModule(moduleDTO);
+		ResultDTO resultDTO = new ResultDTO(Boolean.FALSE);
 		if (moduleRead != null) {
-			throw new CreateModuleException(MODULE_ALREADY_SENT);
+			return moduleHandler.createUpdateModule(moduleDTO);
 		}
-		return this.moduleHandler.createUpdateModule(moduleDTO);
+		return resultDTO;
 	}
 
 	public ModuleDTO getModule(ModuleDTO moduleDTO) {

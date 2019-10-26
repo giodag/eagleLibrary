@@ -14,4 +14,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	public User findByUsername(String username);
 
+	@Query("select u from FROM USER u inner join u.user_transcription ut"
+		    + "where u.activated = true "
+		    + "and (coalesce(:idsUser, null) is null or u.id in (:idsUser)) ")
+	public List<User> findUsersByFilter(List<Long> ids);
 }
