@@ -13,26 +13,26 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.view.AdministratorControllerGUI">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.view.AdministratorControllerGUI">
    <children>
       <AnchorPane fx:id="top" prefHeight="78.0" prefWidth="686.0" style="-fx-background-color: #e1cc4f;">
          <children>
             <Label fx:id="l_assign" layoutX="14.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Assegna Trascrizione" />
-            <Label fx:id="l_transcriptor" layoutX="161.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Trascrittori" />
-            <Label fx:id="l_transcription" layoutX="361.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Trascrizioni" />
+            <Label fx:id="l_transcriptor" layoutX="166.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Trascrittori" />
+            <Label fx:id="l_transcription" layoutX="366.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Trascrizioni" />
             <Label fx:id="l_module" layoutX="465.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Moduli Trascrittore" />
             <Label fx:id="l_logout" layoutX="614.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Logout" />
-            <Label fx:id="l_upload" layoutX="249.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Upload Opera" />
-            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="161.0" layoutY="21.0" startX="-19.600051879882812" startY="39.60000228881836" />
-            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="251.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
-            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="362.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
-            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="459.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
-            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="611.0" layoutY="23.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Label fx:id="l_upload" layoutX="254.0" layoutY="31.0" onMousePressed="#handleButtonAction" text="Upload Opera" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="178.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="266.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="378.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="474.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
+            <Line endX="-19.600051879882812" endY="-6.000002861022949" layoutX="621.0" layoutY="22.0" startX="-19.600051879882812" startY="39.60000228881836" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="a_transcriptor" layoutY="92.0" prefHeight="430.0" prefWidth="686.0" visible="false">
          <children>
-            <Polygon fill="#f3f3f3" layoutX="195.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+            <Polygon fill="#f3f3f3" layoutX="205.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
             <TableView fx:id="trascriptorTable1" layoutX="54.0" layoutY="54.0" prefHeight="188.0" prefWidth="195.0">
                <columns>
                   <TableColumn fx:id="usernameColumnT" prefWidth="193.6000213623047" text="Username" />
@@ -61,20 +61,20 @@
       </AnchorPane>
       <AnchorPane fx:id="a_module" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
          <children>
-            <Polygon fill="#f3f3f3" layoutX="520.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
-            <Button fx:id="b_acceptForm" layoutX="98.0" layoutY="336.0" mnemonicParsing="false" onAction="#acceptForm" text="Accetta" />
-            <Label fx:id="l_yearOfStudy" layoutX="367.0" layoutY="159.0" text="Anno di studio" />
-            <Label layoutX="367.0" layoutY="215.0" text="Commento" />
-            <TextField fx:id="t_yearStudy" editable="false" layoutX="512.0" layoutY="155.0" />
-            <TextArea fx:id="t_comment" editable="false" layoutX="367.0" layoutY="251.0" prefHeight="110.0" prefWidth="293.0" />
-            <Label layoutX="366.0" layoutY="35.0" text="Nome" />
-            <Label layoutX="367.0" layoutY="80.0" text="Cognome" />
-            <Label layoutX="367.0" layoutY="119.0" text="Corso" />
-            <TextField fx:id="t_name" editable="false" layoutX="512.0" layoutY="31.0" />
-            <TextField fx:id="t_lastName" editable="false" layoutX="512.0" layoutY="76.0" />
-            <TextField fx:id="t_degree" editable="false" layoutX="512.0" layoutY="115.0" />
-            <Button fx:id="rejectForm" layoutX="216.0" layoutY="336.0" mnemonicParsing="false" onAction="#rejectForm" text="Rifiuta" />
-            <TableView fx:id="formTable" layoutX="81.0" layoutY="28.0" prefHeight="279.0" prefWidth="195.0">
+            <Polygon fill="#f3f3f3" layoutX="530.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+            <Button fx:id="b_acceptForm" layoutX="54.0" layoutY="336.0" mnemonicParsing="false" onAction="#acceptForm" text="Accetta" />
+            <Label fx:id="l_yearOfStudy" layoutX="327.0" layoutY="159.0" text="Anno di studio" />
+            <Label layoutX="327.0" layoutY="215.0" text="Commento" />
+            <TextField fx:id="t_yearStudy" editable="false" layoutX="473.0" layoutY="155.0" />
+            <TextArea fx:id="t_comment" editable="false" layoutX="327.0" layoutY="251.0" prefHeight="110.0" prefWidth="293.0" />
+            <Label layoutX="327.0" layoutY="35.0" text="Nome" />
+            <Label layoutX="327.0" layoutY="80.0" text="Cognome" />
+            <Label layoutX="327.0" layoutY="119.0" text="Corso" />
+            <TextField fx:id="t_name" editable="false" layoutX="473.0" layoutY="31.0" />
+            <TextField fx:id="t_lastName" editable="false" layoutX="473.0" layoutY="76.0" />
+            <TextField fx:id="t_degree" editable="false" layoutX="473.0" layoutY="115.0" />
+            <Button fx:id="rejectForm" layoutX="187.0" layoutY="336.0" mnemonicParsing="false" onAction="#rejectForm" text="Rifiuta" />
+            <TableView fx:id="formTable" layoutX="54.0" layoutY="28.0" prefHeight="279.0" prefWidth="195.0">
                <columns>
                   <TableColumn fx:id="usernameColumn" prefWidth="193.6000213623047" text="Username" />
                </columns>
@@ -83,7 +83,7 @@
       </AnchorPane>
       <AnchorPane fx:id="a_upload" layoutY="92.0" prefHeight="430.0" prefWidth="686.0" visible="false">
          <children>
-            <Polygon fill="#f3f3f3" layoutX="295.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+            <Polygon fill="#f3f3f3" layoutX="310.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
             <Button fx:id="b_chooseFile" layoutX="62.0" layoutY="199.0" mnemonicParsing="false" onMouseClicked="#chooseFile" prefHeight="32.0" prefWidth="129.0" text="Scegli il file..." />
             <Label fx:id="l_titleUpload" layoutX="63.0" layoutY="47.0" prefHeight="56.0" prefWidth="50.0" text="Titolo" />
             <TextField fx:id="t_titleUpload" layoutX="155.0" layoutY="62.0" prefHeight="26.0" prefWidth="181.0" />
@@ -98,7 +98,7 @@
       </AnchorPane>
       <AnchorPane fx:id="a_trascription" layoutY="92.0" prefHeight="429.0" prefWidth="686.0" visible="false">
          <children>
-            <Polygon fill="#f3f3f3" layoutX="400.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
+            <Polygon fill="#f3f3f3" layoutX="410.0" layoutY="75.0" points="14.79998779296875, -64.19999694824219, -27.60003662109375, -64.19999694824219, -6.79998779296875, -95.0" stroke="#f3f3f3" strokeType="INSIDE" />
             <ScrollPane layoutX="14.0" layoutY="238.0" prefHeight="155.0" prefWidth="662.0">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="157.0" prefWidth="664.0">

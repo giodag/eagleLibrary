@@ -48,11 +48,9 @@ public class TranscriptionControllerGUI implements Initializable{
 
 	@FXML
     void finish(ActionEvent event) {
-		transcription.setTranscription(t_transcription.getText());
-		transcription.setStatus("TOAPPROVE");
     	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
 		try {
-			transcriptionControllerImpl.saveTranscription(transcription);
+			transcriptionControllerImpl.submitTranscription(transcription);
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setHeaderText("Trascrizione finalizzata correttamente");
 			alert.showAndWait();

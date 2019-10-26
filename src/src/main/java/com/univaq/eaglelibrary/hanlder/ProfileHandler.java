@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mysql.cj.util.StringUtils;
 import com.univaq.eaglelibrary.converter.ConvertProfile;
@@ -75,6 +76,7 @@ public class ProfileHandler{
 	 * @param profileDTO
 	 * @return profileDTO
 	 */
+	@Transactional
 	public ProfileDTO readProfile(ProfileDTO profileDTO) {
 		Profile profile = null;
 		if (profileDTO.getId() != null) {
