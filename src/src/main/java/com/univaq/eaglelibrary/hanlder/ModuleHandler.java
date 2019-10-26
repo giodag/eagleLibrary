@@ -112,8 +112,8 @@ public class ModuleHandler {
 		}
 	}
 	
-	public ModuleDTO validateModule(ModuleDTO moduleDTO) throws CannotUpdateModuleException {
-		
+	public ResultDTO validateModule(ModuleDTO moduleDTO) throws CannotUpdateModuleException {
+		ResultDTO resultDTO = new ResultDTO(Boolean.FALSE);
 		if(moduleDTO != null) {
 			Module module = moduleRepository.findModuleByUsername(moduleDTO.getUsername());
 			Date oneYearAgo = getOneYearAgo();
@@ -128,8 +128,9 @@ public class ModuleHandler {
 			}else if(module != null) {
 				module.setStatus(moduleDTO.getStatus());
 				moduleDTO = convertModule.convert(moduleRepository.save(module));
+				resultDTO.setSuccessfullyOperation(Boolean.TRUE);
 			}
 		}
-		return moduleDTO;
+		return resultDTO;
 	}
 }

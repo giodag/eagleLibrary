@@ -24,12 +24,7 @@ public class ModuleControllerImpl implements ModuleController {
 
 	public ResultDTO submitModule(ModuleDTO moduleDTO)
 			throws MandatoryFieldException, CreateModuleException, CannotUpdateModuleException {
-		ModuleDTO moduleRead = this.moduleHandler.readModule(moduleDTO);
-		ResultDTO resultDTO = new ResultDTO(Boolean.FALSE);
-		if (moduleRead != null) {
 			return moduleHandler.createUpdateModule(moduleDTO);
-		}
-		return resultDTO;
 	}
 
 	public ModuleDTO getModule(ModuleDTO moduleDTO) {
@@ -37,7 +32,7 @@ public class ModuleControllerImpl implements ModuleController {
 	}
 
 	public ResultDTO validateModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CannotUpdateModuleException {
-		return this.moduleHandler.createUpdateModule(moduleDTO);
+		return this.moduleHandler.validateModule(moduleDTO);
 	}
 
 }
