@@ -9,8 +9,10 @@ import com.univaq.eaglelibrary.converter.ConvertTranscription;
 import com.univaq.eaglelibrary.dto.PageDTO;
 import com.univaq.eaglelibrary.model.LiteraryWork;
 import com.univaq.eaglelibrary.model.Page;
+import com.univaq.eaglelibrary.model.Transcription;
 import com.univaq.eaglelibrary.repository.LiteraryWorkRepository;
 import com.univaq.eaglelibrary.repository.PageRepository;
+import com.univaq.eaglelibrary.repository.TranscriptionRepository;
 
 @Component
 public class PageHandler {
@@ -20,6 +22,9 @@ public class PageHandler {
 
 	@Autowired
 	private LiteraryWorkRepository literaryWorkRepository;
+	
+	@Autowired
+	private TranscriptionRepository transcriptionRepository;
 
 	@Autowired
 	private ConvertPages convertPages;

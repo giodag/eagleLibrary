@@ -52,7 +52,7 @@ public class TranscriptionHanlder {
 	@Transactional
 	public TranscriptionDTO createUpdateTranscription(TranscriptionDTO transcriptionDTO) {
 		if(transcriptionDTO != null) {
-			Transcription transcription = getTranscriptionEntity(transcriptionDTO);
+			Transcription transcription = getTranscriptionEntityId(transcriptionDTO);
 			if(transcription == null) {
 				transcription = new Transcription();
 			}
@@ -87,6 +87,20 @@ public class TranscriptionHanlder {
 				transcription = transcriptionRepository.findByFilter(transcriptionDTO.getTranscription(), transcriptionDTO.getStatus(),
 						transcriptionDTO.getPage() != null ? transcriptionDTO.getPage().getId() : null,
 								transcriptionDTO.getLockedByuser() != null ? transcriptionDTO.getLockedByuser() : null);
+			}
+		}
+		return transcription;
+	}
+	
+	private Transcription getTranscriptionEntityId(TranscriptionDTO transcriptionDTO) {
+		Transcription transcription = null;
+		if (transcriptionDTO != null) {
+			if (transcriptionDTO.getId() != null) {
+				transcription = transcriptionRepository.findOne(transcriptionDTO.getId());
+			} else {
+				if(transcriptionDTO.getPage() != null) {
+					transcription = transcriptionRepository.findByIdPage(transcriptionDTO.getPage() != null ? transcriptionDTO.getPage().getId() : null);
+				}
 			}
 		}
 		return transcription;

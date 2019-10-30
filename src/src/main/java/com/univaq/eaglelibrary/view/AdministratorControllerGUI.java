@@ -469,6 +469,7 @@ public class AdministratorControllerGUI implements Initializable{
 		t_yearStudy.setText(null);
 		t_comment.setText(null);
 		transcription = null;
+		trascriptionTable2.setItems(null);
 	}
 
 	public void init(Stage stage) {
@@ -619,6 +620,7 @@ public class AdministratorControllerGUI implements Initializable{
 					public void handle(MouseEvent event) {
 						if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
 							UserDTO rowData = row.getItem();
+							resetPage();
 							UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
 							UserDTO transcriber = userControllerImpl.getUser(rowData);
 							t_nameT.setText(transcriber.getFirstName());

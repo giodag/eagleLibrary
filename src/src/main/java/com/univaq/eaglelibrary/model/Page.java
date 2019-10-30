@@ -27,9 +27,10 @@ public class Page {
 	
 	@Column(name = "image")
 	private byte[] image;
-
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "transcription_id")
+	
+	@OneToOne(mappedBy = "page")
+//	@OneToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "transcription_id")
 	private Transcription transcription;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

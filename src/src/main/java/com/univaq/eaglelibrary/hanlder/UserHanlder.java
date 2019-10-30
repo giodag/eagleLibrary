@@ -25,6 +25,7 @@ import com.univaq.eaglelibrary.exceptions.WrongPasswordException;
 import com.univaq.eaglelibrary.model.Transcription;
 import com.univaq.eaglelibrary.model.User;
 import com.univaq.eaglelibrary.repository.UserRepository;
+import com.univaq.eaglelibrary.utility.Permission;
 
 @Component
 public class UserHanlder {
@@ -105,6 +106,7 @@ public class UserHanlder {
 		return resultDTO;
 	}
 	
+	@Transactional
 	public ResultDTO updateUser(UserDTO userDTO) throws MandatoryFieldException{
 		ResultDTO resultDTO = new ResultDTO(Boolean.FALSE);
 		if(userDTO == null) {
@@ -112,15 +114,15 @@ public class UserHanlder {
 		}
 		User user = userRepository.findByUsername(userDTO.getUsername());
 		if(user != null) {
-			user.setActivated(userDTO.getActivated() != null ? userDTO.getActivated() : user.isActivated());
-			user.setEmail(userDTO.getEmail() != null ? userDTO.getEmail() : user.getEmail());
-			user.setFirstName(userDTO.getFirstName() != null ? userDTO.getFirstName() : user.getFirstName());
-			user.setLastName(userDTO.getLastName() != null ? userDTO.getLastName() : user.getLastName());
-			user.setLevel(userDTO.getLevel() != null ? userDTO.getLevel() : user.getLevel());
-			user.setListTranscription(CollectionUtils.isEmpty(userDTO.getTranscriptionList()) ? convertTranscription.convertToModel(userDTO.getTranscriptionList()) : user.getListTranscription());
-			user.setPassword(userDTO.getPassword() != null ? userDTO.getPassword() : user.getPassword());
-			user.setPermission(userDTO.getPassword() != null ? userDTO.getPassword() : user.getPassword());
-			user.setUsername(userDTO.getUsername() != null ? userDTO.getUsername() : user.getUsername());
+			userDTO.setActivated(userDTO.getActivated() != null ? userDTO.getActivated() : user.isActivated());
+			userDTO.setEmail(userDTO.getEmail() != null ? userDTO.getEmail() : user.getEmail());
+			userDTO.setFirstName(userDTO.getFirstName() != null ? userDTO.getFirstName() : user.getFirstName());
+			userDTO.setLastName(userDTO.getLastName() != null ? userDTO.getLastName() : user.getLastName());
+			userDTO.setLevel(userDTO.getLevel() != null ? userDTO.getLevel() : user.getLevel());
+			userDTO.setTranscriptionList(userDTO.getTranscriptionList() != null ? userDTO.getTranscriptionList() : convertTranscription.convert(user.getListTranscription()));
+			userDTO.setPassword(userDTO.getPassword() != null ? userDTO.getPassword() : user.getPassword());
+			userDTO.setPermission(userDTO.getPermission() != null ? userDTO.getPermission() : Permission.valueOf(user.getPermission()));
+			userDTO.setUsername(userDTO.getUsername() != null ? userDTO.getUsername() : user.getUsername());
 			user = userRepository.save(convertUser.convert(userDTO));
 			if(user != null) {
 				resultDTO.setSuccessfullyOperation(Boolean.TRUE);

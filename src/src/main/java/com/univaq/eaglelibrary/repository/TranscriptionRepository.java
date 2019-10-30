@@ -28,4 +28,10 @@ public interface TranscriptionRepository extends JpaRepository<Transcription, Lo
 			@Param("page_id")Long page_id,
 			@Param("lockByUser")Long lockByUser);
 
+	@Query("select t from Transcription t "
+			+ "where 1=1 "
+			+ "and (coalesce(:page_id, null) is null  or t.page.id =:page_id) ")
+	public Transcription findByIdPage(
+			@Param("page_id")Long page_id);
+
 }

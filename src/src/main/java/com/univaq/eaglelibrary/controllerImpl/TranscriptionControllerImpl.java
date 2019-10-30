@@ -158,7 +158,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 						        iter.remove();
 						    }
 						}
-						transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
+//						transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
 						userHandler.updateUser(userRead);
 					}
 				}
@@ -187,7 +187,8 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 				
 				if(userRead != null && pageRead != null) {
 					TranscriptionDTO transcriptionFilter = new TranscriptionDTO();
-					transcriptionFilter.setPage(new PageDTO());
+//					transcriptionFilter.setPage(new PageDTO());
+					transcriptionFilter.setPage(pageRead);
 					transcriptionFilter.getPage().setId(pageRead.getId());
 					transcriptionFilter = transcriptionHanlder.readTranscription(transcriptionFilter);
 
@@ -201,6 +202,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 							transcriptionFilter.getUserList().add(userRead);
 						} else {
 							List<UserDTO> usersWorkOnTranscription = Arrays.asList(userRead);
+							transcriptionFilter.setUserList(usersWorkOnTranscription);
 						}
 					} else {
 						// --Scenario in cui la trascrizione la stiamo creando in questo momento
@@ -208,10 +210,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 						List<UserDTO> usersWorkOnTranscription = Arrays.asList(userRead);
 						transcriptionFilter.setUserList(usersWorkOnTranscription);
 						transcriptionFilter.setStatus("OPEN");
-						//TODO qua ci sta il problema
-//						pageRead.setTranscriptionDTO(transcriptionFilter);
 						transcriptionFilter.setPage(pageRead);
-//						pageHandler.createUpdatePage(pageRead);
 					}
 					if(userRead.getTranscriptionList() != null) {
 						userRead.getTranscriptionList().add(transcriptionFilter);
@@ -223,6 +222,8 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 					
 //					transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
 					userHandler.updateUser(userRead);
+//					pageRead.setTranscriptionDTO(transcriptionFilter);
+//					pageHandler.createUpdatePage(pageRead);
 					assignTranscriptionResponseDTO.setAssigned(Boolean.TRUE);
 				}
 			}
