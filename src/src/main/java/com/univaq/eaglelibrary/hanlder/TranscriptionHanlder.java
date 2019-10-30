@@ -41,6 +41,9 @@ public class TranscriptionHanlder {
 	
 	@Autowired
 	private ConvertPages convertPages;
+	
+	@Autowired
+	private ConvertUser convertUser;
 
 	private final Logger LOGGER = LoggerFactory.getLogger(TranscriptionHanlder.class);
 	

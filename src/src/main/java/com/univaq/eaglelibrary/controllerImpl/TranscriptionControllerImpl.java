@@ -1,6 +1,7 @@
 package com.univaq.eaglelibrary.controllerImpl;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.univaq.eaglelibrary.controller.TranscriptionController;
 import com.univaq.eaglelibrary.dto.AssignTranscriptionRequestDTO;
@@ -17,11 +19,15 @@ import com.univaq.eaglelibrary.dto.LockTranscriptionResponseDTO;
 import com.univaq.eaglelibrary.dto.PageDTO;
 import com.univaq.eaglelibrary.dto.ResultDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
+import com.univaq.eaglelibrary.dto.UnassignTranscriptionRequestDTO;
+import com.univaq.eaglelibrary.dto.UnassignTranscriptionResponseDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.hanlder.PageHandler;
 import com.univaq.eaglelibrary.hanlder.TranscriptionHanlder;
 import com.univaq.eaglelibrary.hanlder.UserHanlder;
+import com.univaq.eaglelibrary.model.User;
+import com.univaq.eaglelibrary.repository.TranscriptionRepository;
 /**
  * L'implementazione dell'interfaccia controller, orchestra le chiamate verso il core computazionale 
  * del sistema minimizzando così gli impatti tra la parte view e la parte logica nel caso di change requests.
@@ -117,6 +123,50 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 		}
 		logger.debug("finish validateTranscription");
 		return resultDTO;
+	}
+	
+	public UnassignTranscriptionResponseDTO unassignTranscription(
+			UnassignTranscriptionRequestDTO unassignTranscriptionRequestDTO) throws MandatoryFieldException {
+		UnassignTranscriptionResponseDTO unassignTranscriptionResponseDTO = null;
+		if (unassignTranscriptionRequestDTO != null && unassignTranscriptionRequestDTO.getPageList() != null
+				&& !unassignTranscriptionRequestDTO.getPageList().isEmpty()
+				&& StringUtils.isNotEmpty(unassignTranscriptionRequestDTO.getUsername())) {
+			
+			UserDTO userFilter = new UserDTO();
+			userFilter.setUsername(unassignTranscriptionRequestDTO.getUsername());
+			UserDTO userRead = userHandler.readUser(userFilter);
+			
+			if(userRead != null && !CollectionUtils.isEmpty(unassignTranscriptionRequestDTO.getPageList())) {
+				for (PageDTO pageDTO : unassignTranscriptionRequestDTO.getPageList()) {
+					PageDTO pageRead = pageHandler.readPage(pageDTO);
+					TranscriptionDTO transcriptionFilter = new TranscriptionDTO();
+					transcriptionFilter.setPage(new PageDTO());
+					transcriptionFilter.getPage().setId(pageRead.getId());
+					transcriptionFilter = transcriptionHanlder.readTranscription(transcriptionFilter);
+					
+					if(transcriptionFilter != null) {
+						for (Iterator<UserDTO> iter = transcriptionFilter.getUserList().listIterator(); iter.hasNext(); ) {
+							UserDTO userDTO = iter.next();
+						    if (userDTO.getUsername().equalsIgnoreCase(userRead.getUsername())) {
+						        iter.remove();
+						    }
+						}
+						for (Iterator<TranscriptionDTO> iter = userRead.getTranscriptionList().listIterator(); iter.hasNext(); ) {
+							TranscriptionDTO transcrToRemove = iter.next();
+						    if (pageRead.getId().equals(transcrToRemove.getPage().getId())) {
+						        iter.remove();
+						    }
+						}
+						transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
+						userHandler.updateUser(userRead);
+					}
+				}
+				unassignTranscriptionResponseDTO = new UnassignTranscriptionResponseDTO();
+				unassignTranscriptionResponseDTO.setAssigned(Boolean.TRUE);
+			}
+		}
+				
+		return unassignTranscriptionResponseDTO;
 	}
 
 	public AssignTranscriptionResponseDTO assignTrascription(
@@ -253,5 +303,4 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 			throw new MandatoryFieldException();
 		}
 	}
-
 }
