@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.univaq.eaglelibrary.controller.TranscriptionController;
@@ -27,13 +28,12 @@ import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.hanlder.PageHandler;
 import com.univaq.eaglelibrary.hanlder.TranscriptionHanlder;
 import com.univaq.eaglelibrary.hanlder.UserHanlder;
-import com.univaq.eaglelibrary.model.User;
-import com.univaq.eaglelibrary.repository.TranscriptionRepository;
 /**
  * L'implementazione dell'interfaccia controller, orchestra le chiamate verso il core computazionale 
  * del sistema minimizzando così gli impatti tra la parte view e la parte logica nel caso di change requests.
  */
 @Service
+@Transactional
 public class TranscriptionControllerImpl implements TranscriptionController {
 
 	private final Logger logger = LoggerFactory.getLogger(TranscriptionControllerImpl.class);
