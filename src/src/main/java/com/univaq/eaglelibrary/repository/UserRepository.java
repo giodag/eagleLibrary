@@ -16,7 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	public User findByUsername(String username);
 
 	@Query("select u from User u "
-		    + "WHERE u.activated = 1 "
-		    + "and (coalesce(:idsUser, null) is null or u.id in (:idsUser)) ")
+		    + "WHERE (coalesce(:idsUser, null) is null or u.id in (:idsUser)) ")
 	public List<User> findUsersByFilter( @Param("idsUser") List<Long> idsUser);
 }

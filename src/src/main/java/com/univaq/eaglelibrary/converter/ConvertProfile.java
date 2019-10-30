@@ -37,7 +37,7 @@ public class ConvertProfile {
 			profileDTO.setDegreeCourse(profile.getDegreeCourse());
 			profileDTO.setId(profile.getId());
 			profileDTO.setMatriculationNumber(profile.getMatriculationNumber());
-			profileDTO.setUser(convertUser.convert(profile.getUser()));
+			profileDTO.setUser(convertUser.convertNoTranscription(profile.getUser()));
 		}	
 		return profileDTO;
 	}

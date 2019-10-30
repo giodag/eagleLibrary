@@ -33,7 +33,7 @@ public class Profile {
 	@Column(name = "degreeCourse")
 	private String degreeCourse;
 	
-	@OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
 	

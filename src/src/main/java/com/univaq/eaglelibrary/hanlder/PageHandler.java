@@ -2,6 +2,7 @@ package com.univaq.eaglelibrary.hanlder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.univaq.eaglelibrary.converter.ConvertPages;
 import com.univaq.eaglelibrary.converter.ConvertTranscription;
@@ -60,6 +61,7 @@ public class PageHandler {
 		return page;
 	}
 
+	@Transactional
 	public PageDTO readPage(PageDTO pageDTO) {
 		if (pageDTO != null) {
 				pageDTO = convertPages.convert(readPageEntity(pageDTO));

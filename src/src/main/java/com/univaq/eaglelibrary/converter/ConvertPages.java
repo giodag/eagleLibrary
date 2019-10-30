@@ -57,9 +57,23 @@ public class ConvertPages {
 			page.setChapter(pageDTO.getChapter());
 			page.setId(pageDTO.getId());
 			page.setPageNumber(pageDTO.getPageNumber());
-			//page.setTranscription(convertTranscription.convert(pageDTO.getTranscriptionDTO()));
 			page.setImage(pageDTO.getImage());
 		}
 		return page;
+	}
+
+	public PageDTO convertNoTranscription(Page page) {
+		PageDTO pageDTO = null;
+		if (page != null) {
+			pageDTO = new PageDTO();
+			pageDTO.setChapter(page.getChapter());
+			pageDTO.setId(page.getId());
+			pageDTO.setPageNumber(page.getPageNumber());
+			pageDTO.setImage(page.getImage());
+			if(page.getLiteraryWorkPage() != null) {
+				pageDTO.setIdLiteraryWork(page.getLiteraryWorkPage().getId());
+			}
+		}
+		return pageDTO;
 	}
 }

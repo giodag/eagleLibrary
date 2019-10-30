@@ -36,6 +36,10 @@ public class UserControllerImpl implements UserController {
 		return this.userHanlder.logout();
 	}
 	
+	public UserDTO getUser(UserDTO userDTO) {
+		return userHanlder.readUser(userDTO);
+	}
+	
 	public UserListDTO getUserList(UserFilterDTO userFilterDTO) {
 		return userHanlder.readUserListByFilter(userFilterDTO);
 	}

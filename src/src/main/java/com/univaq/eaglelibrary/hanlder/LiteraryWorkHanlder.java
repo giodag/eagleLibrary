@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.univaq.eaglelibrary.converter.ConvertLiteraryWork;
 import com.univaq.eaglelibrary.converter.ConvertTranscription;
@@ -47,6 +48,7 @@ public class LiteraryWorkHanlder {
 	private final Logger LOGGER = LoggerFactory.getLogger(LiteraryWorkHanlder.class);
 	private static final String MISSED_PARAMETER = "Missed parameter : ";
 
+	@Transactional
 	public LiteraryWorkDTO readLiteraryWork(LiteraryWorkDTO literaryWorkDTO) {
 
 		LiteraryWork literaryWork = null;
@@ -73,6 +75,7 @@ public class LiteraryWorkHanlder {
 		return literaryWorkDTORead;
 	}
 
+	@Transactional
 	public LiteraryWorkListDTO readLiteraryWorkList(LiteraryWorkListFilterDTO literaryWorkListFilterDTO) {
 		LiteraryWorkListDTO literaryWorkListDTO = null;
 		List<LiteraryWork> literaryWorksFiltered = null;

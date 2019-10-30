@@ -66,6 +66,7 @@ public class ProfileHandler{
 		} else {
 			profile = convertProfile.convert(profileDTO);
 		}
+		userRepository.save(profile.getUser());
 		profileRepository.save(profile);
 		
 		return profileDTO;

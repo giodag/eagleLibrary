@@ -14,15 +14,21 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.univaq.eaglelibrary.controllerImpl.LiteraryWorkControllerImpl;
 import com.univaq.eaglelibrary.controllerImpl.ModuleControllerImpl;
+import com.univaq.eaglelibrary.controllerImpl.ProfileControllerImpl;
 import com.univaq.eaglelibrary.controllerImpl.TranscriptionControllerImpl;
 import com.univaq.eaglelibrary.controllerImpl.UserControllerImpl;
+import com.univaq.eaglelibrary.dto.AssignTranscriptionRequestDTO;
+import com.univaq.eaglelibrary.dto.AssignTranscriptionResponseDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListFilterDTO;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.PageDTO;
+import com.univaq.eaglelibrary.dto.ProfileDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
+import com.univaq.eaglelibrary.dto.UserFilterDTO;
+import com.univaq.eaglelibrary.dto.UserListDTO;
 import com.univaq.eaglelibrary.exceptions.CannotUpdateModuleException;
 import com.univaq.eaglelibrary.exceptions.CreateUserException;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
@@ -39,7 +45,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -48,6 +53,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -68,27 +74,27 @@ public class AdministratorControllerGUI implements Initializable{
 	private TableView<TranscriptionTable> assignTable,trascriptionTable,trascriptionTable2;
 
 	@FXML
-	private TableColumn<UserDTO, Integer> levelColumnAA;
-	
+	private TableColumn<UserDTO, Integer> levelColumnAA,levelColumnA;
+
 	@FXML
 	private TableColumn<UserDTO, String> usernameColumnA,usernameColumnAA,usernameColumn,usernameColumnT;
 
 	@FXML
-	private TableColumn<TranscriptionTable, String> pageColumnA,yearColumnA,authorColumnA,titleColumnA,
+	private TableColumn<TranscriptionTable, String> pageColumnA,yearColumnA,authorColumnA,titleColumnA,statusColumnA,
 	statusColumnC,pageColumnC,yearColumnC,authorColumnC,titleColumnC,statusColumnT,pageColumnT,yearColumnT,authorColumnT,titleColumnT;
 
 	@FXML
 	private Button saveOpera,savePage,discardPage,search,b_chooseFile,rejectForm,uploadPage,b_acceptForm,saveTranscriptor;
 
 	@FXML
-	private Label l_yearUpload,l_upload,l_logout,l_yearSearch,l_titleUpload,l_yearOfStudy,l_assign,l_transcriptor,l_transcription,l_module;
+	private Label l_yearUpload,l_upload,l_logout,l_yearSearch,l_titleUpload,l_yearOfStudy,l_assign,l_transcriptor,l_transcription,l_module,l_livel;
 
 	@FXML
 	private AnchorPane top,a_uploadPage,a_upload,a_assign,a_trascription,a_module,a_transcriptor;
 
 	@FXML
 	private TextField t_yearUpload,t_authorUpload,t_titleUpload,t_chooseFile,t_yearSearch,t_authorSearch,
-	t_titleSearch,t_degree,t_lastName,t_name,t_yearStudy,t_degreeT,t_lastNameT,t_nameT,t_level;
+	t_titleSearch,t_degree,t_lastName,t_name,t_yearStudy,t_usernameT,t_lastNameT,t_nameT,t_level;
 
 	@FXML
 	private ImageView viewPage;
@@ -102,6 +108,8 @@ public class AdministratorControllerGUI implements Initializable{
 	private File page;
 	private List<File> pageList;
 	final FileChooser fileChooser = new FileChooser();
+	private String username;
+	private TranscriptionDTO transcription;
 	//errorNumber mi serve per capire se sono stati inseriti dati sbagliati oppure nulli
 	private boolean errorFormat;
 
@@ -110,9 +118,34 @@ public class AdministratorControllerGUI implements Initializable{
 	void acceptForm(ActionEvent event) {
 		ModuleControllerImpl moduleControllerImpl = (ModuleControllerImpl)context.getBean("moduleControllerImpl");
 		ModuleDTO moduleDTO = new ModuleDTO();
+		moduleDTO.setUsername(username);
 		moduleDTO.setStatus("ACCEPTED");
 		try {
 			moduleControllerImpl.validateModule(moduleDTO);
+			UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
+			UserDTO userDTO = new UserDTO();
+			userDTO.setUsername(username);
+			userDTO = userControllerImpl.getUser(userDTO);
+			userDTO.setPermission(Permission.TRANSCRIBER);
+			try {
+				userControllerImpl.registration(userDTO);
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setHeaderText("Modulo accettato");
+				alert.showAndWait();
+				//aggiornamento della tabella
+				initializeFormTable();
+				resetPage();
+			} catch (MandatoryFieldException e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setHeaderText(e.getMessage());
+				alert.showAndWait();
+				e.printStackTrace();
+			} catch (CreateUserException e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setHeaderText("Errore nella modifica dei permessi");
+				alert.showAndWait();
+				e.printStackTrace();
+			}
 		} catch (MandatoryFieldException e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setHeaderText(e.getMessage());
@@ -124,22 +157,6 @@ public class AdministratorControllerGUI implements Initializable{
 			alert.showAndWait();
 			e.printStackTrace();
 		}
-
-		UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
-		user.setPermission(Permission.TRANSCRIBER);
-		try {
-			userControllerImpl.registration(user);
-		} catch (MandatoryFieldException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText(e.getMessage());
-			alert.showAndWait();
-			e.printStackTrace();
-		} catch (CreateUserException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText("Errore nella modifica dei permessi");
-			alert.showAndWait();
-			e.printStackTrace();
-		}
 	}
 
 
@@ -147,9 +164,16 @@ public class AdministratorControllerGUI implements Initializable{
 	void rejectForm(ActionEvent event) {
 		ModuleControllerImpl moduleControllerImpl = (ModuleControllerImpl)context.getBean("moduleControllerImpl");
 		ModuleDTO moduleDTO = new ModuleDTO();
+		moduleDTO.setUsername(username);
 		moduleDTO.setStatus("REJECTED");
 		try {
 			moduleControllerImpl.validateModule(moduleDTO);
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setHeaderText("Modulo rigettato");
+			alert.showAndWait();
+			//aggiornamento della tabella
+			initializeFormTable();
+			resetPage();
 		} catch (MandatoryFieldException e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setHeaderText(e.getMessage());
@@ -165,18 +189,29 @@ public class AdministratorControllerGUI implements Initializable{
 
 	@FXML
 	void saveTranscriptor(ActionEvent event) {
-		TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
-		//	TODO VEDI BEENE lo user e quale trascrizione usare
-		TranscriptionDTO transcriptionDTO = new TranscriptionDTO();
-		//		transcriptionDTO.setUsername();
-		try {
-			transcriptionControllerImpl.saveTranscription(transcriptionDTO);
-		} catch (MandatoryFieldException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText(e.getMessage());
-			alert.showAndWait();
-			e.printStackTrace();
+		if(!errorFormat) {
+			UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
+			UserDTO userDTO = new UserDTO();
+			userDTO.setUsername(t_usernameT.getText());
+			userDTO = userControllerImpl.getUser(userDTO);
+			if(userDTO != null) {
+				userDTO.setLevel(integerController(t_level, l_livel));
+				try {
+					userControllerImpl.updateUser(userDTO);
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setHeaderText("Trascrittore salvato correttamente");
+					alert.showAndWait();
+				} catch (MandatoryFieldException e) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setHeaderText(e.getMessage());
+					alert.showAndWait();
+					e.printStackTrace();
+				}
+			}
+		} else {
+			errorFormat = false;
 		}
+		
 	}
 
 	@FXML
@@ -191,8 +226,10 @@ public class AdministratorControllerGUI implements Initializable{
 				for (LiteraryWorkDTO literaryWorkDTO : literaryWorkListRead.getLiteraryWorkList()) {
 					if(literaryWorkDTO.getPageList() != null && !literaryWorkDTO.getPageList().isEmpty()) {
 						for (PageDTO pageDTO : literaryWorkDTO.getPageList()) {
-							if(pageDTO.getTranscriptionDTO() != null) {
+							if(pageDTO.getTranscriptionDTO() != null && pageDTO.getTranscriptionDTO().getStatus() != null
+									&& !pageDTO.getTranscriptionDTO().getStatus().equalsIgnoreCase("closed") ) {
 								pageDTO.getTranscriptionDTO().setLiteraryWork(literaryWorkDTO);
+								pageDTO.getTranscriptionDTO().setPage(pageDTO);
 								transcriptionToShow.add(pageDTO.getTranscriptionDTO());
 							}
 						}
@@ -423,6 +460,13 @@ public class AdministratorControllerGUI implements Initializable{
 		page = null;
 		viewPage.setImage(null);
 		t_chooseFile.setText(null);
+		username = null;
+		t_name.setText(null);
+		t_lastName.setText(null);
+		t_degree.setText(null);
+		t_yearStudy.setText(null);
+		t_comment.setText(null);
+		transcription = null;
 	}
 
 	public void init(Stage stage) {
@@ -434,8 +478,22 @@ public class AdministratorControllerGUI implements Initializable{
 	private void initializeTable() {
 		initilizeTranscriberTable();
 		initilizeTranscriptionTable();
+		initializeFormTable();
 		setTableRowDoubleClick();
 
+	}
+
+
+	private void initializeFormTable() {
+		ModuleControllerImpl moduleControllerImpl = (ModuleControllerImpl)context.getBean("moduleControllerImpl");
+		List<ModuleDTO> modulesRead = moduleControllerImpl.getAllModules();
+		ObservableList<UserDTO> userForm = FXCollections.observableArrayList();
+		for (ModuleDTO moduleDTO : modulesRead) {
+			if(moduleDTO.getStatus() != null && moduleDTO.getStatus().equalsIgnoreCase("open")){
+				userForm.add(moduleDTO.getUser());
+			}
+		}
+		formTable.setItems(userForm);
 	}
 
 
@@ -451,8 +509,18 @@ public class AdministratorControllerGUI implements Initializable{
 				if(literaryWorkDTO.getPageList() != null && !literaryWorkDTO.getPageList().isEmpty()) {
 					for (PageDTO pageDTO : literaryWorkDTO.getPageList()) {
 						if(pageDTO.getTranscriptionDTO() != null) {
-							pageDTO.getTranscriptionDTO().setLiteraryWork(literaryWorkDTO);
-							TranscriptionTable transcriptionTable = new TranscriptionTable(pageDTO.getTranscriptionDTO());
+							if(pageDTO.getTranscriptionDTO().getStatus() != null && !pageDTO.getTranscriptionDTO().getStatus().equalsIgnoreCase("closed")) {
+								pageDTO.getTranscriptionDTO().setLiteraryWork(literaryWorkDTO);
+								pageDTO.getTranscriptionDTO().setPage(pageDTO);
+								TranscriptionTable transcriptionTable = new TranscriptionTable(pageDTO.getTranscriptionDTO());
+								transcription.add(transcriptionTable);
+							}
+						} else {
+							TranscriptionTable transcriptionTable = new TranscriptionTable(literaryWorkDTO);
+							if(pageDTO.getPageNumber() != null) {
+								transcriptionTable.setPage(pageDTO.getPageNumber().toString());
+							}
+							transcriptionTable.setStatus("TO ASSIGN");
 							transcription.add(transcriptionTable);
 						}
 					}
@@ -478,20 +546,29 @@ public class AdministratorControllerGUI implements Initializable{
 		yearColumnT.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("year"));
 		authorColumnT.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("author"));
 		titleColumnT.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("title"));
+		statusColumnA.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("status"));
 	}
 
 
 	private void initilizeTranscriberTable() {
 		buildTranscriberColumn();
 		ObservableList<UserDTO> transcriber = FXCollections.observableArrayList();
-		//chiamata per la lista di trascrittori
-//		trascriptorTable1;
-		
+		UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
+		UserFilterDTO userFilterDTO = new UserFilterDTO();
+		userFilterDTO.setTranscriber(true);
+		UserListDTO transcriberList = userControllerImpl.getUserList(userFilterDTO);
+		if(transcriberList != null && transcriberList.getListUserDTO() != null && !transcriberList.getListUserDTO().isEmpty()) {
+			for (UserDTO userDTO : transcriberList.getListUserDTO()) {
+				transcriber.add(userDTO);
+			}
+		}
+		trascriptorTable1.setItems(transcriber);
 	}
 
 
 	private void buildTranscriberColumn() {
 		usernameColumnA.setCellValueFactory(new PropertyValueFactory<UserDTO,String>("username"));
+		levelColumnA.setCellValueFactory(new PropertyValueFactory<UserDTO,Integer>("level"));
 		levelColumnAA.setCellValueFactory(new PropertyValueFactory<UserDTO,Integer>("level"));
 		usernameColumnAA.setCellValueFactory(new PropertyValueFactory<UserDTO,String>("username"));
 		usernameColumn.setCellValueFactory(new PropertyValueFactory<UserDTO,String>("username"));
@@ -540,7 +617,28 @@ public class AdministratorControllerGUI implements Initializable{
 					public void handle(MouseEvent event) {
 						if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
 							UserDTO rowData = row.getItem();
-							//TODO
+							UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
+							UserDTO transcriber = userControllerImpl.getUser(rowData);
+							t_nameT.setText(transcriber.getFirstName());
+							t_lastNameT.setText(transcriber.getLastName());
+							t_usernameT.setText(transcriber.getUsername());
+							if(transcriber.getLevel() != null) {
+								t_level.setText(transcriber.getLevel().toString());
+							}
+							if(transcriber.getTranscriptionList() != null) {
+								ObservableList<TranscriptionTable> transcriptionTables = FXCollections.observableArrayList();
+								for (TranscriptionDTO transcription : transcriber.getTranscriptionList()) {
+									LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
+									LiteraryWorkDTO literaryWorkDTO = new LiteraryWorkDTO();
+									if(transcription.getPage() != null && transcription.getPage().getIdLiteraryWork() != null) {
+										literaryWorkDTO.setId(transcription.getPage().getIdLiteraryWork());
+										transcription.setLiteraryWork(literaryWorkControllerImpl.getLiteraryWork(literaryWorkDTO));
+									}
+									TranscriptionTable transcriptionTable = new TranscriptionTable(transcription);
+									transcriptionTables.add(transcriptionTable);
+								}
+								trascriptionTable2.setItems(transcriptionTables);
+							}
 						}
 					}
 				});
@@ -553,21 +651,111 @@ public class AdministratorControllerGUI implements Initializable{
 				row.setOnMouseClicked(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent event) {
 						if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+							transcriptorTableA.setItems(null);
+							transcriptorTableAA.setItems(null);
 							TranscriptionTable rowData = row.getItem();
 							TranscriptionDTO transcriptionDTO = readTranscription(rowData);
-							ObservableList<UserDTO> userListDTO = FXCollections.observableArrayList();
-							for (UserDTO userDTO : transcriptionDTO.getUserList()) {
-								userListDTO.add(userDTO);
+							if(transcriptionDTO != null) {
+								transcription = transcriptionDTO;
+								ObservableList<UserDTO> userListDTO = FXCollections.observableArrayList();
+								for (UserDTO userDTO : transcriptionDTO.getUserList()) {
+									userListDTO.add(userDTO);
+								}
+								transcriptorTableAA.setItems(userListDTO);
+							} else {
+								LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
+								LiteraryWorkDTO literaryWorkDTO = new LiteraryWorkDTO();
+								literaryWorkDTO.setAuthor(rowData.getAuthor());
+								literaryWorkDTO.setTitle(rowData.getTitle());
+								literaryWorkDTO.setYear(Integer.valueOf(rowData.getYear()));
+								literaryWorkDTO = literaryWorkControllerImpl.getLiteraryWork(literaryWorkDTO);
+								if(literaryWorkDTO != null && literaryWorkDTO.getPageList() != null && !literaryWorkDTO.getPageList().isEmpty()) {
+									transcription = new TranscriptionDTO();
+									transcription.setPage(literaryWorkDTO.getPageList().get(Integer.valueOf(rowData.getPage())));
+								}
 							}
-							transcriptorTableAA.setItems(userListDTO);
-							//TODO leggere la lista di transcriber
-							List<UserDTO> list = new ArrayList<UserDTO>();
-							list.removeAll(transcriptionDTO.getUserList());
-							ObservableList<UserDTO> userAvailableListDTO = FXCollections.observableArrayList();
-							for (UserDTO userDTO : transcriptionDTO.getUserList()) {
-								userAvailableListDTO.add(userDTO);
+							UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
+							UserFilterDTO userFilterDTO = new UserFilterDTO();
+							userFilterDTO.setTranscriber(true);
+							UserListDTO transcriberList = userControllerImpl.getUserList(userFilterDTO);
+							if(transcriberList != null && transcriberList.getListUserDTO() != null && !transcriberList.getListUserDTO().isEmpty()) {
+								for (UserDTO userAllTranscriberDTO : transcriberList.getListUserDTO()) {
+									if(transcriptionDTO != null) {
+										for (UserDTO userTranscriberDTO : transcriptionDTO.getUserList()) {
+											if(userAllTranscriberDTO.getId()==userTranscriberDTO.getId()) {
+												transcriberList.getListUserDTO().remove(userAllTranscriberDTO);
+											}
+										}
+									} 
+								}
+								ObservableList<UserDTO> userAvailableListDTO = FXCollections.observableArrayList();
+								for (UserDTO userDTO : transcriberList.getListUserDTO()) {
+									userAvailableListDTO.add(userDTO);
+								}
+								transcriptorTableA.setItems(userAvailableListDTO);
 							}
-							transcriptorTableA.setItems(userAvailableListDTO);
+						}
+					}
+				});
+				return row ;
+			}
+		});
+		formTable.setRowFactory( new Callback<TableView<UserDTO>, TableRow<UserDTO>>() {
+			public TableRow<UserDTO> call(TableView<UserDTO> tv) {
+				final TableRow<UserDTO> row = new TableRow<UserDTO>();
+				row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+						if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+							UserDTO rowData = row.getItem();
+							ProfileControllerImpl profileControllerImpl = (ProfileControllerImpl)context.getBean("profileControllerImpl");
+							ProfileDTO profileDTO = new ProfileDTO();
+							profileDTO.setUser(rowData);
+							profileDTO = profileControllerImpl.getProfile(profileDTO);
+							if(profileDTO.getUser() != null) {
+								t_name.setText(profileDTO.getUser().getFirstName());
+								t_lastName.setText(profileDTO.getUser().getLastName());
+							}
+							t_degree.setText(profileDTO.getDegreeCourse());
+							ModuleControllerImpl moduleControllerImpl = (ModuleControllerImpl)context.getBean("moduleControllerImpl");
+							ModuleDTO moduleDTO = new ModuleDTO();
+							moduleDTO.setUser(rowData);
+							moduleDTO = moduleControllerImpl.getModule(moduleDTO);
+							if(moduleDTO != null) {
+								t_yearStudy.setText(moduleDTO.getYearOfTheStudy().toString());
+								t_comment.setText(moduleDTO.getComment());
+							}
+							username = rowData.getUsername();
+						}
+					}
+				});
+				return row ;
+			}
+		});
+		transcriptorTableA.setRowFactory( new Callback<TableView<UserDTO>, TableRow<UserDTO>>() {
+			public TableRow<UserDTO> call(TableView<UserDTO> tv) {
+				final TableRow<UserDTO> row = new TableRow<UserDTO>();
+				row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+						if (event.getClickCount() == 2 && (!row.isEmpty()) ) {
+							UserDTO rowData = row.getItem();
+							TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
+							AssignTranscriptionRequestDTO assignDTO = new AssignTranscriptionRequestDTO();
+							assignDTO.setUsername(rowData.getUsername());
+							List<PageDTO> pageAssignList = new ArrayList<PageDTO>();
+							pageAssignList.add(transcription.getPage());
+							assignDTO.setPageList(pageAssignList);
+							AssignTranscriptionResponseDTO response = transcriptionControllerImpl.assignTrascription(assignDTO);
+							if(response.getAssigned() != null) {
+								Alert alert = new Alert(AlertType.CONFIRMATION);
+								alert.setHeaderText("Trascrizione assegnata correttamente");
+								alert.showAndWait();
+								transcriptorTableA.setItems(null);
+								transcriptorTableAA.setItems(null);
+							} else {
+								Alert alert = new Alert(AlertType.ERROR);
+								alert.setHeaderText("Assegnamento fallito");
+								alert.showAndWait();
+							}
 						}
 					}
 				});
@@ -584,10 +772,15 @@ public class AdministratorControllerGUI implements Initializable{
 		literaryWorkDTO.setYear(Integer.valueOf(rowData.getYear()));
 		literaryWorkDTO = literaryWorkControllerImpl.getLiteraryWork(literaryWorkDTO);
 		TranscriptionDTO transcriptionDTORead = null;
-		if(literaryWorkDTO != null && literaryWorkDTO.getPageList() != null && !literaryWorkDTO.getPageList().isEmpty()
-				&& user.getTranscriptionTable().getPage() != null && literaryWorkDTO.getPageList().get(Integer.valueOf(user.getTranscriptionTable().getPage())) != null) {
-			transcriptionDTORead = literaryWorkDTO.getPageList().get(Integer.valueOf(user.getTranscriptionTable().getPage())).getTranscriptionDTO();
-			transcriptionDTORead.setPage(literaryWorkDTO.getPageList().get(Integer.valueOf(user.getTranscriptionTable().getPage())));
+		if(literaryWorkDTO != null && literaryWorkDTO.getPageList() != null && !literaryWorkDTO.getPageList().isEmpty() && rowData.getPage() != null) {
+			for (PageDTO page : literaryWorkDTO.getPageList()) {
+				if(page.getPageNumber() != null && rowData.getPage().equals(page.getPageNumber().toString())) {
+					transcriptionDTORead = page.getTranscriptionDTO();
+					if(transcriptionDTORead != null) {
+						transcriptionDTORead.setPage(page);
+					}
+				}
+			}
 			return transcriptionDTORead;
 		}
 		return null;

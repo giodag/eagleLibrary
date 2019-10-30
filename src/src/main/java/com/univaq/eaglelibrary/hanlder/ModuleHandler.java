@@ -2,6 +2,7 @@ package com.univaq.eaglelibrary.hanlder;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -132,5 +133,11 @@ public class ModuleHandler {
 			}
 		}
 		return resultDTO;
+	}
+	
+	public List<ModuleDTO> getAllModules(){
+		List<Module> modules = moduleRepository.findAll();
+		List<ModuleDTO> modulesRead = convertModule.convert(modules);
+		return modulesRead;
 	}
 }

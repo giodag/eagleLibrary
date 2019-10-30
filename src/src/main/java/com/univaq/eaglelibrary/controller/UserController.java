@@ -18,6 +18,7 @@ public interface UserController {
 		public UserDTO login(LoginRequestDTO loginRequestDTO) throws UserNotFoundException, MandatoryFieldException, WrongPasswordException;
 		public ResultDTO registration(UserDTO userDTO) throws MandatoryFieldException, CreateUserException;
 		public ResultDTO logout();
+		public UserDTO getUser(UserDTO userDTO);
 		public UserListDTO getUserList(UserFilterDTO userFilterDTO);
 		public ResultDTO updateUser(UserDTO userDTO)throws MandatoryFieldException;
 }

@@ -73,6 +73,7 @@ public class UserHanlder {
 		return userRead;
 	}
 	
+	@Transactional
 	public UserDTO readUser(UserDTO userDTO) {
 		UserDTO userRead = null;
 		if(userDTO != null) {
@@ -134,13 +135,13 @@ public class UserHanlder {
 	 * @param userFilterDTO
 	 * @return
 	 */
+	@Transactional
 	public UserListDTO readUserListByFilter(UserFilterDTO userFilterDTO) {
 		List<User> transcriber = new ArrayList<User>();
 		List<User> userList = userRepository.findUsersByFilter(userFilterDTO.getId());
 		if(userFilterDTO.getTranscriber() != null && userFilterDTO.getTranscriber()) {
 			for (User user : userList) {
-				List<Transcription> listTranscription = user.getListTranscription();
-				if(!CollectionUtils.isEmpty(listTranscription)) {
+				if(user.getPermission() != null && user.getPermission().equalsIgnoreCase("transcriber")) {
 					transcriber.add(user);
 				}
 			}

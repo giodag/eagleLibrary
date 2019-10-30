@@ -39,14 +39,15 @@
                </columns>
             </TableView>
             <Label layoutX="54.0" layoutY="22.0" text="Trascrittori:" />
+            <Label fx:id="l_livel" layoutX="327.0" layoutY="173.0" text="Livello" />
             <Label layoutX="327.0" layoutY="173.0" text="Livello" />
             <TextField fx:id="t_level" layoutX="473.0" layoutY="169.0" />
             <Label layoutX="327.0" layoutY="42.0" text="Nome" />
             <Label layoutX="328.0" layoutY="87.0" text="Cognome" />
-            <Label layoutX="328.0" layoutY="126.0" text="Corso" />
+            <Label layoutX="328.0" layoutY="126.0" text="Username" />
             <TextField fx:id="t_nameT" editable="false" layoutX="473.0" layoutY="38.0" />
             <TextField fx:id="t_lastNameT" editable="false" layoutX="473.0" layoutY="83.0" />
-            <TextField fx:id="t_degreeT" editable="false" layoutX="473.0" layoutY="122.0" />
+            <TextField fx:id="t_usernameT" editable="false" layoutX="473.0" layoutY="122.0" />
             <Button fx:id="saveTranscriptor" layoutX="421.0" layoutY="217.0" mnemonicParsing="false" onAction="#saveTranscriptor" text="Save" />
             <TableView fx:id="trascriptionTable2" layoutX="28.0" layoutY="263.0" prefHeight="118.0" prefWidth="630.0">
                <columns>
@@ -149,7 +150,7 @@
             <TableView fx:id="transcriptorTableA" layoutX="355.0" layoutY="222.0" prefHeight="127.0" prefWidth="254.0">
                <columns>
                   <TableColumn fx:id="usernameColumnA" prefWidth="168.00003051757812" text="Username" />
-                  <TableColumn fx:id="usernameColumnA" prefWidth="80.00006103515625" text="Livello" />
+                  <TableColumn fx:id="levelColumnA" prefWidth="80.00006103515625" text="Livello" />
                </columns>
             </TableView>
             <Label layoutX="355.0" layoutY="182.0" text="Trascrittori disponibili:" />

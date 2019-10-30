@@ -122,6 +122,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 	public AssignTranscriptionResponseDTO assignTrascription(
 			AssignTranscriptionRequestDTO assignTranscriptionRequestDTO) {
 		logger.debug("start getTranscription");
+		AssignTranscriptionResponseDTO assignTranscriptionResponseDTO = new AssignTranscriptionResponseDTO();
 		if (assignTranscriptionRequestDTO != null && assignTranscriptionRequestDTO.getPageList() != null
 				&& !assignTranscriptionRequestDTO.getPageList().isEmpty()
 				&& StringUtils.isNotEmpty(assignTranscriptionRequestDTO.getUsername())) {
@@ -154,13 +155,10 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 						transcriptionFilter.setStatus("OPEN");
 					}
 					transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
-
+					assignTranscriptionResponseDTO.setAssigned(Boolean.TRUE);
 				}
 			}
 		}
-		AssignTranscriptionResponseDTO assignTranscriptionResponseDTO = new AssignTranscriptionResponseDTO();
-		assignTranscriptionResponseDTO.setAssigned(Boolean.TRUE);
-
 		logger.debug("finish getTranscription");
 		return assignTranscriptionResponseDTO;
 	}

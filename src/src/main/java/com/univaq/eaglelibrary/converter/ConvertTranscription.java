@@ -14,9 +14,22 @@ public class ConvertTranscription {
 	
 	@Autowired
 	private ConvertUser convertUser;
+	
+	@Autowired
+	private ConvertPages convertPages;
 
 	public Transcription convert(TranscriptionDTO transcriptionDTO) {
-		return null;
+		Transcription transcription = null;
+		if(transcriptionDTO != null) {
+			transcription = new Transcription();
+			transcription.setId(transcriptionDTO.getId());
+			transcription.setLockByUser(transcriptionDTO.getLockedByuser());
+			transcription.setStatus(transcriptionDTO.getStatus());
+			transcription.setTranscription(transcriptionDTO.getTranscription());
+			transcription.setPage(convertPages.convertToModel(transcriptionDTO.getPage()));
+			transcription.setUsersWorkTranscription(convertUser.convertToModel(transcriptionDTO.getUserList()));
+		}
+		return transcription;
 		
 	}
 	
@@ -50,6 +63,7 @@ public class ConvertTranscription {
 			transcriptionDTO.setLockedByuser(transcription.getLockByUser());
 			transcriptionDTO.setStatus(transcription.getStatus());
 			transcriptionDTO.setTranscription(transcription.getTranscription());
+			transcriptionDTO.setPage(convertPages.convertNoTranscription(transcription.getPage()));
 			transcriptionDTO.setUserList(convertUser.convertNoTranscription(transcription.getUsersWorkTranscription()));
 		}
 		return transcriptionDTO;

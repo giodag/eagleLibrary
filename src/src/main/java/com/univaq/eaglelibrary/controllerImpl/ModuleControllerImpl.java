@@ -1,5 +1,7 @@
 package com.univaq.eaglelibrary.controllerImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,10 @@ public class ModuleControllerImpl implements ModuleController {
 
 	public ResultDTO validateModule(ModuleDTO moduleDTO) throws MandatoryFieldException, CannotUpdateModuleException {
 		return this.moduleHandler.validateModule(moduleDTO);
+	}
+	
+	public List<ModuleDTO> getAllModules(){
+		return this.moduleHandler.getAllModules();
 	}
 
 }
