@@ -45,6 +45,9 @@ public class ConvertPages {
 			pageDTO.setId(page.getId());
 			pageDTO.setPageNumber(page.getPageNumber());
 			pageDTO.setImage(page.getImage());
+			if(page.getLiteraryWorkPage() != null) {
+				pageDTO.setIdLiteraryWork(page.getLiteraryWorkPage().getId());
+			}
 			pageDTO.setTranscriptionDTO(convertTranscription.convert(page.getTranscription()));
 		}
 		return pageDTO;
@@ -58,6 +61,7 @@ public class ConvertPages {
 			page.setId(pageDTO.getId());
 			page.setPageNumber(pageDTO.getPageNumber());
 			page.setImage(pageDTO.getImage());
+//			page.setTranscription(convertTranscription.convertNoPages(pageDTO.getTranscriptionDTO()));
 		}
 		return page;
 	}

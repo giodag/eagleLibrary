@@ -27,7 +27,20 @@ public class ConvertTranscription {
 			transcription.setStatus(transcriptionDTO.getStatus());
 			transcription.setTranscription(transcriptionDTO.getTranscription());
 			transcription.setPage(convertPages.convertToModel(transcriptionDTO.getPage()));
-			transcription.setUsersWorkTranscription(convertUser.convertToModel(transcriptionDTO.getUserList()));
+//			transcription.setUsersWorkTranscription(convertUser.convertToModel(transcriptionDTO.getUserList()));
+		}
+		return transcription;
+		
+	}
+	
+	public Transcription convertNoPages(TranscriptionDTO transcriptionDTO) {
+		Transcription transcription = null;
+		if(transcriptionDTO != null) {
+			transcription = new Transcription();
+			transcription.setId(transcriptionDTO.getId());
+			transcription.setLockByUser(transcriptionDTO.getLockedByuser());
+			transcription.setStatus(transcriptionDTO.getStatus());
+			transcription.setTranscription(transcriptionDTO.getTranscription());
 		}
 		return transcription;
 		

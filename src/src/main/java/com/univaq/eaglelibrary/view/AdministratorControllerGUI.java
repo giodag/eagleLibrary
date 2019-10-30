@@ -26,6 +26,8 @@ import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.PageDTO;
 import com.univaq.eaglelibrary.dto.ProfileDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
+import com.univaq.eaglelibrary.dto.UnassignTranscriptionRequestDTO;
+import com.univaq.eaglelibrary.dto.UnassignTranscriptionResponseDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.dto.UserFilterDTO;
 import com.univaq.eaglelibrary.dto.UserListDTO;
@@ -658,8 +660,10 @@ public class AdministratorControllerGUI implements Initializable{
 							if(transcriptionDTO != null) {
 								transcription = transcriptionDTO;
 								ObservableList<UserDTO> userListDTO = FXCollections.observableArrayList();
-								for (UserDTO userDTO : transcriptionDTO.getUserList()) {
-									userListDTO.add(userDTO);
+								if(transcriptionDTO.getUserList() != null) {
+									for (UserDTO userDTO : transcriptionDTO.getUserList()) {
+										userListDTO.add(userDTO);
+									}
 								}
 								transcriptorTableAA.setItems(userListDTO);
 							} else {
@@ -678,18 +682,20 @@ public class AdministratorControllerGUI implements Initializable{
 							UserFilterDTO userFilterDTO = new UserFilterDTO();
 							userFilterDTO.setTranscriber(true);
 							UserListDTO transcriberList = userControllerImpl.getUserList(userFilterDTO);
+							List<UserDTO> transcriberFree = new ArrayList<UserDTO>();
 							if(transcriberList != null && transcriberList.getListUserDTO() != null && !transcriberList.getListUserDTO().isEmpty()) {
+								transcriberFree.addAll(transcriberList.getListUserDTO());
 								for (UserDTO userAllTranscriberDTO : transcriberList.getListUserDTO()) {
-									if(transcriptionDTO != null) {
+									if(transcriptionDTO != null && transcriptionDTO.getUserList() != null) {
 										for (UserDTO userTranscriberDTO : transcriptionDTO.getUserList()) {
 											if(userAllTranscriberDTO.getId()==userTranscriberDTO.getId()) {
-												transcriberList.getListUserDTO().remove(userAllTranscriberDTO);
+												transcriberFree.remove(userAllTranscriberDTO);
 											}
 										}
 									} 
 								}
 								ObservableList<UserDTO> userAvailableListDTO = FXCollections.observableArrayList();
-								for (UserDTO userDTO : transcriberList.getListUserDTO()) {
+								for (UserDTO userDTO : transcriberFree) {
 									userAvailableListDTO.add(userDTO);
 								}
 								transcriptorTableA.setItems(userAvailableListDTO);
@@ -744,16 +750,64 @@ public class AdministratorControllerGUI implements Initializable{
 							List<PageDTO> pageAssignList = new ArrayList<PageDTO>();
 							pageAssignList.add(transcription.getPage());
 							assignDTO.setPageList(pageAssignList);
-							AssignTranscriptionResponseDTO response = transcriptionControllerImpl.assignTrascription(assignDTO);
+							AssignTranscriptionResponseDTO response = new AssignTranscriptionResponseDTO();
+							try {
+								response = transcriptionControllerImpl.assignTrascription(assignDTO);
+							} catch (MandatoryFieldException e) {
+								Alert alert = new Alert(AlertType.ERROR);
+								alert.setHeaderText(e.getMessage());
+								alert.showAndWait();
+								e.printStackTrace();
+							}
 							if(response.getAssigned() != null) {
 								Alert alert = new Alert(AlertType.CONFIRMATION);
 								alert.setHeaderText("Trascrizione assegnata correttamente");
 								alert.showAndWait();
+								initilizeTranscriptionTable();
 								transcriptorTableA.setItems(null);
 								transcriptorTableAA.setItems(null);
 							} else {
 								Alert alert = new Alert(AlertType.ERROR);
 								alert.setHeaderText("Assegnamento fallito");
+								alert.showAndWait();
+							}
+						}
+					}
+				});
+				return row ;
+			}
+		});
+		transcriptorTableAA.setRowFactory( new Callback<TableView<UserDTO>, TableRow<UserDTO>>() {
+			public TableRow<UserDTO> call(TableView<UserDTO> tv) {
+				final TableRow<UserDTO> row = new TableRow<UserDTO>();
+				row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+						if (event.getClickCount() == 2 && (!row.isEmpty()) ) {
+							UserDTO rowData = row.getItem();
+							TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
+							UnassignTranscriptionRequestDTO assignDTO = new UnassignTranscriptionRequestDTO();
+							assignDTO.setUsername(rowData.getUsername());
+							List<PageDTO> pageAssignList = new ArrayList<PageDTO>();
+							pageAssignList.add(transcription.getPage());
+							assignDTO.setPageList(pageAssignList);
+							UnassignTranscriptionResponseDTO response = new UnassignTranscriptionResponseDTO();
+							try {
+								response = transcriptionControllerImpl.unassignTranscription(assignDTO);
+							} catch (MandatoryFieldException e) {
+								Alert alert = new Alert(AlertType.ERROR);
+								alert.setHeaderText(e.getMessage());
+								alert.showAndWait();
+								e.printStackTrace();
+							}
+							if(response.getAssigned() != null) {
+								Alert alert = new Alert(AlertType.CONFIRMATION);
+								alert.setHeaderText("Trascrizione de-assegnata correttamente");
+								alert.showAndWait();
+								transcriptorTableA.setItems(null);
+								transcriptorTableAA.setItems(null);
+							} else {
+								Alert alert = new Alert(AlertType.ERROR);
+								alert.setHeaderText("De-assegnamento fallito");
 								alert.showAndWait();
 							}
 						}

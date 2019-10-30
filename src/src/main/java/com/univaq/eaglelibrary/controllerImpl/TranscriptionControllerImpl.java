@@ -1,5 +1,6 @@
 package com.univaq.eaglelibrary.controllerImpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -170,7 +171,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 	}
 
 	public AssignTranscriptionResponseDTO assignTrascription(
-			AssignTranscriptionRequestDTO assignTranscriptionRequestDTO) {
+			AssignTranscriptionRequestDTO assignTranscriptionRequestDTO) throws MandatoryFieldException {
 		logger.debug("start getTranscription");
 		AssignTranscriptionResponseDTO assignTranscriptionResponseDTO = new AssignTranscriptionResponseDTO();
 		if (assignTranscriptionRequestDTO != null && assignTranscriptionRequestDTO.getPageList() != null
@@ -195,16 +196,33 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 						// vogliamo
 						// -- solo settare il nuovo user
 						// -- N.B. : qui anche lo status della trascrizione sto lasciando invariato
-						transcriptionFilter.getUserList().add(userRead);
+						// -- da controllare il caso in cui la lista degli assegnati sia nulla
+						if(transcriptionFilter.getUserList() != null) {
+							transcriptionFilter.getUserList().add(userRead);
+						} else {
+							List<UserDTO> usersWorkOnTranscription = Arrays.asList(userRead);
+						}
 					} else {
 						// --Scenario in cui la trascrizione la stiamo creando in questo momento
 						transcriptionFilter = new TranscriptionDTO();
 						List<UserDTO> usersWorkOnTranscription = Arrays.asList(userRead);
-						transcriptionFilter.setPage(pageRead);
 						transcriptionFilter.setUserList(usersWorkOnTranscription);
 						transcriptionFilter.setStatus("OPEN");
+						//TODO qua ci sta il problema
+//						pageRead.setTranscriptionDTO(transcriptionFilter);
+						transcriptionFilter.setPage(pageRead);
+//						pageHandler.createUpdatePage(pageRead);
 					}
-					transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
+					if(userRead.getTranscriptionList() != null) {
+						userRead.getTranscriptionList().add(transcriptionFilter);
+					} else {
+						List<TranscriptionDTO> transcriptionList = new ArrayList<TranscriptionDTO>();
+						transcriptionList.add(transcriptionFilter);
+						userRead.setTranscriptionList(transcriptionList);
+					}
+					
+//					transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
+					userHandler.updateUser(userRead);
 					assignTranscriptionResponseDTO.setAssigned(Boolean.TRUE);
 				}
 			}

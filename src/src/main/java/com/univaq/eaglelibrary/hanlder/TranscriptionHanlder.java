@@ -34,9 +34,6 @@ public class TranscriptionHanlder {
 	private ConvertTranscription convertTranscription;
 	
 	@Autowired
-	private ConvertUser convertUser;
-	
-	@Autowired
 	private ConvertLiteraryWork convertLiteraryWork;
 	
 	@Autowired
