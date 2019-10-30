@@ -21,14 +21,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-public class TranscriptionControllerGUI implements Initializable{
+public class TranscriptionAdministratorControllerGUI implements Initializable{
 	
     @FXML
     private TextArea t_transcription;
@@ -37,47 +37,32 @@ public class TranscriptionControllerGUI implements Initializable{
     private ImageView viewPage;
     
     @FXML
-    private Button home,finish;
+    private Button home,reject;
 
     @FXML
-    private Button saveTranscription;
+    private Button accept;
     
 	private UserDTO user;
 	private ApplicationContext context;
 	private TranscriptionDTO transcription;
 
 	@FXML
-    void finish(ActionEvent event) {
+    void reject(ActionEvent event) {
     	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
-		try {
-			transcriptionControllerImpl.submitTranscription(transcription);
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setHeaderText("Trascrizione finalizzata correttamente");
-			alert.showAndWait();
-		} catch (MandatoryFieldException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText(e.getMessage());
-			alert.showAndWait();
-			e.printStackTrace();
-		}
+    	transcription.setTranscription(t_transcription.getText());
+    	transcription.setStatus("REJECT");
+		transcriptionControllerImpl.validateTranscription(transcription);
+		Alert alertOK = new Alert(AlertType.CONFIRMATION);
+		alertOK.setHeaderText("Trascrizione rigettata correttamente");
+		alertOK.showAndWait();
 	}
 	
     @FXML
     void comeBackHome(ActionEvent event) {
-    	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
-    	transcription.setLockedByuser(null);
-    	try {
-			transcriptionControllerImpl.saveTranscription(transcription);
-		} catch (MandatoryFieldException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText(e.getMessage());
-			alert.showAndWait();
-			e.printStackTrace();
-		}
     	Stage stage = (Stage) home.getScene().getWindow();
         stage.close();
         
-    	String fxmlFile = "/fxml/home.fxml";
+    	String fxmlFile = "/fxml/administrator.fxml";
 
 		FXMLLoader loader = new FXMLLoader();
 		Parent rootNode = null;
@@ -90,26 +75,20 @@ public class TranscriptionControllerGUI implements Initializable{
 		Scene scene = new Scene(rootNode);
 		stage.setScene(scene);
 		stage.setUserData(user);
-		HomepageControllerGUI controller = (HomepageControllerGUI)loader.getController();
+		AdministratorControllerGUI controller = (AdministratorControllerGUI)loader.getController();
 		controller.init(stage);
 		stage.show();
     }
 
     @FXML
-    void saveTranscription(ActionEvent event) {
+    void accept(ActionEvent event) {
     	transcription.setTranscription(t_transcription.getText());
+    	transcription.setStatus("CLOSED");
     	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
-		try {
-			transcriptionControllerImpl.saveTranscription(transcription);
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setHeaderText("Trascrizione salvata correttamente");
-			alert.showAndWait();
-		} catch (MandatoryFieldException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText(e.getMessage());
-			alert.showAndWait();
-			e.printStackTrace();
-		}
+	    transcriptionControllerImpl.validateTranscription(transcription);
+	    Alert alertOK = new Alert(AlertType.CONFIRMATION);
+		alertOK.setHeaderText("Trascrizione validata correttamente");
+		alertOK.showAndWait();
     }
 
 	public void init(Stage stage) {
@@ -157,3 +136,4 @@ public class TranscriptionControllerGUI implements Initializable{
 		return context;
 	}
 }
+

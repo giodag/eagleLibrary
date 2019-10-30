@@ -103,8 +103,8 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 		logger.debug("start validateTranscription");
 		ResultDTO resultDTO = null;
 		TranscriptionDTO transcriptionRead = transcriptionHanlder.readTranscription(transcriptionDTO);
-		if ("IN APPROVE".equals(transcriptionRead.getStatus())) {
-
+//		if ("CLOSED".equals(transcriptionRead.getStatus()) || "REJECT".equals(transcriptionRead.getStatus())) {
+		if(transcriptionRead != null) {
 			// --Ho commentato di proposito la riga sotto perchè è un errore mettere
 			// completed direttamente,
 			// --lo status in questo caso deve essere passato dalla GUI perchè potrebbe
