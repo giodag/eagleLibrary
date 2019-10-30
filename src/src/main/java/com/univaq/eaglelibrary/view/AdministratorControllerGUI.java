@@ -590,7 +590,7 @@ public class AdministratorControllerGUI implements Initializable{
 							Stage stage = (Stage) l_upload.getScene().getWindow();
 							stage.close();
 
-							String fxmlFile = "/fxml/transcriptionPage.fxml";
+							String fxmlFile = "/fxml/transcriptionAdministrator.fxml";
 
 							FXMLLoader loader = new FXMLLoader();
 							Parent rootNode = null;
@@ -604,7 +604,7 @@ public class AdministratorControllerGUI implements Initializable{
 							stage.setScene(scene);
 							user.setTranscriptionTable(rowData);
 							stage.setUserData(user);
-							TranscriptionControllerGUI controller = (TranscriptionControllerGUI)loader.getController();
+							TranscriptionAdministratorControllerGUI controller = (TranscriptionAdministratorControllerGUI)loader.getController();
 							controller.init(stage); 
 							stage.show();
 						}
