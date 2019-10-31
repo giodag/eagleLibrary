@@ -12,7 +12,6 @@ import com.univaq.eaglelibrary.controllerImpl.TranscriptionControllerImpl;
 import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
-import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,9 +20,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;

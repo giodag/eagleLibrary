@@ -59,7 +59,7 @@ public class TranscriptionHanlder {
 			transcription.setId(transcriptionDTO.getId() != null ? transcriptionDTO.getId() : transcription.getId());
 			transcription.setPage(transcriptionDTO.getPage() != null ? convertPages.convertToModel(transcriptionDTO.getPage()) : transcription.getPage());
 			//--TODO riga che ho aggiunto per vedere se risolve il problema detach;
-			transcription.getPage().setTranscription(transcription);
+//			transcription.getPage().setTranscription(transcription);
 			transcription.setStatus(StringUtils.isNotEmpty(transcriptionDTO.getStatus()) ? transcriptionDTO.getStatus() : transcription.getStatus());
 			transcription.setUsersWorkTranscription(transcriptionDTO.getUserList() != null && !transcriptionDTO.getUserList().isEmpty() ? convertUser.convertToModel(transcriptionDTO.getUserList()) : transcription.getUsersWorkTranscription());
 			transcription.setTranscription(StringUtils.isNotEmpty(transcriptionDTO.getTranscription()) ? transcriptionDTO.getTranscription() : transcription.getTranscription());

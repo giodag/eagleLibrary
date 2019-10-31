@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.univaq.eaglelibrary.controller.TranscriptionController;
@@ -33,7 +32,6 @@ import com.univaq.eaglelibrary.hanlder.UserHanlder;
  * del sistema minimizzando così gli impatti tra la parte view e la parte logica nel caso di change requests.
  */
 @Service
-@Transactional
 public class TranscriptionControllerImpl implements TranscriptionController {
 
 	private final Logger logger = LoggerFactory.getLogger(TranscriptionControllerImpl.class);
