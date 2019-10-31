@@ -19,6 +19,7 @@ import com.univaq.eaglelibrary.controllerImpl.TranscriptionControllerImpl;
 import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListDTO;
 import com.univaq.eaglelibrary.dto.LiteraryWorkListFilterDTO;
+import com.univaq.eaglelibrary.dto.LockTranscriptionRequestDTO;
 import com.univaq.eaglelibrary.dto.ModuleDTO;
 import com.univaq.eaglelibrary.dto.PageDTO;
 import com.univaq.eaglelibrary.dto.ProfileDTO;
@@ -357,6 +358,14 @@ public class HomepageControllerGUI implements Initializable{
 					public void handle(MouseEvent event) {
 						if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
 							TranscriptionTable rowData = row.getItem();
+							TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
+							LockTranscriptionRequestDTO lockTranscriptionRequestDTO = new LockTranscriptionRequestDTO();
+							user.setTranscriptionTable(rowData);
+							lockTranscriptionRequestDTO.setUsername(user.getUsername());
+							TranscriptionDTO transcriptionToLock = readTranscription();
+							lockTranscriptionRequestDTO.setTranscription(transcriptionToLock);
+							transcriptionControllerImpl.lockTranscription(lockTranscriptionRequestDTO);
+							
 							Stage stage = (Stage) l_profile.getScene().getWindow();
 							stage.close();
 
@@ -372,7 +381,6 @@ public class HomepageControllerGUI implements Initializable{
 							stage = new Stage();
 							Scene scene = new Scene(rootNode);
 							stage.setScene(scene);
-							user.setTranscriptionTable(rowData);
 							stage.setUserData(user);
 							TranscriptionControllerGUI controller = (TranscriptionControllerGUI)loader.getController();
 							controller.init(stage); 
@@ -471,6 +479,23 @@ public class HomepageControllerGUI implements Initializable{
 		return false;
 	}
 
+	private TranscriptionDTO readTranscription() {
+		LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
+		LiteraryWorkDTO literaryWorkDTO = new LiteraryWorkDTO();
+		literaryWorkDTO.setAuthor(user.getTranscriptionTable().getAuthor());
+		literaryWorkDTO.setTitle(user.getTranscriptionTable().getTitle());
+		literaryWorkDTO.setYear(Integer.valueOf(user.getTranscriptionTable().getYear()));
+		literaryWorkDTO = literaryWorkControllerImpl.getLiteraryWork(literaryWorkDTO);
+		TranscriptionDTO transcriptionDTORead = null;
+		if(literaryWorkDTO != null && literaryWorkDTO.getPageList() != null && !literaryWorkDTO.getPageList().isEmpty()
+				&& user.getTranscriptionTable().getPage() != null && literaryWorkDTO.getPageList().get(Integer.valueOf(user.getTranscriptionTable().getPage())) != null) {
+			transcriptionDTORead = literaryWorkDTO.getPageList().get(Integer.valueOf(user.getTranscriptionTable().getPage())).getTranscriptionDTO();
+			transcriptionDTORead.setPage(literaryWorkDTO.getPageList().get(Integer.valueOf(user.getTranscriptionTable().getPage())));
+			return transcriptionDTORead;
+		}
+		return null;
+	}
+	
 	private void buildColumn() {
 		statusColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("status"));
 		authorColumn.setCellValueFactory(new PropertyValueFactory<TranscriptionTable,String>("author"));

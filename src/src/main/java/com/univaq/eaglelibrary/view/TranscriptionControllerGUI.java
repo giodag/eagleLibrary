@@ -54,6 +54,7 @@ public class TranscriptionControllerGUI implements Initializable{
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setHeaderText("Trascrizione finalizzata correttamente");
 			alert.showAndWait();
+			backHome();
 		} catch (MandatoryFieldException e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setHeaderText(e.getMessage());
@@ -64,20 +65,14 @@ public class TranscriptionControllerGUI implements Initializable{
 	
     @FXML
     void comeBackHome(ActionEvent event) {
-    	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
-    	transcription.setLockedByuser(null);
-    	try {
-			transcriptionControllerImpl.saveTranscription(transcription);
-		} catch (MandatoryFieldException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText(e.getMessage());
-			alert.showAndWait();
-			e.printStackTrace();
-		}
+    	backHome();
+    }
+
+    private void backHome() {
     	Stage stage = (Stage) home.getScene().getWindow();
         stage.close();
         
-    	String fxmlFile = "/fxml/home.fxml";
+    	String fxmlFile = "/fxml/homePage.fxml";
 
 		FXMLLoader loader = new FXMLLoader();
 		Parent rootNode = null;
@@ -93,9 +88,10 @@ public class TranscriptionControllerGUI implements Initializable{
 		HomepageControllerGUI controller = (HomepageControllerGUI)loader.getController();
 		controller.init(stage);
 		stage.show();
-    }
+		
+	}
 
-    @FXML
+	@FXML
     void saveTranscription(ActionEvent event) {
     	transcription.setTranscription(t_transcription.getText());
     	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
@@ -104,6 +100,7 @@ public class TranscriptionControllerGUI implements Initializable{
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setHeaderText("Trascrizione salvata correttamente");
 			alert.showAndWait();
+			backHome();
 		} catch (MandatoryFieldException e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setHeaderText(e.getMessage());
