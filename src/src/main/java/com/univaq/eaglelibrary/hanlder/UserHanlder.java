@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import com.mysql.cj.util.StringUtils;
 import com.univaq.eaglelibrary.converter.ConvertTranscription;
@@ -22,7 +21,6 @@ import com.univaq.eaglelibrary.exceptions.CreateUserException;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
 import com.univaq.eaglelibrary.exceptions.UserNotFoundException;
 import com.univaq.eaglelibrary.exceptions.WrongPasswordException;
-import com.univaq.eaglelibrary.model.Transcription;
 import com.univaq.eaglelibrary.model.User;
 import com.univaq.eaglelibrary.repository.UserRepository;
 import com.univaq.eaglelibrary.utility.Permission;
@@ -134,12 +132,6 @@ public class UserHanlder {
 		return resultDTO;
 	}
 	
-	/**
-	 * This method return a list of user transcriber if and only if is set as filter,
-	 * else return list of all active users;
-	 * @param userFilterDTO
-	 * @return
-	 */
 	@Transactional
 	public UserListDTO readUserListByFilter(UserFilterDTO userFilterDTO) {
 		List<User> transcriber = new ArrayList<User>();
