@@ -29,19 +29,19 @@ import javafx.stage.Stage;
 public class ViewOperaControllerGUI implements Initializable{
 
 	@FXML
-    private Label l_previous,l_next;
+	private Label l_previous,l_next;
 
-    @FXML
-    private Button b_home;
-    
-    @FXML
-    private ImageView opera;
-    
-    private UserDTO user;
+	@FXML
+	private Button b_home;
+
+	@FXML
+	private ImageView opera;
+
+	private UserDTO user;
 	private ApplicationContext context;
 	private LiteraryWorkDTO literaryWorkDTO;
 	private Integer i;
-    
+
 	@FXML
 	private void handleButtonAction(MouseEvent eventMuose) {
 		if(eventMuose.getSource() == l_previous) {
@@ -53,13 +53,13 @@ public class ViewOperaControllerGUI implements Initializable{
 		opera.setImage(img);
 		checkPage(literaryWorkDTO.getPageList());
 	}
-	
-    @FXML
-    void comeBackHome(ActionEvent event) {
-    	Stage stage = (Stage) b_home.getScene().getWindow();
-        stage.close();
-        
-    	String fxmlFile = "/fxml/homePage.fxml";
+
+	@FXML
+	void comeBackHome(ActionEvent event) {
+		Stage stage = (Stage) b_home.getScene().getWindow();
+		stage.close();
+
+		String fxmlFile = "/fxml/homePage.fxml";
 
 		FXMLLoader loader = new FXMLLoader();
 		Parent rootNode = null;
@@ -76,14 +76,14 @@ public class ViewOperaControllerGUI implements Initializable{
 		HomepageControllerGUI controller = (HomepageControllerGUI)loader.getController();
 		controller.init(stage);
 		stage.show();
-    }
-    
+	}
+
 	public void init(Stage stage) {
 		user = (UserDTO) stage.getUserData();
 		initializeGUI();	
 	}
 
-	
+
 	private void initializeGUI() {
 		LiteraryWorkControllerImpl literaryWorkControllerImpl = (LiteraryWorkControllerImpl)context.getBean("literaryWorkControllerImpl");
 		literaryWorkDTO = new LiteraryWorkDTO();
@@ -93,7 +93,10 @@ public class ViewOperaControllerGUI implements Initializable{
 		literaryWorkDTO = literaryWorkControllerImpl.getLiteraryWork(literaryWorkDTO);
 		if(literaryWorkDTO != null && literaryWorkDTO.getPageList() != null && !literaryWorkDTO.getPageList().isEmpty()) {
 			i=0;
-			Image img = new Image(new ByteArrayInputStream(literaryWorkDTO.getPageList().get(i).getImage()));
+			Image img = null;
+			if(literaryWorkDTO.getPageList() != null && literaryWorkDTO.getPageList().get(i) != null && literaryWorkDTO.getPageList().get(i).getImage() != null) {
+				img = new Image(new ByteArrayInputStream(literaryWorkDTO.getPageList().get(i).getImage()));
+			}
 			opera.setImage(img);
 			checkPage(literaryWorkDTO.getPageList());
 		}
@@ -115,7 +118,7 @@ public class ViewOperaControllerGUI implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		getContext();
 	}
-	
+
 	private ApplicationContext getContext() {
 		context = new ClassPathXmlApplicationContext("spring-context.xml");
 		return context;
