@@ -213,7 +213,7 @@ public class AdministratorControllerGUI implements Initializable{
 		} else {
 			errorFormat = false;
 		}
-		
+
 	}
 
 	@FXML
@@ -228,12 +228,14 @@ public class AdministratorControllerGUI implements Initializable{
 				for (LiteraryWorkDTO literaryWorkDTO : literaryWorkListRead.getLiteraryWorkList()) {
 					if(literaryWorkDTO.getPageList() != null && !literaryWorkDTO.getPageList().isEmpty()) {
 						for (PageDTO pageDTO : literaryWorkDTO.getPageList()) {
-							if(pageDTO.getTranscriptionDTO() != null && pageDTO.getTranscriptionDTO().getStatus() != null
-									&& !pageDTO.getTranscriptionDTO().getStatus().equalsIgnoreCase("closed") ) {
+							//							if(pageDTO.getTranscriptionDTO() != null && pageDTO.getTranscriptionDTO().getStatus() != null
+							//									&& !pageDTO.getTranscriptionDTO().getStatus().equalsIgnoreCase("closed") ) {
+							if(pageDTO.getTranscriptionDTO() != null) {
 								pageDTO.getTranscriptionDTO().setLiteraryWork(literaryWorkDTO);
 								pageDTO.getTranscriptionDTO().setPage(pageDTO);
 								transcriptionToShow.add(pageDTO.getTranscriptionDTO());
 							}
+							//}
 						}
 					}
 				}
