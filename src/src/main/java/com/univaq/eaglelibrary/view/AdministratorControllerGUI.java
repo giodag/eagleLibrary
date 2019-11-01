@@ -476,6 +476,7 @@ public class AdministratorControllerGUI implements Initializable{
 		}	
 		stage = new Stage();
 		Scene scene = new Scene(rootNode);
+		stage.getIcons().add(new Image(LoginView.class.getClassLoader().getResourceAsStream("images/libro.png")));
 		stage.setScene(scene);
 		stage.setUserData(user);
 		HomepageControllerGUI controller = (HomepageControllerGUI)loader.getController();
@@ -625,6 +626,7 @@ public class AdministratorControllerGUI implements Initializable{
 							}	
 							stage = new Stage();
 							Scene scene = new Scene(rootNode);
+							stage.getIcons().add(new Image(LoginView.class.getClassLoader().getResourceAsStream("images/libro.png")));
 							stage.setScene(scene);
 							user.setTranscriptionTable(rowData);
 							stage.setUserData(user);

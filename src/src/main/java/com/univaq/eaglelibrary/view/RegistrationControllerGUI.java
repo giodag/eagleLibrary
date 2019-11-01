@@ -43,7 +43,6 @@ public class RegistrationControllerGUI {
     	
     	ApplicationContext context = getContext();
     	UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
-    	//TODO inserire messaggi dialog
     	UserDTO userDTO = decorateUserDTO();
     	try {
 			userControllerImpl.registration(userDTO);

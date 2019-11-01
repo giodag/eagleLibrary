@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -64,6 +65,7 @@ public class LoginControllerGUI{
     		}	
     		stage = new Stage();
     		Scene scene = new Scene(rootNode);
+    		stage.getIcons().add(new Image(LoginView.class.getClassLoader().getResourceAsStream("images/libro.png")));
     		stage.setScene(scene);
     		stage.setUserData(user);
     		HomepageControllerGUI controller = (HomepageControllerGUI)loader.getController();
@@ -106,6 +108,7 @@ public class LoginControllerGUI{
 
 		stage = new Stage();
 		Scene scene = new Scene(rootNode);
+		stage.getIcons().add(new Image(LoginView.class.getClassLoader().getResourceAsStream("images/libro.png")));
 		stage.setScene(scene);
 		stage.show();
     }
