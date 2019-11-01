@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.univaq.eaglelibrary.controller.TranscriptionController;
 import com.univaq.eaglelibrary.controllerImpl.LiteraryWorkControllerImpl;
 import com.univaq.eaglelibrary.controllerImpl.TranscriptionControllerImpl;
 import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
@@ -73,11 +74,11 @@ public class TranscriptionControllerGUI implements Initializable{
     }
 
     private void unlock() {
-    	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
+    	TranscriptionController transcriptionController = (TranscriptionController)context.getBean("transcriptionControllerImpl");
     	LockTranscriptionRequestDTO lockTranscriptionRequestDTO = new LockTranscriptionRequestDTO();
     	lockTranscriptionRequestDTO.setTranscription(transcription);
     	lockTranscriptionRequestDTO.setUsername(user.getUsername());
-		transcriptionControllerImpl.unlockTranscription(lockTranscriptionRequestDTO );
+		transcriptionController.unlockTranscription(lockTranscriptionRequestDTO );
 	}
 
 	private void backHome() {
