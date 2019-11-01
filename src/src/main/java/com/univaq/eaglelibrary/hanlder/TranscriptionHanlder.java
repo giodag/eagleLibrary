@@ -18,6 +18,7 @@ import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.model.Page;
 import com.univaq.eaglelibrary.model.Transcription;
 import com.univaq.eaglelibrary.model.User;
+import com.univaq.eaglelibrary.repository.PageRepository;
 import com.univaq.eaglelibrary.repository.TranscriptionRepository;
 import com.univaq.eaglelibrary.repository.UserRepository;
 
@@ -29,6 +30,9 @@ public class TranscriptionHanlder {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private PageRepository pageRepository;
 
 	@Autowired
 	private ConvertTranscription convertTranscription;
@@ -53,18 +57,26 @@ public class TranscriptionHanlder {
 	public TranscriptionDTO createUpdateTranscription(TranscriptionDTO transcriptionDTO) {
 		if(transcriptionDTO != null) {
 			Transcription transcription = getTranscriptionEntityId(transcriptionDTO);
+			Page page = pageRepository.findOne(transcriptionDTO.getPage().getId());
 			if(transcription == null) {
 				transcription = new Transcription();
+				
+				
 			}
 			transcription.setId(transcriptionDTO.getId() != null ? transcriptionDTO.getId() : transcription.getId());
 			transcription.setPage(transcriptionDTO.getPage() != null ? convertPages.convertToModel(transcriptionDTO.getPage()) : transcription.getPage());
 			//--TODO riga che ho aggiunto per vedere se risolve il problema detach;
 //			transcription.getPage().setTranscription(transcription);
+			page.setTranscription(transcription);
 			transcription.setStatus(StringUtils.isNotEmpty(transcriptionDTO.getStatus()) ? transcriptionDTO.getStatus() : transcription.getStatus());
 			transcription.setUsersWorkTranscription(transcriptionDTO.getUserList() != null && !transcriptionDTO.getUserList().isEmpty() ? convertUser.convertToModel(transcriptionDTO.getUserList()) : transcription.getUsersWorkTranscription());
 			transcription.setTranscription(StringUtils.isNotEmpty(transcriptionDTO.getTranscription()) ? transcriptionDTO.getTranscription() : transcription.getTranscription());
 			transcription.setLockByUser(transcriptionDTO.getLockedByuser() != null ? transcriptionDTO.getLockedByuser() : transcription.getLockByUser());
-			transcription = transcriptionRepository.save(transcription);
+			//transcription = transcriptionRepository.save(transcription);
+			//transcription=transcriptionRepository.assignTranscription(transcription.getStatus(), transcription.getLockByUser(), transcription.getTranscription(), page.getId());
+			page.setTranscription(transcription);
+			pageRepository.save(page);
+			
 			transcriptionDTO = convertTranscription.convert(transcription);
 		}
 		return transcriptionDTO;

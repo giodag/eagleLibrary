@@ -49,6 +49,8 @@ public class TranscriptionControllerGUI implements Initializable{
 	@FXML
     void finish(ActionEvent event) {
     	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
+		transcription.setUsername(user.getUsername());
+		transcription.setTranscription(t_transcription.getText());
 		try {
 			transcriptionControllerImpl.submitTranscription(transcription);
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -94,6 +96,7 @@ public class TranscriptionControllerGUI implements Initializable{
 	@FXML
     void saveTranscription(ActionEvent event) {
     	transcription.setTranscription(t_transcription.getText());
+    	transcription.setUsername(user.getUsername());
     	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
 		try {
 			transcriptionControllerImpl.saveTranscription(transcription);
@@ -116,8 +119,8 @@ public class TranscriptionControllerGUI implements Initializable{
 
 	private void initializeGUI() {
 		transcription = readTranscription();
+		t_transcription.setText(transcription.getTranscription());
 		if(transcription != null && transcription.getPage() != null && transcription.getPage().getImage() != null) {
-			t_transcription.setText(transcription.getTranscription());
 			Image img = new Image(new ByteArrayInputStream(transcription.getPage().getImage()));
 			viewPage.setImage(img);
 		} else {

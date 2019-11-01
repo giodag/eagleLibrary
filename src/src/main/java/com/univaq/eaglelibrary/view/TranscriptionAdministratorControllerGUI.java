@@ -49,7 +49,7 @@ public class TranscriptionAdministratorControllerGUI implements Initializable{
     void reject(ActionEvent event) {
     	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
     	transcription.setTranscription(t_transcription.getText());
-    	transcription.setStatus("REJECT");
+    	transcription.setStatus("REJECTED");
 		transcriptionControllerImpl.validateTranscription(transcription);
 		Alert alertOK = new Alert(AlertType.CONFIRMATION);
 		alertOK.setHeaderText("Trascrizione rigettata correttamente");
@@ -97,8 +97,8 @@ public class TranscriptionAdministratorControllerGUI implements Initializable{
 
 	private void initializeGUI() {
 		transcription = readTranscription();
+		t_transcription.setText(transcription.getTranscription());
 		if(transcription != null && transcription.getPage() != null && transcription.getPage().getImage() != null) {
-			t_transcription.setText(transcription.getTranscription());
 			Image img = new Image(new ByteArrayInputStream(transcription.getPage().getImage()));
 			viewPage.setImage(img);
 		} else {

@@ -33,8 +33,9 @@ public class Transcription {
 	
 //	@OneToOne(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "page_id")
-    @OneToOne
-    @MapsId
+
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "page_id", nullable = false)
 	private Page page;
 	
 	@Column(name = "lockByUser")

@@ -442,7 +442,7 @@ public class HomepageControllerGUI implements Initializable{
 		ObservableList<TranscriptionTable> trascriptionClosed = FXCollections.observableArrayList();
 		for (TranscriptionDTO transcriptionRead : transcriptions) {
 			TranscriptionTable transcriptionTable = new TranscriptionTable(transcriptionRead);
-			if(transcriptionRead.getStatus() != null && (transcriptionRead.getStatus().equals("OPEN")) || transcriptionRead.getStatus().equals("REJECT")) {
+			if(transcriptionRead.getStatus() != null && (transcriptionRead.getStatus().equals("OPEN")) || transcriptionRead.getStatus().equals("REJECTED")) {
 				trascriptionOpen.add(transcriptionTable);
 			} else {
 				trascriptionClosed.add(transcriptionTable);

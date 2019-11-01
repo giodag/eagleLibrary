@@ -86,10 +86,10 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 				// --Setto questa info a null per permettere al prossimo utente di lockare, sia
 				// esso lo stesso di prima
 				// --oppure un altro
-				transcriptionDTO.setLockedByuser(null);
 				transcriptionDTO = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
 				LockTranscriptionRequestDTO lockTranscriptionRequestDTO = new LockTranscriptionRequestDTO();
 				lockTranscriptionRequestDTO.setTranscription(transcriptionDTO);
+				lockTranscriptionRequestDTO.setUsername(userFiter.getUsername());
 				unlockTranscription(lockTranscriptionRequestDTO);
 			}
 		}
@@ -209,6 +209,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 						transcriptionFilter.setUserList(usersWorkOnTranscription);
 						transcriptionFilter.setStatus("OPEN");
 						transcriptionFilter.setPage(pageRead);
+						//transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
 					}
 					if(userRead.getTranscriptionList() != null) {
 						userRead.getTranscriptionList().add(transcriptionFilter);
