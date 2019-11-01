@@ -14,7 +14,10 @@ import com.univaq.eaglelibrary.model.Profile;
 import com.univaq.eaglelibrary.model.User;
 import com.univaq.eaglelibrary.repository.ProfileRepository;
 import com.univaq.eaglelibrary.repository.UserRepository;
-
+/**
+ * Handler che gestisce tutta la logica computazionale dell'area dati che interessa i profili degli utenti.
+ *
+ */
 @Component
 public class ProfileHandler{
 	

@@ -13,7 +13,10 @@ import com.univaq.eaglelibrary.model.Transcription;
 import com.univaq.eaglelibrary.repository.LiteraryWorkRepository;
 import com.univaq.eaglelibrary.repository.PageRepository;
 import com.univaq.eaglelibrary.repository.TranscriptionRepository;
-
+/**
+ * Handler che gestisce tutta la logica computazionale dell'area dati che interessa pagine di un'opera.
+ *
+ */
 @Component
 public class PageHandler {
 

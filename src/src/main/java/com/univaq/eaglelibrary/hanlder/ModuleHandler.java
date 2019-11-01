@@ -20,7 +20,10 @@ import com.univaq.eaglelibrary.model.Module;
 import com.univaq.eaglelibrary.model.User;
 import com.univaq.eaglelibrary.repository.ModuleRepository;
 import com.univaq.eaglelibrary.repository.UserRepository;
-
+/**
+ * Handler che gestisce tutta la logica computazionale dell'area dati che interessa i moduli per diventare trascrittore.
+ *
+ */
 @Component
 public class ModuleHandler {
 	

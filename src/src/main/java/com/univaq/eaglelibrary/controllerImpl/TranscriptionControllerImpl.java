@@ -108,8 +108,6 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 			// --lo status in questo caso deve essere passato dalla GUI perchè potrebbe
 			// anche essere REJECT
 			// --quindi a DB andiamo a scrivere quello che ci arriva.
-			// transcriptionDTO.setStatus("COMPLETED");
-
 			TranscriptionDTO transcriptionDTOUpdated = transcriptionHanlder.createUpdateTranscription(transcriptionDTO);
 			// --Per la validate della trascrizione assumiamo che, l'utente che revisionerà
 			// la trascrizione all'atto della validazione
@@ -156,7 +154,6 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 						        iter.remove();
 						    }
 						}
-//						transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
 						userHandler.updateUser(userRead);
 					}
 				}
@@ -185,7 +182,6 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 				
 				if(userRead != null && pageRead != null) {
 					TranscriptionDTO transcriptionFilter = new TranscriptionDTO();
-//					transcriptionFilter.setPage(new PageDTO());
 					transcriptionFilter.setPage(pageRead);
 					transcriptionFilter.getPage().setId(pageRead.getId());
 					transcriptionFilter = transcriptionHanlder.readTranscription(transcriptionFilter);
@@ -218,11 +214,7 @@ public class TranscriptionControllerImpl implements TranscriptionController {
 						transcriptionList.add(transcriptionFilter);
 						userRead.setTranscriptionList(transcriptionList);
 					}
-					
-//					transcriptionHanlder.createUpdateTranscription(transcriptionFilter);
 					userHandler.updateUser(userRead);
-//					pageRead.setTranscriptionDTO(transcriptionFilter);
-//					pageHandler.createUpdatePage(pageRead);
 					assignTranscriptionResponseDTO.setAssigned(Boolean.TRUE);
 				}
 			}

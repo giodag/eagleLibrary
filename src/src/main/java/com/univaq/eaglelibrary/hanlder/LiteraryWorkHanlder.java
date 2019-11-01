@@ -23,7 +23,10 @@ import com.univaq.eaglelibrary.model.Page;
 import com.univaq.eaglelibrary.model.Transcription;
 import com.univaq.eaglelibrary.repository.LiteraryWorkRepository;
 import com.univaq.eaglelibrary.repository.TranscriptionRepository;
-
+/**
+ * Handler che gestisce tutta la logica computazionale dell'area dati che interessa le opere.
+ *
+ */
 @Component
 public class LiteraryWorkHanlder {
 

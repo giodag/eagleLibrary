@@ -61,7 +61,6 @@ public class ConvertPages {
 			page.setId(pageDTO.getId());
 			page.setPageNumber(pageDTO.getPageNumber());
 			page.setImage(pageDTO.getImage());
-//			page.setTranscription(convertTranscription.convertNoPages(pageDTO.getTranscriptionDTO()));
 		}
 		return page;
 	}

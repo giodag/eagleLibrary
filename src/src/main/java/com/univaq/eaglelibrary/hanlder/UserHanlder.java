@@ -26,7 +26,10 @@ import com.univaq.eaglelibrary.model.Transcription;
 import com.univaq.eaglelibrary.model.User;
 import com.univaq.eaglelibrary.repository.UserRepository;
 import com.univaq.eaglelibrary.utility.Permission;
-
+/**
+ * Handler che gestisce tutta la logica computazionale dell'area dati che interessa gli utenti.
+ *
+ */
 @Component
 public class UserHanlder {
 

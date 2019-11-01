@@ -21,7 +21,10 @@ import com.univaq.eaglelibrary.model.User;
 import com.univaq.eaglelibrary.repository.PageRepository;
 import com.univaq.eaglelibrary.repository.TranscriptionRepository;
 import com.univaq.eaglelibrary.repository.UserRepository;
-
+/**
+ * Handler che gestisce tutta la logica computazionale dell'area dati che interessa le trascrizioni delle pagine.
+ *
+ */
 @Component
 public class TranscriptionHanlder {
 
