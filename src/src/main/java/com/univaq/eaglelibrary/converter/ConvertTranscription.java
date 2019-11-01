@@ -27,7 +27,6 @@ public class ConvertTranscription {
 			transcription.setStatus(transcriptionDTO.getStatus());
 			transcription.setTranscription(transcriptionDTO.getTranscription());
 			transcription.setPage(convertPages.convertToModel(transcriptionDTO.getPage()));
-//			transcription.setUsersWorkTranscription(convertUser.convertToModel(transcriptionDTO.getUserList()));
 		}
 		return transcription;
 		

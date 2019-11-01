@@ -45,25 +45,10 @@ public class MySQLConnection extends Database {
 	private static DataSource pool = null;
 	// --New property for DB connection--//
 
-	/**
-	 * 
-	 * @param user
-	 * @param password
-	 * @param host
-	 * @param port
-	 * @param db_name
-	 * @throws DatabaseException 
-	 */
 	public MySQLConnection() throws DatabaseException {
 		this.connect();
 	}
 
-	/**
-	 * This method allows connection to database
-	 * @return 
-	 * @return 
-	 * @throws ClassNotFoundException 
-	 */
 	@Override
 	public void connect() {
 		if (pool == null) {

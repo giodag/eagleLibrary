@@ -76,34 +76,10 @@ public abstract class Database implements PersistenceService {
 		}
 	}
 
-	/**
-	 * This method provides an interface to sorted select for database tables
-	 * 
-	 * @param table
-	 * @param condition
-	 * @param order
-	 * @return ResultSet of selected records
-	 * @throws Exception
-	 */
 	protected abstract ResultSet select(String table, String condition, String order) throws Exception;
 
-	/**
-	 * This method provides an interface to select for database tables
-	 * 
-	 * @param table
-	 * @param order
-	 * @return
-	 * @throws Exception
-	 */
 	protected abstract ResultSet select(String table, String order) throws Exception;
 
-	/**
-	 * This method provides an interface to insert for database tables
-	 * 
-	 * @param table
-	 * @param data
-	 * @throws Exception
-	 */
 	protected abstract void insert(String table, Map<String, Object> data) throws Exception;
 
 	public void connect() throws DatabaseException {}

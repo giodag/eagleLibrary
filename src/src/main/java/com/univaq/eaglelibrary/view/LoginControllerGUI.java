@@ -3,6 +3,7 @@ package com.univaq.eaglelibrary.view;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.univaq.eaglelibrary.controller.UserController;
 import com.univaq.eaglelibrary.controllerImpl.UserControllerImpl;
 import com.univaq.eaglelibrary.dto.LoginRequestDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
@@ -46,8 +47,8 @@ public class LoginControllerGUI{
 
     	try {
     		ApplicationContext context = getContext();
-        	UserControllerImpl userControllerImpl = (UserControllerImpl)context.getBean("userControllerImpl");
-        	UserDTO user = userControllerImpl.login(loginRequestDTO);
+        	UserController userController = (UserController)context.getBean("userControllerImpl");
+        	UserDTO user = userController.login(loginRequestDTO);
         	
         	Stage stage = (Stage) login.getScene().getWindow();
             stage.close();

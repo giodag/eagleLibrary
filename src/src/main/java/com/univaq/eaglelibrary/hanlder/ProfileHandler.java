@@ -14,7 +14,10 @@ import com.univaq.eaglelibrary.model.Profile;
 import com.univaq.eaglelibrary.model.User;
 import com.univaq.eaglelibrary.repository.ProfileRepository;
 import com.univaq.eaglelibrary.repository.UserRepository;
-
+/**
+ * Handler che gestisce tutta la logica computazionale dell'area dati che interessa i profili degli utenti.
+ *
+ */
 @Component
 public class ProfileHandler{
 	
@@ -41,12 +44,6 @@ public class ProfileHandler{
 	private static final String MISSED_PARAMETER = "Missed parameter : ";
 	private static final String ALL = "All";
 
-	/**
-	 * 
-	 * @param profileDTO
-	 * @return
-	 * @throws MandatoryFieldException
-	 */
 	public ProfileDTO createUpdateProfile(ProfileDTO profileDTO) throws MandatoryFieldException {
 		
 		checkMandatory(profileDTO);
@@ -71,12 +68,7 @@ public class ProfileHandler{
 		
 		return profileDTO;
 	}
-	
-	/**
-	 * This method return a profile, you need to set id or user in profileDTO.
-	 * @param profileDTO
-	 * @return profileDTO
-	 */
+
 	@Transactional
 	public ProfileDTO readProfile(ProfileDTO profileDTO) {
 		Profile profile = null;
@@ -90,12 +82,7 @@ public class ProfileHandler{
 		}
 		return convertProfile.convert(profile);
 	}
-	
-	/**
-	 * 
-	 * @param profileDTO
-	 * @throws MandatoryFieldException
-	 */
+
 	private void checkMandatory(ProfileDTO profileDTO) throws MandatoryFieldException {
 		if(profileDTO == null) {
 			throw new MandatoryFieldException(MISSED_PARAMETER, ALL);

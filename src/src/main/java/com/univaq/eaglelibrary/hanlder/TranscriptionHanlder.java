@@ -21,7 +21,10 @@ import com.univaq.eaglelibrary.model.User;
 import com.univaq.eaglelibrary.repository.PageRepository;
 import com.univaq.eaglelibrary.repository.TranscriptionRepository;
 import com.univaq.eaglelibrary.repository.UserRepository;
-
+/**
+ * Handler che gestisce tutta la logica computazionale dell'area dati che interessa le trascrizioni delle pagine.
+ *
+ */
 @Component
 public class TranscriptionHanlder {
 
@@ -48,11 +51,7 @@ public class TranscriptionHanlder {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(TranscriptionHanlder.class);
 	
-	/**
-	 * 
-	 * @param transcriptionDTO
-	 * @return
-	 */
+	
 	@Transactional
 	public TranscriptionDTO createUpdateTranscription(TranscriptionDTO transcriptionDTO) {
 		if(transcriptionDTO != null) {
@@ -120,11 +119,6 @@ public class TranscriptionHanlder {
 		return transcription;
 	}
 
-	/**
-	 * 
-	 * @param transcriptionDTO
-	 * @return
-	 */
 	@Transactional
 	public List<TranscriptionDTO> readTranscriptionList(TranscriptionDTO transcriptionDTO) {
 		List<TranscriptionDTO> transcriptionListRead = null;
