@@ -10,6 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.univaq.eaglelibrary.controllerImpl.LiteraryWorkControllerImpl;
 import com.univaq.eaglelibrary.controllerImpl.TranscriptionControllerImpl;
 import com.univaq.eaglelibrary.dto.LiteraryWorkDTO;
+import com.univaq.eaglelibrary.dto.LockTranscriptionRequestDTO;
 import com.univaq.eaglelibrary.dto.TranscriptionDTO;
 import com.univaq.eaglelibrary.dto.UserDTO;
 import com.univaq.eaglelibrary.exceptions.MandatoryFieldException;
@@ -67,10 +68,19 @@ public class TranscriptionControllerGUI implements Initializable{
 	
     @FXML
     void comeBackHome(ActionEvent event) {
+    	unlock();
     	backHome();
     }
 
-    private void backHome() {
+    private void unlock() {
+    	TranscriptionControllerImpl transcriptionControllerImpl = (TranscriptionControllerImpl)context.getBean("transcriptionControllerImpl");
+    	LockTranscriptionRequestDTO lockTranscriptionRequestDTO = new LockTranscriptionRequestDTO();
+    	lockTranscriptionRequestDTO.setTranscription(transcription);
+    	lockTranscriptionRequestDTO.setUsername(user.getUsername());
+		transcriptionControllerImpl.unlockTranscription(lockTranscriptionRequestDTO );
+	}
+
+	private void backHome() {
     	Stage stage = (Stage) home.getScene().getWindow();
         stage.close();
         

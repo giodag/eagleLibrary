@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univaq.eaglelibrary.view.AdministratorControllerGUI">
    <children>
@@ -172,5 +173,10 @@
             <Button fx:id="saveOpera" layoutX="430.0" layoutY="460.0" mnemonicParsing="false" onAction="#saveOpera" text="Finish" />
          </children>
       </AnchorPane>
+      <Label fx:id="l_home" layoutX="612.0" layoutY="78.0" onMousePressed="#home" text="Home Page" textFill="#4913ed">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -51,6 +51,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -204,6 +205,7 @@ public class HomepageControllerGUI implements Initializable{
 		}	
 		stage = new Stage();
 		Scene scene = new Scene(rootNode);
+		stage.getIcons().add(new Image(LoginView.class.getClassLoader().getResourceAsStream("images/libro.png")));
 		stage.setScene(scene);
 		stage.setUserData(user);
 		AdministratorControllerGUI controller = (AdministratorControllerGUI)loader.getController();
@@ -246,6 +248,7 @@ public class HomepageControllerGUI implements Initializable{
 						a_module.setVisible(false);
 						a_trascription.setVisible(true);
 						a_searchList.setVisible(false);
+						initializeTrascriptionTable();
 						ownStage.setHeight(570);
 						ownStage.setWidth(703);
 					} else {
@@ -380,6 +383,7 @@ public class HomepageControllerGUI implements Initializable{
 							}	
 							stage = new Stage();
 							Scene scene = new Scene(rootNode);
+							stage.getIcons().add(new Image(LoginView.class.getClassLoader().getResourceAsStream("images/libro.png")));
 							stage.setScene(scene);
 							stage.setUserData(user);
 							TranscriptionControllerGUI controller = (TranscriptionControllerGUI)loader.getController();
@@ -416,6 +420,7 @@ public class HomepageControllerGUI implements Initializable{
 							}	
 							stage = new Stage();
 							Scene scene = new Scene(rootNode);
+							stage.getIcons().add(new Image(LoginView.class.getClassLoader().getResourceAsStream("images/libro.png")));
 							stage.setScene(scene);
 							user.setTranscriptionTable(rowData);
 							stage.setUserData(user);

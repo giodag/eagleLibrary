@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 @Component("loginView")
@@ -25,8 +26,9 @@ public class LoginView {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
-
+		
 		Stage stage = new Stage();
+		stage.getIcons().add(new Image(LoginView.class.getClassLoader().getResourceAsStream("images/libro.png")));
 		Scene scene = new Scene(rootNode);
 		stage.setScene(scene);
 		stage.show();

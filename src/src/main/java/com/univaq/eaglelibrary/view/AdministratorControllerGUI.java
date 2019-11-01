@@ -89,7 +89,7 @@ public class AdministratorControllerGUI implements Initializable{
 	private Button saveOpera,savePage,discardPage,search,b_chooseFile,rejectForm,uploadPage,b_acceptForm,saveTranscriptor;
 
 	@FXML
-	private Label l_yearUpload,l_upload,l_logout,l_yearSearch,l_titleUpload,l_yearOfStudy,l_assign,l_transcriptor,l_transcription,l_module,l_livel;
+	private Label l_yearUpload,l_upload,l_logout,l_yearSearch,l_titleUpload,l_yearOfStudy,l_assign,l_transcriptor,l_transcription,l_module,l_livel,l_home;
 
 	@FXML
 	private AnchorPane top,a_uploadPage,a_upload,a_assign,a_trascription,a_module,a_transcriptor;
@@ -460,6 +460,28 @@ public class AdministratorControllerGUI implements Initializable{
 		}
 	}
 
+	@FXML
+	private void home(MouseEvent eventMuose) {
+		Stage stage = (Stage) l_home.getScene().getWindow();
+		stage.close();
+
+		String fxmlFile = "/fxml/homePage.fxml";
+
+		FXMLLoader loader = new FXMLLoader();
+		Parent rootNode = null;
+		try {
+			rootNode = loader.load(getClass().getResourceAsStream(fxmlFile));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		stage = new Stage();
+		Scene scene = new Scene(rootNode);
+		stage.setScene(scene);
+		stage.setUserData(user);
+		HomepageControllerGUI controller = (HomepageControllerGUI)loader.getController();
+		controller.init(stage); 
+		stage.show();
+	}
 	private void resetPage() {
 		page = null;
 		viewPage.setImage(null);
