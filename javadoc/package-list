@@ -1,0 +1,12 @@
+com.univaq.eaglelibrary
+com.univaq.eaglelibrary.controller
+com.univaq.eaglelibrary.controllerImpl
+com.univaq.eaglelibrary.converter
+com.univaq.eaglelibrary.dto
+com.univaq.eaglelibrary.exceptions
+com.univaq.eaglelibrary.hanlder
+com.univaq.eaglelibrary.model
+com.univaq.eaglelibrary.persistence
+com.univaq.eaglelibrary.repository
+com.univaq.eaglelibrary.utility
+com.univaq.eaglelibrary.view
