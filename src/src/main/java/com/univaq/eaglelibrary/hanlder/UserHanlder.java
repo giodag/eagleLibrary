@@ -92,6 +92,7 @@ public class UserHanlder {
 		return userRead;
 	}
 
+	@Transactional
 	public ResultDTO createUser(UserDTO userDTO) throws MandatoryFieldException, CreateUserException {
 		ResultDTO resultDTO = null;
 		checkMandatory(userDTO);

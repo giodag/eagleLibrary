@@ -66,6 +66,7 @@ public class LiteraryWorkHanlder {
 		return convertLiteraryWork.convert(literaryWork);
 	}
 
+	@Transactional
 	public LiteraryWorkDTO readLiteraryWorkTranscribed(LiteraryWorkDTO literaryWorkDTO) {
 		LiteraryWorkDTO literaryWorkDTORead = readLiteraryWork(literaryWorkDTO);
 		if (literaryWorkDTORead != null && literaryWorkDTORead.getPageList() != null
